@@ -211,12 +211,22 @@ const Index = () => {
             <div className="w-full h-full">
               <video 
                 ref={videoRef}
-                muted
+                muted={true}
                 autoPlay={true} 
                 loop
                 playsInline
                 className="w-full h-full object-cover" 
                 style={{ width: '100vw', height: '100vh', objectFit: 'cover' }}
+                useEffect(() => {
+  if (videoRef.current) {
+    videoRef.current.muted = true;
+    videoRef.current.play().catch((e) => {
+      console.warn("Autoplay failed:", e);
+    });
+  }
+}, []);
+
+                
               >
                 <source src="https://9nk.de/neu/video.mp4" type="video/mp4" />
                 Your browser does not support HTML5 video.
