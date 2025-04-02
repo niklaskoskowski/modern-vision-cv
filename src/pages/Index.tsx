@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Code, Image, Briefcase, Mail, User, X, Edit, Check, ChevronDown } from 'lucide-react';
@@ -124,7 +125,11 @@ const Index = () => {
           <ul className="flex items-center justify-between w-full">
             <li>
               <button onClick={() => scrollToSection('home')} className="cursor-pointer flex items-center">
-                <img src="https://9nk.de/assets/nk-portfolio.png" alt="NK Portfolio Logo" className="h-6 md:h-8 w-auto" />
+                <img 
+                  src="https://9nk.de/assets/nk-portfolio.png" 
+                  alt="NK Portfolio Logo" 
+                  className="h-5 w-auto md:h-8" 
+                />
               </button>
             </li>
             <div className="flex items-center gap-1">
