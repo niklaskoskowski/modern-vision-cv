@@ -69,8 +69,20 @@ const Index = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  
 
+  useEffect(() => {
+  const video = document.querySelector('video');
+  if (video) {
+    video.muted = true;
+    video.playsInline = true;
+    video.play().catch(e => {
+      console.warn("Safari Autoplay failed:", e);
+    });
+  }
+}, []);
+
+
+  
   useEffect(() => {
     const searchParams = new URLSearchParams(window.location.search);
     const sent = searchParams.get('sent');
