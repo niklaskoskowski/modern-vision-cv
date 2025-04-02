@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Code, Image, Briefcase, Mail, User } from 'lucide-react';
@@ -91,9 +90,24 @@ const Index = () => {
       </header>
 
       <main className="container mx-auto px-4 pt-32 pb-20 max-w-6xl">
-        {/* Hero Section */}
-        <section id="home" className="mb-24">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+        {/* Hero Section with Video Background */}
+        <section id="home" className="mb-24 relative">
+          <div className="absolute inset-0 w-full h-full overflow-hidden -z-10">
+            <div className="absolute inset-0 bg-black/40 z-10"></div>
+            <video 
+              autoPlay 
+              loop 
+              muted 
+              playsInline
+              className="w-full h-full object-cover" 
+              style={{ width: '100%', height: '100vh', objectFit: 'cover' }}
+            >
+              <source src="https://9nk.de/neu/video.mp4" type="video/mp4" />
+              Your browser does not support the video tag.
+            </video>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center min-h-[80vh] relative z-10">
             <div className="animate-fade-in">
               <div className="bg-secondary/50 text-primary rounded-full px-4 py-1 inline-flex items-center text-sm mb-4">
                 <span className="mr-2">Design</span>
@@ -102,10 +116,10 @@ const Index = () => {
                 <span className="mx-2">•</span>
                 <span>Web</span>
               </div>
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4">
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4 text-white">
                 Hi, Ich bin <span className="text-gradient">Niklas</span>,
               </h1>
-              <p className="text-xl md:text-2xl text-muted-foreground mb-8">schau Dich mal um!</p>
+              <p className="text-xl md:text-2xl text-white mb-8">schau Dich mal um!</p>
               <button 
                 onClick={() => scrollToSection('about')}
                 className="bg-primary text-white rounded-full px-6 py-3 flex items-center font-medium hover:bg-primary/90 transition-colors"
@@ -115,7 +129,7 @@ const Index = () => {
             </div>
             <div className="glass rounded-3xl overflow-hidden">
               <img 
-                src="https://placehold.co/600x400/random?text=Niklas+Koskowski" 
+                src="https://nkmd.de/placeholder/600x400" 
                 alt="Niklas Koskowski" 
                 className="w-full h-full object-cover"
               />
@@ -236,7 +250,7 @@ const Index = () => {
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             <div className="project-card">
-              <img src="https://placehold.co/600x400/random?text=FSA+2024" alt="Aftermovie Formula Student Austria 2024" />
+              <img src="https://nkmd.de/placeholder/600x400" alt="Aftermovie Formula Student Austria 2024" />
               <div className="project-overlay">
                 <h3 className="text-xl font-medium mb-2">Aftermovie Formula Student Austria 2024</h3>
                 <button className="bg-white/20 hover:bg-white/30 text-white px-4 py-2 rounded-full mt-2 transition-colors">Ansehen</button>
@@ -244,7 +258,7 @@ const Index = () => {
             </div>
             
             <div className="project-card">
-              <img src="https://placehold.co/600x400/random?text=Fast+Forest" alt="Fast Forest – Rendering" />
+              <img src="https://nkmd.de/placeholder/600x400" alt="Fast Forest – Rendering" />
               <div className="project-overlay">
                 <h3 className="text-xl font-medium mb-2">Fast Forest – Rendering</h3>
                 <button className="bg-white/20 hover:bg-white/30 text-white px-4 py-2 rounded-full mt-2 transition-colors">Ansehen</button>
@@ -252,7 +266,7 @@ const Index = () => {
             </div>
             
             <div className="project-card">
-              <img src="https://placehold.co/600x400/random?text=Logo+Design" alt="Logodesign – niklaskoskowski.de" />
+              <img src="https://nkmd.de/placeholder/600x400" alt="Logodesign – niklaskoskowski.de" />
               <div className="project-overlay">
                 <h3 className="text-xl font-medium mb-2">Logodesign – niklaskoskowski.de</h3>
                 <button className="bg-white/20 hover:bg-white/30 text-white px-4 py-2 rounded-full mt-2 transition-colors">Ansehen</button>
@@ -260,7 +274,7 @@ const Index = () => {
             </div>
             
             <div className="project-card">
-              <img src="https://placehold.co/600x400/random?text=Muster+Design" alt="Muster Lybecker Institut Raahe – Finnland" />
+              <img src="https://nkmd.de/placeholder/600x400" alt="Muster Lybecker Institut Raahe – Finnland" />
               <div className="project-overlay">
                 <h3 className="text-xl font-medium mb-2">Muster Lybecker Institut Raahe</h3>
                 <button className="bg-white/20 hover:bg-white/30 text-white px-4 py-2 rounded-full mt-2 transition-colors">Ansehen</button>
@@ -274,7 +288,7 @@ const Index = () => {
               {[1, 2, 3, 4, 5, 6, 7, 8].map((item) => (
                 <div key={item} className="aspect-square overflow-hidden rounded-xl">
                   <img 
-                    src={`https://placehold.co/400x400/random?text=Photo+${item}`} 
+                    src={`https://nkmd.de/placeholder/400x400`} 
                     alt={`Foto ${item}`} 
                     className="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
                   />
