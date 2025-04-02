@@ -25,28 +25,28 @@ const Index = () => {
     src: string;
   }>>([{
     id: 1,
-    src: "https://nkmd.de/placeholder/?s400x400"
+    src: "https://img.nkmd.de/uploads/medium/d9/48/01eb4fc6c6699e89f418c8278f35.jpg"
   }, {
     id: 2,
-    src: "https://nkmd.de/placeholder/?s400x400"
+    src: "https://img.nkmd.de/uploads/medium/fe/43/3640d2f8ca9ce08b7bb7b3ad040c.jpg"
   }, {
     id: 3,
-    src: "https://nkmd.de/placeholder/?s400x400"
+    src: "https://img.nkmd.de/uploads/medium/89/fc/4e14d2ef8a79327757c20fdf9939.jpg"
   }, {
     id: 4,
-    src: "https://nkmd.de/placeholder/?s400x400"
+    src: "https://img.nkmd.de/uploads/medium/63/e7/6a5741726ab5bee759010ae4de3b.jpg"
   }, {
     id: 5,
-    src: "https://nkmd.de/placeholder/?s400x400"
+    src: "https://img.nkmd.de/uploads/medium/10/af/9609c92495e20d4425bfbf2a4156.jpeg"
   }, {
     id: 6,
-    src: "https://nkmd.de/placeholder/?s400x400"
+    src: "https://img.nkmd.de/uploads/medium/22/b8/9b7c2247db1be5e0fe48c15a7904.png"
   }, {
     id: 7,
-    src: "https://nkmd.de/placeholder/?s400x400"
+    src: "https://img.nkmd.de/uploads/medium/3b/b3/8c5e9d06a1700f606e23a7c53c0f.jpeg"
   }, {
     id: 8,
-    src: "https://nkmd.de/placeholder/?s400x400"
+    src: "https://img.nkmd.de/uploads/medium/68/11/2d07d6a7ae88e9834939e35630b0.jpeg"
   }]);
   const [editImageId, setEditImageId] = useState<number | null>(null);
   const [newImageUrl, setNewImageUrl] = useState<string>("");
@@ -416,9 +416,9 @@ const Index = () => {
             </div>
 
             <div className="project-card flex flex-col">
-              <h3 className="text-xl font-medium mb-3 px-2">UI/UX Design Portfolio</h3>
-              <div className="relative flex-1 overflow-hidden cursor-pointer" onClick={() => openImageModal("https://nkmd.de/placeholder/?s800x600&text=UI/UX+Design")}>
-                <img src="https://nkmd.de/placeholder/?s800x600&text=UI/UX+Design" alt="UI/UX Design Portfolio" className="w-full h-full object-cover transition-transform duration-500 hover:scale-105" />
+              <h3 className="text-xl font-medium mb-3 px-2">Fast Forest Tasse (250x)</h3>
+              <div className="relative flex-1 overflow-hidden cursor-pointer" onClick={() => openImageModal("https://img.nkmd.de/uploads/small2x/8d/5a/d93ae8cacfcd48bfd85e026b62ea.jpg")}>
+                <img src="https://img.nkmd.de/uploads/small2x/8d/5a/d93ae8cacfcd48bfd85e026b62ea.jpg" alt="Fast Forest Tasse (250x)" className="w-full h-full object-cover transition-transform duration-500 hover:scale-105" />
                 <div className="absolute inset-0 bg-black/30 hover:bg-black/50 transition-colors flex items-center justify-center">
                 </div>
               </div>
@@ -426,8 +426,8 @@ const Index = () => {
             
             <div className="project-card flex flex-col">
               <h3 className="text-xl font-medium mb-3 px-2">Corporate Identity Project</h3>
-              <div className="relative flex-1 overflow-hidden cursor-pointer" onClick={() => openImageModal("https://nkmd.de/placeholder/?s800x600&text=Corporate+Identity")}>
-                <img src="https://nkmd.de/placeholder/?s800x600&text=Corporate+Identity" alt="Corporate Identity Project" className="w-full h-full object-cover transition-transform duration-500 hover:scale-105" />
+              <div className="relative flex-1 overflow-hidden cursor-pointer" onClick={() => openImageModal("https://img.nkmd.de/uploads/small2x/68/7b/e36f5a2bc4bd09643d07d0c9fcac.jpg")}>
+                <img src="https://img.nkmd.de/uploads/small2x/68/7b/e36f5a2bc4bd09643d07d0c9fcac.jpg" alt="Corporate Identity Project" className="w-full h-full object-cover transition-transform duration-500 hover:scale-105" />
                 <div className="absolute inset-0 bg-black/30 hover:bg-black/50 transition-colors flex items-center justify-center">
                 </div>
               </div>
