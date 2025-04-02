@@ -74,35 +74,16 @@ const Index = () => {
     
     videoRef.current.muted = true;
     videoRef.current.playsInline = true;
-    videoRef.current.autoplay = true;
     
-    videoRef.current.setAttribute('playsinline', '');
-    videoRef.current.setAttribute('webkit-playsinline', '');
-    videoRef.current.setAttribute('muted', '');
-    videoRef.current.setAttribute('autoplay', '');
-    
-    const playAttempt = () => {
+    const timer = setTimeout(() => {
       if (videoRef.current) {
-        const promise = videoRef.current.play();
-        if (promise !== undefined) {
-          promise.catch(error => {
-            console.log("Autoplay failed:", error);
-          });
-        }
+        videoRef.current.play().catch(error => {
+          console.log("Autoplay failed:", error);
+        });
       }
-    };
+    }, 2000);
     
-    playAttempt();
-    
-    if (document.readyState === 'complete') {
-      playAttempt();
-    } else {
-      window.addEventListener('load', playAttempt, { once: true });
-    }
-    
-    return () => {
-      window.removeEventListener('load', playAttempt);
-    };
+    return () => clearTimeout(timer);
   }, []);
 
   useEffect(() => {
@@ -231,7 +212,7 @@ const Index = () => {
               <video 
                 ref={videoRef}
                 muted
-                autoPlay
+                autoPlay={false} 
                 loop
                 playsInline
                 className="w-full h-full object-cover" 
