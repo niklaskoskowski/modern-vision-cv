@@ -204,18 +204,17 @@ const Index = () => {
             
             <div className="w-full h-full">
               <video
-  ref={videoRef}
-  muted
-  autoPlay
-  loop
-  playsInline
-  preload="auto"
-  className="w-full h-full object-cover"
-  style={{ width: '100vw', height: '100vh', objectFit: 'cover' }}
->
-  <source src="https://9nk.de/neu/video.mp4" type="video/mp4" />
-  Your browser does not support HTML5 video.
-</video>
+        ref={videoRef}
+        autoPlay
+        muted
+        loop
+        playsInline
+        preload="auto"
+        className="absolute top-0 left-0 w-full h-full object-cover z-0"
+      >
+        <source src="https://9nk.de/neu/video.mp4" type="video/mp4" />
+        Dein Browser unterstützt kein HTML5-Video.
+      </video>
 
             </div>
           </div>
