@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Code, Image, Briefcase, Mail, User, X, Edit, Check, ChevronDown } from 'lucide-react';
+import { ArrowRight, Code, Image, Briefcase, Mail, User, X, Eye, Edit, Check } from 'lucide-react';
 import { Dialog, DialogContent, DialogClose } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { useIsMobile } from "@/hooks/use-mobile";
 
 const Index = () => {
   const [activeSection, setActiveSection] = useState<string>('home');
@@ -14,39 +13,45 @@ const Index = () => {
   const [showImageModal, setShowImageModal] = useState<boolean>(false);
   const [selectedImage, setSelectedImage] = useState<string>("");
   const [isEditMode, setIsEditMode] = useState<boolean>(false);
-  const isMobile = useIsMobile();
-
   const [galleryImages, setGalleryImages] = useState<Array<{
     id: number;
     src: string;
-  }>>([{
-    id: 1,
-    src: "https://nkmd.de/placeholder/?s400x400"
-  }, {
-    id: 2,
-    src: "https://nkmd.de/placeholder/?s400x400"
-  }, {
-    id: 3,
-    src: "https://nkmd.de/placeholder/?s400x400"
-  }, {
-    id: 4,
-    src: "https://nkmd.de/placeholder/?s400x400"
-  }, {
-    id: 5,
-    src: "https://nkmd.de/placeholder/?s400x400"
-  }, {
-    id: 6,
-    src: "https://nkmd.de/placeholder/?s400x400"
-  }, {
-    id: 7,
-    src: "https://nkmd.de/placeholder/?s400x400"
-  }, {
-    id: 8,
-    src: "https://nkmd.de/placeholder/?s400x400"
-  }]);
+  }>>([
+    {
+      id: 1,
+      src: "https://nkmd.de/placeholder/?s400x400"
+    },
+    {
+      id: 2,
+      src: "https://nkmd.de/placeholder/?s400x400"
+    },
+    {
+      id: 3,
+      src: "https://nkmd.de/placeholder/?s400x400"
+    },
+    {
+      id: 4,
+      src: "https://nkmd.de/placeholder/?s400x400"
+    },
+    {
+      id: 5,
+      src: "https://nkmd.de/placeholder/?s400x400"
+    },
+    {
+      id: 6,
+      src: "https://nkmd.de/placeholder/?s400x400"
+    },
+    {
+      id: 7,
+      src: "https://nkmd.de/placeholder/?s400x400"
+    },
+    {
+      id: 8,
+      src: "https://nkmd.de/placeholder/?s400x400"
+    }
+  ]);
   const [editImageId, setEditImageId] = useState<number | null>(null);
   const [newImageUrl, setNewImageUrl] = useState<string>("");
-
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);
@@ -121,45 +126,32 @@ const Index = () => {
   return <div className="min-h-screen">
       <header className={`fixed top-0 left-0 right-0 z-50 flex justify-center py-4 px-6 transition-all duration-300 ${isScrolled ? 'py-2' : 'py-4'}`}>
         <nav className={`navbar-glass rounded-full py-2 px-4 md:px-6 max-w-4xl mx-auto transition-all duration-300 ${isScrolled ? 'shadow-md' : ''}`}>
-          <ul className="flex items-center justify-between w-full">
-            <li className="mr-2 md:mr-4">
-              <button onClick={() => scrollToSection('home')} className="cursor-pointer flex items-center">
-                <img 
-                  src="https://9nk.de/assets/nk-portfolio.png" 
-                  alt="NK Portfolio Logo" 
-                  className="h-4 w-auto md:h-6" 
-                />
+          <ul className="flex items-center space-x-1 md:space-x-2">
+            <li>
+              <button onClick={() => scrollToSection('home')} className={`px-3 py-2 rounded-full text-sm md:text-base transition-colors ${activeSection === 'home' ? 'bg-primary text-white' : 'hover:bg-secondary'}`}>
+                Home
               </button>
             </li>
-            <div className="flex items-center gap-1">
-              {!isMobile && (
-                <li>
-                  <button onClick={() => scrollToSection('about')} className={`px-1.5 md:px-3 py-1.5 md:py-2 rounded-full text-xs md:text-base transition-colors ${activeSection === 'about' ? 'bg-primary text-white' : 'hover:bg-secondary'}`}>
-                    Über
-                  </button>
-                </li>
-              )}
-              <li>
-                <button onClick={() => scrollToSection('lebenslauf')} className={`px-1.5 md:px-3 py-1.5 md:py-2 rounded-full text-xs md:text-base transition-colors ${activeSection === 'lebenslauf' ? 'bg-primary text-white' : 'hover:bg-secondary'}`}>
-                  Lebenslauf
-                </button>
-              </li>
-              <li>
-                <button onClick={() => scrollToSection('projekte')} className={`px-1.5 md:px-3 py-1.5 md:py-2 rounded-full text-xs md:text-base transition-colors ${activeSection === 'projekte' ? 'bg-primary text-white' : 'hover:bg-secondary'}`}>
-                  Projekte
-                </button>
-              </li>
-              <li>
-                <button onClick={() => scrollToSection('kontakt')} className={`px-1.5 md:px-3 py-1.5 md:py-2 rounded-full text-xs md:text-base transition-colors ${activeSection === 'kontakt' ? 'bg-primary text-white' : 'hover:bg-secondary'}`}>
-                  Kontakt
-                </button>
-              </li>
-            </div>
+            <li>
+              <button onClick={() => scrollToSection('lebenslauf')} className={`px-3 py-2 rounded-full text-sm md:text-base transition-colors ${activeSection === 'lebenslauf' ? 'bg-primary text-white' : 'hover:bg-secondary'}`}>
+                Lebenslauf
+              </button>
+            </li>
+            <li>
+              <button onClick={() => scrollToSection('projekte')} className={`px-3 py-2 rounded-full text-sm md:text-base transition-colors ${activeSection === 'projekte' ? 'bg-primary text-white' : 'hover:bg-secondary'}`}>
+                Projekte
+              </button>
+            </li>
+            <li>
+              <button onClick={() => scrollToSection('kontakt')} className={`px-3 py-2 rounded-full text-sm md:text-base transition-colors ${activeSection === 'kontakt' ? 'bg-primary text-white' : 'hover:bg-secondary'}`}>
+                Kontakt
+              </button>
+            </li>
           </ul>
         </nav>
       </header>
 
-      <main className="container mx-auto px-4 pt-0  pb-20 max-w-6xl">
+      <main className="container mx-auto px-4 pt-32 pb-20 max-w-6xl">
         <section id="home" className="mb-24 relative">
           <div className="absolute inset-0 w-screen h-full overflow-hidden -z-10 left-1/2 transform -translate-x-1/2">
             <div className="absolute inset-0 bg-black/40 z-10"></div>
@@ -173,7 +165,7 @@ const Index = () => {
             </video>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center min-h-[100vh] relative z-10">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center min-h-[80vh] relative z-10">
             <div className="animate-fade-in">
               <div className="bg-secondary/50 text-primary rounded-full px-4 py-1 inline-flex items-center text-sm mb-4">
                 <span className="mr-2">Design</span>
@@ -190,20 +182,8 @@ const Index = () => {
                 Mehr erfahren <ArrowRight className="ml-2 h-4 w-4" />
               </button>
             </div>
-            <div className={`glass rounded-3xl overflow-hidden ${isMobile ? 'hidden' : ''}`}>
-              <img alt="Niklas Koskowski" src="https://9nk.de/assets/niklas.png" className="w-full h-full object-cover" />
-            </div>
-          </div>
-          
-          <div 
-            className={`absolute bottom-8 left-1/2 transform -translate-x-1/2 cursor-pointer transition-opacity duration-500 z-30 ${isScrolled ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}
-            onClick={() => scrollToSection('about')}
-          >
-            <div className="flex flex-col items-center text-white">
-              <span className="text-sm mb-2">Mehr entdecken</span>
-              <div className="animate-bounce bg-white/20 p-2 w-10 h-10 ring-1 ring-white/30 shadow-lg rounded-full flex items-center justify-center">
-                <ChevronDown className="h-6 w-6 text-white" />
-              </div>
+            <div className="glass rounded-3xl overflow-hidden">
+              <img alt="Niklas Koskowski" className="w-full h-full object-cover" src="https://9nk.de/assets/niklas.png" />
             </div>
           </div>
         </section>
@@ -320,6 +300,7 @@ const Index = () => {
               <div className="relative flex-1 overflow-hidden cursor-pointer" onClick={() => setShowVideoModal(true)}>
                 <img alt="Aftermovie Formula Student Austria 2024" src="https://img.youtube.com/vi/Drb7kUK75zA/maxresdefault.jpg" className="w-full h-full object-cover transition-transform duration-500 hover:scale-105" />
                 <div className="absolute inset-0 bg-black/30 hover:bg-black/50 transition-colors flex items-center justify-center">
+                  <Eye className="h-10 w-10 text-white" />
                 </div>
               </div>
             </div>
@@ -329,6 +310,7 @@ const Index = () => {
               <div className="relative flex-1 overflow-hidden cursor-pointer" onClick={() => openImageModal("https://img.nkmd.de/uploads/small2x/3c/c4/71d33a70ac981283a2c1b22e81ed.png")}>
                 <img src="https://img.nkmd.de/uploads/small2x/3c/c4/71d33a70ac981283a2c1b22e81ed.png" alt="Fast Forest – Rendering" className="w-full h-full object-cover transition-transform duration-500 hover:scale-105" />
                 <div className="absolute inset-0 bg-black/30 hover:bg-black/50 transition-colors flex items-center justify-center">
+                  <Eye className="h-10 w-10 text-white" />
                 </div>
               </div>
             </div>
@@ -337,7 +319,8 @@ const Index = () => {
               <h3 className="text-xl font-medium mb-3 px-2">Logodesign – niklaskoskowski.de</h3>
               <div className="relative flex-1 overflow-hidden cursor-pointer" onClick={() => openImageModal("https://9nk.de/assets/9.png")}>
                 <img src="https://9nk.de/assets/9.png" alt="Logodesign – niklaskoskowski.de" className="w-full h-full object-cover transition-transform duration-500 hover:scale-105" />
-                <div className="absolute inset-0 bg-black/30 hover:bg-black/00 transition-colors flex items-center justify-center">
+                <div className="absolute inset-0 bg-black/30 hover:bg-black/50 transition-colors flex items-center justify-center">
+                  <Eye className="h-10 w-10 text-white" />
                 </div>
               </div>
             </div>
@@ -347,6 +330,27 @@ const Index = () => {
               <div className="relative flex-1 overflow-hidden cursor-pointer" onClick={() => openImageModal("https://9nk.de/assets/raahe.jpg")}>
                 <img src="https://9nk.de/assets/raahe.jpg" alt="Muster Lybecker Institut Raahe – Finnland" className="w-full h-full object-cover transition-transform duration-500 hover:scale-105" />
                 <div className="absolute inset-0 bg-black/30 hover:bg-black/50 transition-colors flex items-center justify-center">
+                  <Eye className="h-10 w-10 text-white" />
+                </div>
+              </div>
+            </div>
+
+            <div className="project-card flex flex-col">
+              <h3 className="text-xl font-medium mb-3 px-2">Motorsport Photography</h3>
+              <div className="relative flex-1 overflow-hidden cursor-pointer" onClick={() => openImageModal("https://nkmd.de/placeholder/?s800x600&text=Motorsport")}>
+                <img src="https://nkmd.de/placeholder/?s800x600&text=Motorsport" alt="Motorsport Photography" className="w-full h-full object-cover transition-transform duration-500 hover:scale-105" />
+                <div className="absolute inset-0 bg-black/30 hover:bg-black/50 transition-colors flex items-center justify-center">
+                  <Eye className="h-10 w-10 text-white" />
+                </div>
+              </div>
+            </div>
+            
+            <div className="project-card flex flex-col">
+              <h3 className="text-xl font-medium mb-3 px-2">3D Printing Collection</h3>
+              <div className="relative flex-1 overflow-hidden cursor-pointer" onClick={() => openImageModal("https://nkmd.de/placeholder/?s800x600&text=3D+Printing")}>
+                <img src="https://nkmd.de/placeholder/?s800x600&text=3D+Printing" alt="3D Printing Collection" className="w-full h-full object-cover transition-transform duration-500 hover:scale-105" />
+                <div className="absolute inset-0 bg-black/30 hover:bg-black/50 transition-colors flex items-center justify-center">
+                  <Eye className="h-10 w-10 text-white" />
                 </div>
               </div>
             </div>
@@ -356,6 +360,7 @@ const Index = () => {
               <div className="relative flex-1 overflow-hidden cursor-pointer" onClick={() => openImageModal("https://nkmd.de/placeholder/?s800x600&text=UI/UX+Design")}>
                 <img src="https://nkmd.de/placeholder/?s800x600&text=UI/UX+Design" alt="UI/UX Design Portfolio" className="w-full h-full object-cover transition-transform duration-500 hover:scale-105" />
                 <div className="absolute inset-0 bg-black/30 hover:bg-black/50 transition-colors flex items-center justify-center">
+                  <Eye className="h-10 w-10 text-white" />
                 </div>
               </div>
             </div>
@@ -365,6 +370,7 @@ const Index = () => {
               <div className="relative flex-1 overflow-hidden cursor-pointer" onClick={() => openImageModal("https://nkmd.de/placeholder/?s800x600&text=Corporate+Identity")}>
                 <img src="https://nkmd.de/placeholder/?s800x600&text=Corporate+Identity" alt="Corporate Identity Project" className="w-full h-full object-cover transition-transform duration-500 hover:scale-105" />
                 <div className="absolute inset-0 bg-black/30 hover:bg-black/50 transition-colors flex items-center justify-center">
+                  <Eye className="h-10 w-10 text-white" />
                 </div>
               </div>
             </div>
@@ -484,4 +490,5 @@ const Index = () => {
       </Dialog>
     </div>;
 };
+
 export default Index;
