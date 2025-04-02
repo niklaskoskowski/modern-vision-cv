@@ -209,15 +209,15 @@ const Index = () => {
             <div className="absolute inset-0 bg-black/40 z-10"></div>
             
             <div className="w-full h-full">
-              <video 
-                ref={videoRef}
-                muted={true}
-                autoPlay={true} 
-                loop
-                playsInline
-                className="w-full h-full object-cover" 
-                style={{ width: '100vw', height: '100vh', objectFit: 'cover' }}
-              >
+              <video
+        ref={videoRef}
+        muted
+        autoPlay
+        loop
+        playsInline
+        className="w-full h-full object-cover"
+        style={{ width: '100vw', height: '100vh', objectFit: 'cover' }}
+      >
                 <source src="https://9nk.de/neu/video.mp4" type="video/mp4" />
                 Your browser does not support HTML5 video.
               </video>
