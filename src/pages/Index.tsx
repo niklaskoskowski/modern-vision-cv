@@ -5,6 +5,7 @@ import { Dialog, DialogContent, DialogClose } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+
 const Index = () => {
   const [activeSection, setActiveSection] = useState<string>('home');
   const [isScrolled, setIsScrolled] = useState<boolean>(false);
@@ -15,31 +16,40 @@ const Index = () => {
   const [galleryImages, setGalleryImages] = useState<Array<{
     id: number;
     src: string;
-  }>>([{
-    id: 1,
-    src: "https://nkmd.de/placeholder/400x400"
-  }, {
-    id: 2,
-    src: "https://nkmd.de/placeholder/400x400"
-  }, {
-    id: 3,
-    src: "https://nkmd.de/placeholder/400x400"
-  }, {
-    id: 4,
-    src: "https://nkmd.de/placeholder/400x400"
-  }, {
-    id: 5,
-    src: "https://nkmd.de/placeholder/400x400"
-  }, {
-    id: 6,
-    src: "https://nkmd.de/placeholder/400x400"
-  }, {
-    id: 7,
-    src: "https://nkmd.de/placeholder/400x400"
-  }, {
-    id: 8,
-    src: "https://nkmd.de/placeholder/400x400"
-  }]);
+  }>>([
+    {
+      id: 1,
+      src: "https://nkmd.de/placeholder/?s400x400"
+    },
+    {
+      id: 2,
+      src: "https://nkmd.de/placeholder/?s400x400"
+    },
+    {
+      id: 3,
+      src: "https://nkmd.de/placeholder/?s400x400"
+    },
+    {
+      id: 4,
+      src: "https://nkmd.de/placeholder/?s400x400"
+    },
+    {
+      id: 5,
+      src: "https://nkmd.de/placeholder/?s400x400"
+    },
+    {
+      id: 6,
+      src: "https://nkmd.de/placeholder/?s400x400"
+    },
+    {
+      id: 7,
+      src: "https://nkmd.de/placeholder/?s400x400"
+    },
+    {
+      id: 8,
+      src: "https://nkmd.de/placeholder/?s400x400"
+    }
+  ]);
   const [editImageId, setEditImageId] = useState<number | null>(null);
   const [newImageUrl, setNewImageUrl] = useState<string>("");
   useEffect(() => {
@@ -59,6 +69,7 @@ const Index = () => {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
     if (element) {
@@ -68,10 +79,12 @@ const Index = () => {
       });
     }
   };
+
   const openImageModal = (imageSrc: string) => {
     setSelectedImage(imageSrc);
     setShowImageModal(true);
   };
+
   const updateGalleryImage = (id: number, newSrc: string) => {
     setGalleryImages(prevImages => prevImages.map(img => img.id === id ? {
       ...img,
@@ -80,6 +93,7 @@ const Index = () => {
     setEditImageId(null);
     setNewImageUrl("");
   };
+
   const handleGalleryImageClick = (image: {
     id: number;
     src: string;
@@ -91,6 +105,7 @@ const Index = () => {
       openImageModal(image.src);
     }
   };
+
   const skills = [{
     name: 'Adobe CC (Ai, Id, Ps)',
     level: 90
@@ -107,6 +122,7 @@ const Index = () => {
     name: 'Unreal Engine',
     level: 60
   }];
+
   return <div className="min-h-screen">
       <header className={`fixed top-0 left-0 right-0 z-50 flex justify-center py-4 px-6 transition-all duration-300 ${isScrolled ? 'py-2' : 'py-4'}`}>
         <nav className={`navbar-glass rounded-full py-2 px-4 md:px-6 max-w-4xl mx-auto transition-all duration-300 ${isScrolled ? 'shadow-md' : ''}`}>
@@ -434,4 +450,5 @@ const Index = () => {
       </Dialog>
     </div>;
 };
+
 export default Index;
