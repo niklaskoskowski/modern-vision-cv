@@ -265,7 +265,6 @@ const Index = () => {
                 muted
                 loop
                 playsInline
-                autoPlay
                 preload="auto"
                 className="w-full h-full object-cover"
                 style={{ width: '100vw', height: '100vh', objectFit: 'cover' }}
@@ -572,31 +571,4 @@ const Index = () => {
         </DialogContent>
       </Dialog>
 
-      <Dialog open={editImageId !== null} onOpenChange={() => setEditImageId(null)}>
-        <DialogContent className="sm:max-w-[500px]">
-          <h2 className="text-xl font-bold mb-4">Bild URL ändern</h2>
-          <div className="space-y-4">
-            <div className="flex gap-4">
-              <div className="w-1/3 aspect-square rounded-md overflow-hidden">
-                {newImageUrl && <img src={newImageUrl} alt="Preview" className="w-full h-full object-cover" onError={e => {
-                (e.target as HTMLImageElement).src = "https://nkmd.de/placeholder/400x400";
-              }} />}
-              </div>
-              <div className="w-2/3 space-y-4">
-                <div>
-                  <label htmlFor="imageUrl" className="block text-sm font-medium mb-1">Bild URL</label>
-                  <Input id="imageUrl" value={newImageUrl} onChange={e => setNewImageUrl(e.target.value)} placeholder="https://example.com/image.jpg" />
-                </div>
-              </div>
-            </div>
-            <div className="flex justify-end gap-2">
-              <Button variant="outline" onClick={() => setEditImageId(null)}>Abbrechen</Button>
-              <Button onClick={() => editImageId && updateGalleryImage(editImageId, newImageUrl)}>Speichern</Button>
-            </div>
-          </div>
-        </DialogContent>
-      </Dialog>
-    </div>;
-};
-
-export default Index;
+      <Dialog open={editImageId !== null} onOpenChange={() =>
