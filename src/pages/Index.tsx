@@ -212,7 +212,7 @@ const Index = () => {
               <video 
                 ref={videoRef}
                 muted
-                autoPlay={false} 
+                autoPlay={true} 
                 loop
                 playsInline
                 className="w-full h-full object-cover" 
