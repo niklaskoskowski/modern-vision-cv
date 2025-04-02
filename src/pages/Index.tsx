@@ -1,14 +1,31 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Code, Image, Briefcase, Mail, User, X, Eye } from 'lucide-react';
+import { ArrowRight, Code, Image, Briefcase, Mail, User, X, Eye, Edit, Check } from 'lucide-react';
 import { Dialog, DialogContent, DialogClose } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+
 const Index = () => {
   const [activeSection, setActiveSection] = useState<string>('home');
   const [isScrolled, setIsScrolled] = useState<boolean>(false);
   const [showVideoModal, setShowVideoModal] = useState<boolean>(false);
   const [showImageModal, setShowImageModal] = useState<boolean>(false);
   const [selectedImage, setSelectedImage] = useState<string>("");
+  const [isEditMode, setIsEditMode] = useState<boolean>(false);
+  const [galleryImages, setGalleryImages] = useState<Array<{id: number, src: string}>>([
+    { id: 1, src: "https://nkmd.de/placeholder/400x400" },
+    { id: 2, src: "https://nkmd.de/placeholder/400x400" },
+    { id: 3, src: "https://nkmd.de/placeholder/400x400" },
+    { id: 4, src: "https://nkmd.de/placeholder/400x400" },
+    { id: 5, src: "https://nkmd.de/placeholder/400x400" },
+    { id: 6, src: "https://nkmd.de/placeholder/400x400" },
+    { id: 7, src: "https://nkmd.de/placeholder/400x400" },
+    { id: 8, src: "https://nkmd.de/placeholder/400x400" }
+  ]);
+  const [editImageId, setEditImageId] = useState<number | null>(null);
+  const [newImageUrl, setNewImageUrl] = useState<string>("");
+
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);
@@ -26,6 +43,7 @@ const Index = () => {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
     if (element) {
@@ -35,10 +53,29 @@ const Index = () => {
       });
     }
   };
+
   const openImageModal = (imageSrc: string) => {
     setSelectedImage(imageSrc);
     setShowImageModal(true);
   };
+
+  const updateGalleryImage = (id: number, newSrc: string) => {
+    setGalleryImages(prevImages => 
+      prevImages.map(img => img.id === id ? { ...img, src: newSrc } : img)
+    );
+    setEditImageId(null);
+    setNewImageUrl("");
+  };
+
+  const handleGalleryImageClick = (image: {id: number, src: string}) => {
+    if (isEditMode) {
+      setEditImageId(image.id);
+      setNewImageUrl(image.src);
+    } else {
+      openImageModal(image.src);
+    }
+  };
+
   const skills = [{
     name: 'Adobe CC (Ai, Id, Ps)',
     level: 90
@@ -55,6 +92,7 @@ const Index = () => {
     name: 'Unreal Engine',
     level: 60
   }];
+
   return <div className="min-h-screen">
       <header className={`fixed top-0 left-0 right-0 z-50 flex justify-center py-4 px-6 transition-all duration-300 ${isScrolled ? 'py-2' : 'py-4'}`}>
         <nav className={`navbar-glass rounded-full py-2 px-4 md:px-6 max-w-4xl mx-auto transition-all duration-300 ${isScrolled ? 'shadow-md' : ''}`}>
@@ -269,11 +307,42 @@ const Index = () => {
           </div>
           
           <div className="mt-12">
-            <h3 className="text-xl font-semibold mb-6">Fotogalerie</h3>
+            <div className="flex justify-between items-center mb-6">
+              <h3 className="text-xl font-semibold">Fotogalerie</h3>
+              <Button 
+                variant="outline" 
+                size="sm" 
+                onClick={() => setIsEditMode(!isEditMode)}
+                className="flex items-center gap-2"
+              >
+                {isEditMode ? (
+                  <><Check className="h-4 w-4" /> Fertig</>
+                ) : (
+                  <><Edit className="h-4 w-4" /> Bearbeiten</>
+                )}
+              </Button>
+            </div>
+            
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-              {[1, 2, 3, 4, 5, 6, 7, 8].map(item => <div key={item} className="aspect-square overflow-hidden rounded-xl">
-                  <img src={`https://nkmd.de/placeholder/400x400`} alt={`Foto ${item}`} className="w-full h-full object-cover transition-transform duration-500 hover:scale-110" />
-                </div>)}
+              {galleryImages.map(image => (
+                <div 
+                  key={image.id} 
+                  className={`aspect-square overflow-hidden rounded-xl relative ${isEditMode ? 'cursor-pointer ring-2 ring-offset-2 ring-primary' : ''}`}
+                  onClick={() => handleGalleryImageClick(image)}
+                >
+                  <img 
+                    src={image.src} 
+                    alt={`Foto ${image.id}`} 
+                    className="w-full h-full object-cover transition-transform duration-500 hover:scale-110" 
+                  />
+                  
+                  {isEditMode && (
+                    <div className="absolute inset-0 bg-black/60 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity">
+                      <Edit className="h-8 w-8 text-white" />
+                    </div>
+                  )}
+                </div>
+              ))}
             </div>
           </div>
         </section>
@@ -347,6 +416,44 @@ const Index = () => {
           </div>
         </DialogContent>
       </Dialog>
+
+      <Dialog open={editImageId !== null} onOpenChange={() => setEditImageId(null)}>
+        <DialogContent className="sm:max-w-[500px]">
+          <h2 className="text-xl font-bold mb-4">Bild URL ändern</h2>
+          <div className="space-y-4">
+            <div className="flex gap-4">
+              <div className="w-1/3 aspect-square rounded-md overflow-hidden">
+                {newImageUrl && (
+                  <img 
+                    src={newImageUrl} 
+                    alt="Preview" 
+                    className="w-full h-full object-cover"
+                    onError={(e) => {
+                      (e.target as HTMLImageElement).src = "https://nkmd.de/placeholder/400x400";
+                    }}
+                  />
+                )}
+              </div>
+              <div className="w-2/3 space-y-4">
+                <div>
+                  <label htmlFor="imageUrl" className="block text-sm font-medium mb-1">Bild URL</label>
+                  <Input
+                    id="imageUrl"
+                    value={newImageUrl}
+                    onChange={(e) => setNewImageUrl(e.target.value)}
+                    placeholder="https://example.com/image.jpg"
+                  />
+                </div>
+              </div>
+            </div>
+            <div className="flex justify-end gap-2">
+              <Button variant="outline" onClick={() => setEditImageId(null)}>Abbrechen</Button>
+              <Button onClick={() => editImageId && updateGalleryImage(editImageId, newImageUrl)}>Speichern</Button>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>;
 };
+
 export default Index;
