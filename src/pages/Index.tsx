@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Code, Image, Briefcase, Mail, User, X, Edit, Check, ChevronDown } from 'lucide-react';
@@ -6,6 +5,7 @@ import { Dialog, DialogContent, DialogClose } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 const Index = () => {
   const [activeSection, setActiveSection] = useState<string>('home');
@@ -14,6 +14,8 @@ const Index = () => {
   const [showImageModal, setShowImageModal] = useState<boolean>(false);
   const [selectedImage, setSelectedImage] = useState<string>("");
   const [isEditMode, setIsEditMode] = useState<boolean>(false);
+  const isMobile = useIsMobile();
+
   const [galleryImages, setGalleryImages] = useState<Array<{
     id: number;
     src: string;
@@ -125,11 +127,13 @@ const Index = () => {
                 <img src="https://9nk.de/assets/nk-portfolio.png" alt="NK Portfolio Logo" className="h-8 w-auto" />
               </button>
             </li>
-            <li>
-              <button onClick={() => scrollToSection('about')} className={`px-3 py-2 rounded-full text-sm md:text-base transition-colors ${activeSection === 'about' ? 'bg-primary text-white' : 'hover:bg-secondary'}`}>
-                Über
-              </button>
-            </li>
+            {!isMobile && (
+              <li>
+                <button onClick={() => scrollToSection('about')} className={`px-3 py-2 rounded-full text-sm md:text-base transition-colors ${activeSection === 'about' ? 'bg-primary text-white' : 'hover:bg-secondary'}`}>
+                  Über
+                </button>
+              </li>
+            )}
             <li>
               <button onClick={() => scrollToSection('lebenslauf')} className={`px-3 py-2 rounded-full text-sm md:text-base transition-colors ${activeSection === 'lebenslauf' ? 'bg-primary text-white' : 'hover:bg-secondary'}`}>
                 Lebenslauf
@@ -180,13 +184,13 @@ const Index = () => {
                 Mehr erfahren <ArrowRight className="ml-2 h-4 w-4" />
               </button>
             </div>
-            <div className="glass rounded-3xl overflow-hidden">
+            <div className={`glass rounded-3xl overflow-hidden ${isMobile ? 'hidden' : ''}`}>
               <img alt="Niklas Koskowski" src="https://9nk.de/assets/niklas.png" className="w-full h-full object-cover" />
             </div>
           </div>
           
           <div 
-            className={`absolute bottom-8 left-1/2 transform -translate-x-1/2 cursor-pointer transition-opacity duration-500 z-20 ${isScrolled ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}
+            className={`absolute bottom-8 left-1/2 transform -translate-x-1/2 cursor-pointer transition-opacity duration-500 z-30 ${isScrolled ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}
             onClick={() => scrollToSection('about')}
           >
             <div className="flex flex-col items-center text-white">
