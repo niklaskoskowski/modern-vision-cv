@@ -152,7 +152,7 @@ const Index = () => {
             </video>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center min-h-[90vh] relative z-10">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center min-h-[100vh] relative z-10">
             <div className="animate-fade-in">
               <div className="bg-secondary/50 text-primary rounded-full px-4 py-1 inline-flex items-center text-sm mb-4">
                 <span className="mr-2">Design</span>
