@@ -70,43 +70,10 @@ const Index = () => {
   }, []);
 
   useEffect(() => {
-    const video = videoRef.current;
-    if (!video) return;
-    
-    video.muted = true;
-    
-    const attemptAutoplay = () => {
-      const playPromise = video.play();
-      
-      if (playPromise !== undefined) {
-        playPromise.catch(error => {
-          console.log('Autoplay was prevented:', error);
-          
-          const handleUserInteraction = () => {
-            video.play().catch(e => console.log('Play failed despite user interaction:', e));
-            ['click', 'touchstart', 'keydown'].forEach(event => {
-              document.removeEventListener(event, handleUserInteraction);
-            });
-          };
-          
-          ['click', 'touchstart', 'keydown'].forEach(event => {
-            document.addEventListener(event, handleUserInteraction, { once: true });
-          });
-        });
-      }
-    };
-    
-    attemptAutoplay();
-    
-    video.addEventListener('canplaythrough', attemptAutoplay);
-    video.addEventListener('loadedmetadata', attemptAutoplay);
-    
-    return () => {
-      if (video) {
-        video.removeEventListener('canplaythrough', attemptAutoplay);
-        video.removeEventListener('loadedmetadata', attemptAutoplay);
-      }
-    };
+    const video = document.getElementById("myVideo") as HTMLVideoElement;
+    if (video) {
+      video.muted = true;
+    }
   }, []);
 
   useEffect(() => {
@@ -232,18 +199,9 @@ const Index = () => {
             <div className="absolute inset-0 bg-black/40 z-10"></div>
             
             <div className="w-full h-full">
-              <video 
-                ref={videoRef}
-                autoPlay
-                muted
-                loop
-                playsInline
-                preload="auto"
-                className="w-full h-full object-cover"
-                style={{ width: '100vw', height: '100vh', objectFit: 'cover' }}
-              >
+              <video autoPlay muted loop playsInline id="myVideo" className="w-full h-full object-cover" style={{ width: '100vw', height: '100vh', objectFit: 'cover' }}>
                 <source src="https://9nk.de/neu/video.mp4" type="video/mp4" />
-                Your browser does not support the video tag.
+                Your browser does not support HTML5 video.
               </video>
             </div>
           </div>
