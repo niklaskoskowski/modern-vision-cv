@@ -3,14 +3,12 @@ import { Link } from 'react-router-dom';
 import { ArrowRight, Code, Image, Briefcase, Mail, User, X, Eye } from 'lucide-react';
 import { Dialog, DialogContent, DialogClose } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-
 const Index = () => {
   const [activeSection, setActiveSection] = useState<string>('home');
   const [isScrolled, setIsScrolled] = useState<boolean>(false);
   const [showVideoModal, setShowVideoModal] = useState<boolean>(false);
   const [showImageModal, setShowImageModal] = useState<boolean>(false);
   const [selectedImage, setSelectedImage] = useState<string>("");
-
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);
@@ -28,7 +26,6 @@ const Index = () => {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
-
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
     if (element) {
@@ -38,12 +35,10 @@ const Index = () => {
       });
     }
   };
-
   const openImageModal = (imageSrc: string) => {
     setSelectedImage(imageSrc);
     setShowImageModal(true);
   };
-
   const skills = [{
     name: 'Adobe CC (Ai, Id, Ps)',
     level: 90
@@ -60,7 +55,6 @@ const Index = () => {
     name: 'Unreal Engine',
     level: 60
   }];
-
   return <div className="min-h-screen">
       <header className={`fixed top-0 left-0 right-0 z-50 flex justify-center py-4 px-6 transition-all duration-300 ${isScrolled ? 'py-2' : 'py-4'}`}>
         <nav className={`navbar-glass rounded-full py-2 px-4 md:px-6 max-w-4xl mx-auto transition-all duration-300 ${isScrolled ? 'shadow-md' : ''}`}>
@@ -236,11 +230,7 @@ const Index = () => {
             <div className="project-card flex flex-col">
               <h3 className="text-xl font-medium mb-3 px-2">Aftermovie Formula Student Austria 2024</h3>
               <div className="relative flex-1 overflow-hidden cursor-pointer" onClick={() => setShowVideoModal(true)}>
-                <img 
-                  alt="Aftermovie Formula Student Austria 2024" 
-                  src="https://img.youtube.com/vi/Drb7kUK75zA/maxresdefault.jpg"
-                  className="w-full h-full object-cover transition-transform duration-500 hover:scale-105" 
-                />
+                <img alt="Aftermovie Formula Student Austria 2024" src="https://img.youtube.com/vi/Drb7kUK75zA/maxresdefault.jpg" className="w-full h-full object-cover transition-transform duration-500 hover:scale-105" />
                 <div className="absolute inset-0 bg-black/30 hover:bg-black/50 transition-colors flex items-center justify-center">
                   <Eye className="h-10 w-10 text-white" />
                 </div>
@@ -249,15 +239,8 @@ const Index = () => {
             
             <div className="project-card flex flex-col">
               <h3 className="text-xl font-medium mb-3 px-2">Fast Forest – Rendering</h3>
-              <div 
-                className="relative flex-1 overflow-hidden cursor-pointer" 
-                onClick={() => openImageModal("https://img.nkmd.de/uploads/small2x/3c/c4/71d33a70ac981283a2c1b22e81ed.png")}
-              >
-                <img 
-                  src="https://img.nkmd.de/uploads/small2x/3c/c4/71d33a70ac981283a2c1b22e81ed.png" 
-                  alt="Fast Forest – Rendering"
-                  className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
-                />
+              <div className="relative flex-1 overflow-hidden cursor-pointer" onClick={() => openImageModal("https://img.nkmd.de/uploads/small2x/3c/c4/71d33a70ac981283a2c1b22e81ed.png")}>
+                <img src="https://img.nkmd.de/uploads/small2x/3c/c4/71d33a70ac981283a2c1b22e81ed.png" alt="Fast Forest – Rendering" className="w-full h-full object-cover transition-transform duration-500 hover:scale-105" />
                 <div className="absolute inset-0 bg-black/30 hover:bg-black/50 transition-colors flex items-center justify-center">
                   <Eye className="h-10 w-10 text-white" />
                 </div>
@@ -266,15 +249,8 @@ const Index = () => {
             
             <div className="project-card flex flex-col">
               <h3 className="text-xl font-medium mb-3 px-2">Logodesign – niklaskoskowski.de</h3>
-              <div 
-                className="relative flex-1 overflow-hidden cursor-pointer" 
-                onClick={() => openImageModal("https://9nk.de/assets/9.png")}
-              >
-                <img 
-                  src="https://9nk.de/assets/9.png" 
-                  alt="Logodesign – niklaskoskowski.de"
-                  className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
-                />
+              <div className="relative flex-1 overflow-hidden cursor-pointer" onClick={() => openImageModal("https://9nk.de/assets/9.png")}>
+                <img src="https://9nk.de/assets/9.png" alt="Logodesign – niklaskoskowski.de" className="w-full h-full object-cover transition-transform duration-500 hover:scale-105" />
                 <div className="absolute inset-0 bg-black/30 hover:bg-black/50 transition-colors flex items-center justify-center">
                   <Eye className="h-10 w-10 text-white" />
                 </div>
@@ -283,15 +259,8 @@ const Index = () => {
             
             <div className="project-card flex flex-col">
               <h3 className="text-xl font-medium mb-3 px-2">Muster Lybecker Institut Raahe</h3>
-              <div 
-                className="relative flex-1 overflow-hidden cursor-pointer" 
-                onClick={() => openImageModal("https://9nk.de/assets/raahe.jpg")}
-              >
-                <img 
-                  src="https://9nk.de/assets/raahe.jpg" 
-                  alt="Muster Lybecker Institut Raahe – Finnland"
-                  className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
-                />
+              <div className="relative flex-1 overflow-hidden cursor-pointer" onClick={() => openImageModal("https://9nk.de/assets/raahe.jpg")}>
+                <img src="https://9nk.de/assets/raahe.jpg" alt="Muster Lybecker Institut Raahe – Finnland" className="w-full h-full object-cover transition-transform duration-500 hover:scale-105" />
                 <div className="absolute inset-0 bg-black/30 hover:bg-black/50 transition-colors flex items-center justify-center">
                   <Eye className="h-10 w-10 text-white" />
                 </div>
@@ -374,11 +343,10 @@ const Index = () => {
             <span className="sr-only">Close</span>
           </DialogClose>
           <div className="relative">
-            <img src={selectedImage} alt="Project image" className="w-full h-auto max-h-[90vh] object-contain" />
+            <img src={selectedImage} alt="Project image" className="w-full h-auto max-h-[90vh] object-contain bg-white" />
           </div>
         </DialogContent>
       </Dialog>
     </div>;
 };
-
 export default Index;
