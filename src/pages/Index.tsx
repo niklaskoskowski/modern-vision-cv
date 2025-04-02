@@ -77,7 +77,10 @@ const Index = () => {
       if (videoElement) {
         videoElement.volume = 0;
         videoElement.muted = true;
+        videoElement.playsInline = true;
         videoElement.controls = false;
+        videoElement.setAttribute('playsinline', '');
+        videoElement.setAttribute('webkit-playsinline', '');
         
         const playPromise = videoElement.play();
         
@@ -101,14 +104,18 @@ const Index = () => {
     
     handlePlayVideo();
     
-    document.addEventListener('visibilitychange', () => {
+    const handleVisibilityChange = () => {
       if (document.visibilityState === 'visible') {
         handlePlayVideo();
       }
-    });
+    };
+    
+    document.addEventListener('visibilitychange', handleVisibilityChange);
     
     return () => {
-      document.removeEventListener('visibilitychange', handlePlayVideo);
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+      document.removeEventListener('touchstart', handlePlayVideo);
+      document.removeEventListener('click', handlePlayVideo);
     };
   }, []);
 
@@ -245,8 +252,9 @@ const Index = () => {
               autoPlay 
               loop 
               muted 
-              playsInline 
+              playsInline
               preload="auto"
+              disablePictureInPicture
               controls={false}
               className="w-full h-full object-cover" 
               style={{
