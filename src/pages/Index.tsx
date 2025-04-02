@@ -52,6 +52,7 @@ const Index = () => {
   ]);
   const [editImageId, setEditImageId] = useState<number | null>(null);
   const [newImageUrl, setNewImageUrl] = useState<string>("");
+  
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);
@@ -127,6 +128,13 @@ const Index = () => {
       <header className={`fixed top-0 left-0 right-0 z-50 flex justify-center py-4 px-6 transition-all duration-300 ${isScrolled ? 'py-2' : 'py-4'}`}>
         <nav className={`navbar-glass rounded-full py-2 px-4 md:px-6 max-w-4xl mx-auto transition-all duration-300 ${isScrolled ? 'shadow-md' : ''}`}>
           <ul className="flex items-center space-x-1 md:space-x-2">
+            <li className="mr-2 md:mr-3">
+              <img 
+                src="https://9nk.de/assets/nk-portfolio.png" 
+                alt="NK Portfolio Logo" 
+                className="h-8 w-auto"
+              />
+            </li>
             <li>
               <button onClick={() => scrollToSection('home')} className={`px-3 py-2 rounded-full text-sm md:text-base transition-colors ${activeSection === 'home' ? 'bg-primary text-white' : 'hover:bg-secondary'}`}>
                 Home
@@ -300,7 +308,6 @@ const Index = () => {
               <div className="relative flex-1 overflow-hidden cursor-pointer" onClick={() => setShowVideoModal(true)}>
                 <img alt="Aftermovie Formula Student Austria 2024" src="https://img.youtube.com/vi/Drb7kUK75zA/maxresdefault.jpg" className="w-full h-full object-cover transition-transform duration-500 hover:scale-105" />
                 <div className="absolute inset-0 bg-black/30 hover:bg-black/50 transition-colors flex items-center justify-center">
-                  <Eye className="h-10 w-10 text-white" />
                 </div>
               </div>
             </div>
@@ -310,7 +317,6 @@ const Index = () => {
               <div className="relative flex-1 overflow-hidden cursor-pointer" onClick={() => openImageModal("https://img.nkmd.de/uploads/small2x/3c/c4/71d33a70ac981283a2c1b22e81ed.png")}>
                 <img src="https://img.nkmd.de/uploads/small2x/3c/c4/71d33a70ac981283a2c1b22e81ed.png" alt="Fast Forest – Rendering" className="w-full h-full object-cover transition-transform duration-500 hover:scale-105" />
                 <div className="absolute inset-0 bg-black/30 hover:bg-black/50 transition-colors flex items-center justify-center">
-                  <Eye className="h-10 w-10 text-white" />
                 </div>
               </div>
             </div>
@@ -320,7 +326,6 @@ const Index = () => {
               <div className="relative flex-1 overflow-hidden cursor-pointer" onClick={() => openImageModal("https://9nk.de/assets/9.png")}>
                 <img src="https://9nk.de/assets/9.png" alt="Logodesign – niklaskoskowski.de" className="w-full h-full object-cover transition-transform duration-500 hover:scale-105" />
                 <div className="absolute inset-0 bg-black/30 hover:bg-black/50 transition-colors flex items-center justify-center">
-                  <Eye className="h-10 w-10 text-white" />
                 </div>
               </div>
             </div>
@@ -330,7 +335,6 @@ const Index = () => {
               <div className="relative flex-1 overflow-hidden cursor-pointer" onClick={() => openImageModal("https://9nk.de/assets/raahe.jpg")}>
                 <img src="https://9nk.de/assets/raahe.jpg" alt="Muster Lybecker Institut Raahe – Finnland" className="w-full h-full object-cover transition-transform duration-500 hover:scale-105" />
                 <div className="absolute inset-0 bg-black/30 hover:bg-black/50 transition-colors flex items-center justify-center">
-                  <Eye className="h-10 w-10 text-white" />
                 </div>
               </div>
             </div>
@@ -340,7 +344,6 @@ const Index = () => {
               <div className="relative flex-1 overflow-hidden cursor-pointer" onClick={() => openImageModal("https://nkmd.de/placeholder/?s800x600&text=Motorsport")}>
                 <img src="https://nkmd.de/placeholder/?s800x600&text=Motorsport" alt="Motorsport Photography" className="w-full h-full object-cover transition-transform duration-500 hover:scale-105" />
                 <div className="absolute inset-0 bg-black/30 hover:bg-black/50 transition-colors flex items-center justify-center">
-                  <Eye className="h-10 w-10 text-white" />
                 </div>
               </div>
             </div>
@@ -350,7 +353,6 @@ const Index = () => {
               <div className="relative flex-1 overflow-hidden cursor-pointer" onClick={() => openImageModal("https://nkmd.de/placeholder/?s800x600&text=3D+Printing")}>
                 <img src="https://nkmd.de/placeholder/?s800x600&text=3D+Printing" alt="3D Printing Collection" className="w-full h-full object-cover transition-transform duration-500 hover:scale-105" />
                 <div className="absolute inset-0 bg-black/30 hover:bg-black/50 transition-colors flex items-center justify-center">
-                  <Eye className="h-10 w-10 text-white" />
                 </div>
               </div>
             </div>
@@ -360,7 +362,6 @@ const Index = () => {
               <div className="relative flex-1 overflow-hidden cursor-pointer" onClick={() => openImageModal("https://nkmd.de/placeholder/?s800x600&text=UI/UX+Design")}>
                 <img src="https://nkmd.de/placeholder/?s800x600&text=UI/UX+Design" alt="UI/UX Design Portfolio" className="w-full h-full object-cover transition-transform duration-500 hover:scale-105" />
                 <div className="absolute inset-0 bg-black/30 hover:bg-black/50 transition-colors flex items-center justify-center">
-                  <Eye className="h-10 w-10 text-white" />
                 </div>
               </div>
             </div>
@@ -370,7 +371,6 @@ const Index = () => {
               <div className="relative flex-1 overflow-hidden cursor-pointer" onClick={() => openImageModal("https://nkmd.de/placeholder/?s800x600&text=Corporate+Identity")}>
                 <img src="https://nkmd.de/placeholder/?s800x600&text=Corporate+Identity" alt="Corporate Identity Project" className="w-full h-full object-cover transition-transform duration-500 hover:scale-105" />
                 <div className="absolute inset-0 bg-black/30 hover:bg-black/50 transition-colors flex items-center justify-center">
-                  <Eye className="h-10 w-10 text-white" />
                 </div>
               </div>
             </div>
