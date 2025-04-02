@@ -233,70 +233,67 @@ const Index = () => {
           <h2 className="section-title">Projekte</h2>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <div className="project-card">
-              <img alt="Aftermovie Formula Student Austria 2024" src="https://img.youtube.com/vi/Drb7kUK75zA/maxresdefault.jpg" />
-              <div className="project-overlay" style={{
-                backgroundImage: 'url(https://nkmd.de/placeholder/1200x800)',
-                backgroundSize: 'cover',
-                backgroundPosition: 'center'
-              }}>
-                <div className="absolute inset-0 bg-black/70 flex flex-col items-center justify-center p-4 text-white">
-                  <h3 className="text-xl font-medium mb-2">Aftermovie Formula Student Austria 2024</h3>
-                  <Button variant="outline" onClick={() => setShowVideoModal(true)} className="border-white/60 text-white hover:bg-white/20 hover:text-white">
-                    <Eye className="mr-2 h-4 w-4" />
-                    Video ansehen
-                  </Button>
+            <div className="project-card flex flex-col">
+              <h3 className="text-xl font-medium mb-3 px-2">Aftermovie Formula Student Austria 2024</h3>
+              <div className="relative flex-1 overflow-hidden cursor-pointer" onClick={() => setShowVideoModal(true)}>
+                <img 
+                  alt="Aftermovie Formula Student Austria 2024" 
+                  src="https://img.youtube.com/vi/Drb7kUK75zA/maxresdefault.jpg"
+                  className="w-full h-full object-cover transition-transform duration-500 hover:scale-105" 
+                />
+                <div className="absolute inset-0 bg-black/30 hover:bg-black/50 transition-colors flex items-center justify-center">
+                  <Eye className="h-10 w-10 text-white" />
                 </div>
               </div>
             </div>
             
-            <div className="project-card">
-              <img src="https://nkmd.de/placeholder/600x400" alt="Fast Forest – Rendering" />
-              <div className="project-overlay" style={{
-                backgroundImage: 'url(https://nkmd.de/placeholder/1200x800)',
-                backgroundSize: 'cover',
-                backgroundPosition: 'center'
-              }}>
-                <div className="absolute inset-0 bg-black/70 flex flex-col items-center justify-center p-4 text-white">
-                  <h3 className="text-xl font-medium mb-2">Fast Forest – Rendering</h3>
-                  <Button variant="outline" onClick={() => openImageModal("https://nkmd.de/placeholder/1200x800")} className="border-white/60 text-white hover:bg-white/20 hover:text-white">
-                    <Image className="mr-2 h-4 w-4" />
-                    Bild öffnen
-                  </Button>
+            <div className="project-card flex flex-col">
+              <h3 className="text-xl font-medium mb-3 px-2">Fast Forest – Rendering</h3>
+              <div 
+                className="relative flex-1 overflow-hidden cursor-pointer" 
+                onClick={() => openImageModal("https://nkmd.de/placeholder/1200x800")}
+              >
+                <img 
+                  src="https://nkmd.de/placeholder/600x400" 
+                  alt="Fast Forest – Rendering"
+                  className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
+                />
+                <div className="absolute inset-0 bg-black/30 hover:bg-black/50 transition-colors flex items-center justify-center">
+                  <Eye className="h-10 w-10 text-white" />
                 </div>
               </div>
             </div>
             
-            <div className="project-card">
-              <img src="https://nkmd.de/placeholder/600x400" alt="Logodesign – niklaskoskowski.de" />
-              <div className="project-overlay" style={{
-                backgroundImage: 'url(https://nkmd.de/placeholder/1200x800)',
-                backgroundSize: 'cover',
-                backgroundPosition: 'center'
-              }}>
-                <div className="absolute inset-0 bg-black/70 flex flex-col items-center justify-center p-4 text-white">
-                  <h3 className="text-xl font-medium mb-2">Logodesign – niklaskoskowski.de</h3>
-                  <Button variant="outline" onClick={() => openImageModal("https://nkmd.de/placeholder/1200x800")} className="border-white/60 text-white hover:bg-white/20 hover:text-white">
-                    <Image className="mr-2 h-4 w-4" />
-                    Bild öffnen
-                  </Button>
+            <div className="project-card flex flex-col">
+              <h3 className="text-xl font-medium mb-3 px-2">Logodesign – niklaskoskowski.de</h3>
+              <div 
+                className="relative flex-1 overflow-hidden cursor-pointer" 
+                onClick={() => openImageModal("https://nkmd.de/placeholder/1200x800")}
+              >
+                <img 
+                  src="https://nkmd.de/placeholder/600x400" 
+                  alt="Logodesign – niklaskoskowski.de"
+                  className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
+                />
+                <div className="absolute inset-0 bg-black/30 hover:bg-black/50 transition-colors flex items-center justify-center">
+                  <Eye className="h-10 w-10 text-white" />
                 </div>
               </div>
             </div>
             
-            <div className="project-card">
-              <img src="https://nkmd.de/placeholder/600x400" alt="Muster Lybecker Institut Raahe – Finnland" />
-              <div className="project-overlay" style={{
-                backgroundImage: 'url(https://nkmd.de/placeholder/1200x800)',
-                backgroundSize: 'cover',
-                backgroundPosition: 'center'
-              }}>
-                <div className="absolute inset-0 bg-black/70 flex flex-col items-center justify-center p-4 text-white">
-                  <h3 className="text-xl font-medium mb-2">Muster Lybecker Institut Raahe</h3>
-                  <Button variant="outline" onClick={() => openImageModal("https://nkmd.de/placeholder/1200x800")} className="border-white/60 text-white hover:bg-white/20 hover:text-white">
-                    <Image className="mr-2 h-4 w-4" />
-                    Bild öffnen
-                  </Button>
+            <div className="project-card flex flex-col">
+              <h3 className="text-xl font-medium mb-3 px-2">Muster Lybecker Institut Raahe</h3>
+              <div 
+                className="relative flex-1 overflow-hidden cursor-pointer" 
+                onClick={() => openImageModal("https://nkmd.de/placeholder/1200x800")}
+              >
+                <img 
+                  src="https://nkmd.de/placeholder/600x400" 
+                  alt="Muster Lybecker Institut Raahe – Finnland"
+                  className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
+                />
+                <div className="absolute inset-0 bg-black/30 hover:bg-black/50 transition-colors flex items-center justify-center">
+                  <Eye className="h-10 w-10 text-white" />
                 </div>
               </div>
             </div>

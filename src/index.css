@@ -184,22 +184,15 @@
 /* Project gallery */
 .project-card {
   @apply bento-box overflow-hidden relative;
-  height: 250px;
+  height: 290px; /* increased height to accommodate the title */
 }
 
 .project-card img {
-  @apply w-full h-full object-cover transition-transform duration-500;
+  @apply w-full h-full object-cover;
 }
+
+/* Removed project-overlay styles as we're no longer using them */
 
 .project-card:hover img {
   transform: scale(1.05);
-}
-
-.project-overlay {
-  @apply absolute inset-0 transition-opacity duration-300 opacity-0 flex flex-col items-center justify-center p-4 text-white;
-  position: relative;
-}
-
-.project-card:hover .project-overlay {
-  opacity: 1;
 }
