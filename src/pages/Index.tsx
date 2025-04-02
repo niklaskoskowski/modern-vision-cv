@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Code, Image, Briefcase, Mail, User, X, Edit, Check, ChevronDown } from 'lucide-react';
@@ -121,34 +122,36 @@ const Index = () => {
   return <div className="min-h-screen">
       <header className={`fixed top-0 left-0 right-0 z-50 flex justify-center py-4 px-6 transition-all duration-300 ${isScrolled ? 'py-2' : 'py-4'}`}>
         <nav className={`navbar-glass rounded-full py-2 px-4 md:px-6 max-w-4xl mx-auto transition-all duration-300 ${isScrolled ? 'shadow-md' : ''}`}>
-          <ul className="flex items-center space-x-1 md:space-x-2">
-            <li className="mr-2 md:mr-3 flex items-center">
+          <ul className="flex items-center justify-between w-full">
+            <li className="flex-shrink-0 mr-3">
               <button onClick={() => scrollToSection('home')} className="cursor-pointer flex items-center">
                 <img src="https://9nk.de/assets/nk-portfolio.png" alt="NK Portfolio Logo" className="h-8 w-auto" />
               </button>
             </li>
-            {!isMobile && (
+            <div className="flex items-center space-x-0.5 md:space-x-2">
+              {!isMobile && (
+                <li>
+                  <button onClick={() => scrollToSection('about')} className={`px-2 md:px-3 py-2 rounded-full text-sm md:text-base transition-colors ${activeSection === 'about' ? 'bg-primary text-white' : 'hover:bg-secondary'}`}>
+                    Über
+                  </button>
+                </li>
+              )}
               <li>
-                <button onClick={() => scrollToSection('about')} className={`px-3 py-2 rounded-full text-sm md:text-base transition-colors ${activeSection === 'about' ? 'bg-primary text-white' : 'hover:bg-secondary'}`}>
-                  Über
+                <button onClick={() => scrollToSection('lebenslauf')} className={`px-2 md:px-3 py-2 rounded-full text-sm md:text-base transition-colors ${activeSection === 'lebenslauf' ? 'bg-primary text-white' : 'hover:bg-secondary'}`}>
+                  Lebenslauf
                 </button>
               </li>
-            )}
-            <li>
-              <button onClick={() => scrollToSection('lebenslauf')} className={`px-3 py-2 rounded-full text-sm md:text-base transition-colors ${activeSection === 'lebenslauf' ? 'bg-primary text-white' : 'hover:bg-secondary'}`}>
-                Lebenslauf
-              </button>
-            </li>
-            <li>
-              <button onClick={() => scrollToSection('projekte')} className={`px-3 py-2 rounded-full text-sm md:text-base transition-colors ${activeSection === 'projekte' ? 'bg-primary text-white' : 'hover:bg-secondary'}`}>
-                Projekte
-              </button>
-            </li>
-            <li>
-              <button onClick={() => scrollToSection('kontakt')} className={`px-3 py-2 rounded-full text-sm md:text-base transition-colors ${activeSection === 'kontakt' ? 'bg-primary text-white' : 'hover:bg-secondary'}`}>
-                Kontakt
-              </button>
-            </li>
+              <li>
+                <button onClick={() => scrollToSection('projekte')} className={`px-2 md:px-3 py-2 rounded-full text-sm md:text-base transition-colors ${activeSection === 'projekte' ? 'bg-primary text-white' : 'hover:bg-secondary'}`}>
+                  Projekte
+                </button>
+              </li>
+              <li>
+                <button onClick={() => scrollToSection('kontakt')} className={`px-2 md:px-3 py-2 rounded-full text-sm md:text-base transition-colors ${activeSection === 'kontakt' ? 'bg-primary text-white' : 'hover:bg-secondary'}`}>
+                  Kontakt
+                </button>
+              </li>
+            </div>
           </ul>
         </nav>
       </header>
