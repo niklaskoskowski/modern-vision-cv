@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Code, Image, Briefcase, Mail, User, X, Edit, Check, ChevronDown, Play } from 'lucide-react';
@@ -19,7 +20,6 @@ const Index = () => {
   const { toast } = useToast();
   const [formSubmitting, setFormSubmitting] = useState<boolean>(false);
   const [formSubmitted, setFormSubmitted] = useState<boolean>(false);
-  const [videoError, setVideoError] = useState<boolean>(false);
   const videoRef = useRef<HTMLVideoElement>(null);
   const [galleryImages, setGalleryImages] = useState<Array<{
     id: number;
@@ -74,30 +74,52 @@ const Index = () => {
     const video = videoRef.current;
     if (!video) return;
     
-    const handleError = () => {
-      console.error('Video error occurred');
-      setVideoError(true);
-    };
-    
-    const playVideo = () => {
-      if (video.paused) {
-        video.play().catch(err => {
-          console.error('Video play failed:', err);
-          setVideoError(true);
+    // Setup video for optimal autoplay based on Apple's documentation
+    const setupVideoForAutoplay = () => {
+      if (!video) return;
+      
+      // Make sure video is muted for autoplay to work
+      video.muted = true;
+      
+      // Try to play the video
+      const playPromise = video.play();
+      
+      if (playPromise !== undefined) {
+        playPromise.catch(error => {
+          console.log('Autoplay was prevented:', error);
+          
+          // Add a user interaction handler if autoplay fails
+          const handleUserInteraction = () => {
+            video.play().catch(e => console.log('Play failed despite user interaction:', e));
+            ['click', 'touchstart', 'keydown'].forEach(event => {
+              document.removeEventListener(event, handleUserInteraction);
+            });
+          };
+          
+          ['click', 'touchstart', 'keydown'].forEach(event => {
+            document.addEventListener(event, handleUserInteraction, { once: true });
+          });
         });
       }
     };
     
-    video.addEventListener('canplay', playVideo);
-    video.addEventListener('error', handleError);
+    // Try to play when video can start playing
+    video.addEventListener('canplay', setupVideoForAutoplay);
     
+    // Also try when metadata is loaded (recommended by Apple)
+    video.addEventListener('loadedmetadata', setupVideoForAutoplay);
+    
+    // Check if video is already ready to play
     if (video.readyState >= 3) {
-      playVideo();
+      setupVideoForAutoplay();
     }
     
     return () => {
-      video.removeEventListener('canplay', playVideo);
-      video.removeEventListener('error', handleError);
+      // Clean up event listeners
+      if (video) {
+        video.removeEventListener('canplay', setupVideoForAutoplay);
+        video.removeEventListener('loadedmetadata', setupVideoForAutoplay);
+      }
     };
   }, []);
 
@@ -226,9 +248,11 @@ const Index = () => {
             <div className="w-full h-full">
               <video 
                 ref={videoRef}
+                autoPlay
                 muted
                 loop
                 playsInline
+                preload="metadata"
                 className="w-full h-full object-cover"
                 style={{ width: '100vw', height: '100vh', objectFit: 'cover' }}
                 poster="https://img.nkmd.de/uploads/medium/10/af/9609c92495e20d4425bfbf2a4156.jpeg"
@@ -236,14 +260,6 @@ const Index = () => {
                 <source src="https://9nk.de/neu/video.mp4" type="video/mp4" />
                 Your browser does not support the video tag.
               </video>
-              
-              {videoError && (
-                <img 
-                  src="https://img.nkmd.de/uploads/medium/10/af/9609c92495e20d4425bfbf2a4156.jpeg" 
-                  alt="Background" 
-                  className="w-full h-full object-cover absolute top-0 left-0"
-                />
-              )}
             </div>
           </div>
           
