@@ -74,11 +74,12 @@ const Index = () => {
   if (video) {
     video.muted = true;
     video.playsInline = true;
-    video.play().catch((error) => {
-      console.warn("Autoplay failed:", error);
+    video.play().catch((err) => {
+      console.warn("Autoplay failed:", err);
     });
   }
 }, []);
+
 
   useEffect(() => {
     const searchParams = new URLSearchParams(window.location.search);
