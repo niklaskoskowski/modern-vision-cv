@@ -193,7 +193,7 @@ const Index = () => {
           <div className="absolute inset-0 w-screen h-full overflow-hidden z-10 left-1/2 transform -translate-x-1/2">
 
 
-            <div className="absolute inset-0 bg-black/40 z-10"></div>
+            
             
             <div className="w-full h-full">
               <video muted autoPlay loop playsInline className="w-full h-full object-cover" >
