@@ -5,7 +5,6 @@ import { Dialog, DialogContent, DialogClose } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-
 const Index = () => {
   const [activeSection, setActiveSection] = useState<string>('home');
   const [isScrolled, setIsScrolled] = useState<boolean>(false);
@@ -43,7 +42,6 @@ const Index = () => {
   }]);
   const [editImageId, setEditImageId] = useState<number | null>(null);
   const [newImageUrl, setNewImageUrl] = useState<string>("");
-  
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);
@@ -61,7 +59,6 @@ const Index = () => {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
-
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
     if (element) {
@@ -71,12 +68,10 @@ const Index = () => {
       });
     }
   };
-
   const openImageModal = (imageSrc: string) => {
     setSelectedImage(imageSrc);
     setShowImageModal(true);
   };
-
   const updateGalleryImage = (id: number, newSrc: string) => {
     setGalleryImages(prevImages => prevImages.map(img => img.id === id ? {
       ...img,
@@ -85,7 +80,6 @@ const Index = () => {
     setEditImageId(null);
     setNewImageUrl("");
   };
-
   const handleGalleryImageClick = (image: {
     id: number;
     src: string;
@@ -97,7 +91,6 @@ const Index = () => {
       openImageModal(image.src);
     }
   };
-
   const skills = [{
     name: 'Adobe CC (Ai, Id, Ps)',
     level: 90
@@ -114,7 +107,6 @@ const Index = () => {
     name: 'Unreal Engine',
     level: 60
   }];
-
   return <div className="min-h-screen">
       <header className={`fixed top-0 left-0 right-0 z-50 flex justify-center py-4 px-6 transition-all duration-300 ${isScrolled ? 'py-2' : 'py-4'}`}>
         <nav className={`navbar-glass rounded-full py-2 px-4 md:px-6 max-w-4xl mx-auto transition-all duration-300 ${isScrolled ? 'shadow-md' : ''}`}>
@@ -160,7 +152,7 @@ const Index = () => {
             </video>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center min-h-[80vh] relative z-10">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center min-h-[80vh] relative z-10 sticky">
             <div className="animate-fade-in">
               <div className="bg-secondary/50 text-primary rounded-full px-4 py-1 inline-flex items-center text-sm mb-4">
                 <span className="mr-2">Design</span>
@@ -459,5 +451,4 @@ const Index = () => {
       </Dialog>
     </div>;
 };
-
 export default Index;
