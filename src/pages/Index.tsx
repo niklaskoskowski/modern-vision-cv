@@ -19,7 +19,7 @@ const Index = () => {
   const { toast } = useToast();
   const [formSubmitting, setFormSubmitting] = useState<boolean>(false);
   const [formSubmitted, setFormSubmitted] = useState<boolean>(false);
-  const videoRef = useRef<HTMLVideoElement>(null);
+  //const videoRef = useRef<HTMLVideoElement>(null);
   const [galleryImages, setGalleryImages] = useState<Array<{
     id: number;
     src: string;
