@@ -77,6 +77,7 @@ const Index = () => {
       if (videoElement) {
         videoElement.volume = 0;
         videoElement.muted = true;
+        videoElement.controls = false;
         
         const playPromise = videoElement.play();
         
@@ -85,7 +86,10 @@ const Index = () => {
             console.log('Autoplay prevented:', error);
             
             const playVideoOnInteraction = () => {
-              videoElement.play().catch(e => console.log("Still couldn't play:", e));
+              if (videoElement) {
+                videoElement.controls = false;
+                videoElement.play().catch(e => console.log("Still couldn't play:", e));
+              }
             };
             
             document.addEventListener('touchstart', playVideoOnInteraction, { once: true });
