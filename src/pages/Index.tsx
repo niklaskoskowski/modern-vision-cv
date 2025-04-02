@@ -19,8 +19,6 @@ const Index = () => {
   const { toast } = useToast();
   const [formSubmitting, setFormSubmitting] = useState<boolean>(false);
   const [formSubmitted, setFormSubmitted] = useState<boolean>(false);
-  const [videoLoaded, setVideoLoaded] = useState<boolean>(false);
-  const [videoError, setVideoError] = useState<boolean>(false);
   const [galleryImages, setGalleryImages] = useState<Array<{
     id: number;
     src: string;
@@ -51,7 +49,6 @@ const Index = () => {
   }]);
   const [editImageId, setEditImageId] = useState<number | null>(null);
   const [newImageUrl, setNewImageUrl] = useState<string>("");
-  const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -69,73 +66,6 @@ const Index = () => {
     };
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  useEffect(() => {
-    const video = videoRef.current;
-    if (!video) return;
-    
-    const playVideo = () => {
-      if (!video) return;
-      
-      video.muted = true;
-      video.setAttribute('playsinline', '');
-      video.setAttribute('webkit-playsinline', '');
-      
-      video.play().catch(error => {
-        console.log('Video autoplay failed:', error);
-        setVideoError(true);
-      });
-    };
-    
-    const handleCanPlay = () => {
-      setVideoLoaded(true);
-      playVideo();
-    };
-    
-    video.addEventListener('canplay', handleCanPlay);
-    video.addEventListener('canplaythrough', handleCanPlay);
-    
-    video.addEventListener('error', () => {
-      console.log('Video error occurred');
-      setVideoError(true);
-    });
-    
-    if (video.readyState >= 3) {
-      playVideo();
-    }
-    
-    document.addEventListener('visibilitychange', () => {
-      if (document.visibilityState === 'visible' && video && video.paused) {
-        playVideo();
-      }
-    });
-    
-    const userInteractionEvents = ['click', 'touchend', 'keydown', 'scroll'];
-    
-    const handleUserInteraction = () => {
-      if (video && video.paused) {
-        playVideo();
-        userInteractionEvents.forEach(event => {
-          document.removeEventListener(event, handleUserInteraction);
-        });
-      }
-    };
-    
-    userInteractionEvents.forEach(event => {
-      document.addEventListener(event, handleUserInteraction);
-    });
-    
-    return () => {
-      video.removeEventListener('canplay', handleCanPlay);
-      video.removeEventListener('canplaythrough', handleCanPlay);
-      video.removeEventListener('error', () => setVideoError(true));
-      document.removeEventListener('visibilitychange', () => {});
-      
-      userInteractionEvents.forEach(event => {
-        document.removeEventListener(event, handleUserInteraction);
-      });
-    };
   }, []);
 
   useEffect(() => {
@@ -261,28 +191,10 @@ const Index = () => {
             <div className="absolute inset-0 bg-black/40 z-10"></div>
             
             <div className="w-full h-full">
-              <video 
-                ref={videoRef}
-                muted
-                loop
-                playsInline
-                preload="auto"
-                className="w-full h-full object-cover"
-                style={{ width: '100vw', height: '100vh', objectFit: 'cover' }}
-                poster="https://img.nkmd.de/uploads/medium/10/af/9609c92495e20d4425bfbf2a4156.jpeg"
-              >
-                <source src="https://9nk.de/neu/video.mp4" type="video/mp4" />
-                Your browser does not support the video tag.
-              </video>
-              
               <img 
                 src="https://img.nkmd.de/uploads/medium/10/af/9609c92495e20d4425bfbf2a4156.jpeg" 
                 alt="Background" 
                 className="w-full h-full object-cover absolute top-0 left-0"
-                style={{ 
-                  display: videoError || !videoLoaded ? 'block' : 'none',
-                  zIndex: 0
-                }}
               />
             </div>
           </div>
