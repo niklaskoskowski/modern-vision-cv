@@ -5,6 +5,7 @@ import { Dialog, DialogContent, DialogClose } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+
 const Index = () => {
   const [activeSection, setActiveSection] = useState<string>('home');
   const [isScrolled, setIsScrolled] = useState<boolean>(false);
@@ -42,6 +43,7 @@ const Index = () => {
   }]);
   const [editImageId, setEditImageId] = useState<number | null>(null);
   const [newImageUrl, setNewImageUrl] = useState<string>("");
+  
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);
@@ -59,6 +61,7 @@ const Index = () => {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
     if (element) {
@@ -68,10 +71,12 @@ const Index = () => {
       });
     }
   };
+
   const openImageModal = (imageSrc: string) => {
     setSelectedImage(imageSrc);
     setShowImageModal(true);
   };
+
   const updateGalleryImage = (id: number, newSrc: string) => {
     setGalleryImages(prevImages => prevImages.map(img => img.id === id ? {
       ...img,
@@ -80,6 +85,7 @@ const Index = () => {
     setEditImageId(null);
     setNewImageUrl("");
   };
+
   const handleGalleryImageClick = (image: {
     id: number;
     src: string;
@@ -91,6 +97,7 @@ const Index = () => {
       openImageModal(image.src);
     }
   };
+
   const skills = [{
     name: 'Adobe CC (Ai, Id, Ps)',
     level: 90
@@ -107,6 +114,7 @@ const Index = () => {
     name: 'Unreal Engine',
     level: 60
   }];
+
   return <div className="min-h-screen">
       <header className={`fixed top-0 left-0 right-0 z-50 flex justify-center py-4 px-6 transition-all duration-300 ${isScrolled ? 'py-2' : 'py-4'}`}>
         <nav className={`navbar-glass rounded-full py-2 px-4 md:px-6 max-w-4xl mx-auto transition-all duration-300 ${isScrolled ? 'shadow-md' : ''}`}>
@@ -319,24 +327,6 @@ const Index = () => {
             </div>
 
             <div className="project-card flex flex-col">
-              <h3 className="text-xl font-medium mb-3 px-2">Motorsport Photography</h3>
-              <div className="relative flex-1 overflow-hidden cursor-pointer" onClick={() => openImageModal("https://nkmd.de/placeholder/?s800x600&text=Motorsport")}>
-                <img src="https://nkmd.de/placeholder/?s800x600&text=Motorsport" alt="Motorsport Photography" className="w-full h-full object-cover transition-transform duration-500 hover:scale-105" />
-                <div className="absolute inset-0 bg-black/30 hover:bg-black/50 transition-colors flex items-center justify-center">
-                </div>
-              </div>
-            </div>
-            
-            <div className="project-card flex flex-col">
-              <h3 className="text-xl font-medium mb-3 px-2">3D Printing Collection</h3>
-              <div className="relative flex-1 overflow-hidden cursor-pointer" onClick={() => openImageModal("https://nkmd.de/placeholder/?s800x600&text=3D+Printing")}>
-                <img src="https://nkmd.de/placeholder/?s800x600&text=3D+Printing" alt="3D Printing Collection" className="w-full h-full object-cover transition-transform duration-500 hover:scale-105" />
-                <div className="absolute inset-0 bg-black/30 hover:bg-black/50 transition-colors flex items-center justify-center">
-                </div>
-              </div>
-            </div>
-
-            <div className="project-card flex flex-col">
               <h3 className="text-xl font-medium mb-3 px-2">UI/UX Design Portfolio</h3>
               <div className="relative flex-1 overflow-hidden cursor-pointer" onClick={() => openImageModal("https://nkmd.de/placeholder/?s800x600&text=UI/UX+Design")}>
                 <img src="https://nkmd.de/placeholder/?s800x600&text=UI/UX+Design" alt="UI/UX Design Portfolio" className="w-full h-full object-cover transition-transform duration-500 hover:scale-105" />
@@ -469,4 +459,5 @@ const Index = () => {
       </Dialog>
     </div>;
 };
+
 export default Index;
