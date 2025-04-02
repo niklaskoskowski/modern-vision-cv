@@ -19,7 +19,7 @@ const Index = () => {
   const { toast } = useToast();
   const [formSubmitting, setFormSubmitting] = useState<boolean>(false);
   const [formSubmitted, setFormSubmitted] = useState<boolean>(false);
-  //const videoRef = useRef<HTMLVideoElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
   const [galleryImages, setGalleryImages] = useState<Array<{
     id: number;
     src: string;
@@ -69,20 +69,32 @@ const Index = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-
   useEffect(() => {
-  const video = document.querySelector('video');
-  if (video) {
-    video.muted = true;
-    video.playsInline = true;
-    video.play().catch(e => {
-      console.warn("Safari Autoplay failed:", e);
-    });
-  }
-}, []);
+    if (!videoRef.current) return;
+    
+    videoRef.current.muted = true;
+    videoRef.current.playsInline = true;
+    
+    const playVideo = () => {
+      if (videoRef.current) {
+        const playPromise = videoRef.current.play();
+        
+        if (playPromise !== undefined) {
+          playPromise.catch(error => {
+            console.warn("Autoplay failed:", error);
+            document.addEventListener('touchstart', () => {
+              videoRef.current?.play();
+            }, { once: true });
+          });
+        }
+      }
+    };
+    
+    const timer = setTimeout(playVideo, 1000);
+    
+    return () => clearTimeout(timer);
+  }, []);
 
-
-  
   useEffect(() => {
     const searchParams = new URLSearchParams(window.location.search);
     const sent = searchParams.get('sent');
@@ -203,12 +215,17 @@ const Index = () => {
       <main className="container mx-auto px-4 pt-0 pb-20 max-w-6xl">
         <section id="home" className="mb-24 relative">
           <div className="absolute inset-0 w-screen h-full overflow-hidden z-10 left-1/2 transform -translate-x-1/2">
-
-
             <div className="absolute inset-0 bg-black/40 z-11"></div>
             
             <div className="w-full h-full">
-              <video playsInline autoPlay muted loop preload="auto" className="w-full h-full object-cover" >
+              <video 
+                ref={videoRef}
+                muted
+                playsInline
+                loop
+                className="w-full h-full object-cover"
+                style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+              >
                 <source src="https://test.9nk.de/video.mp4" type="video/mp4" />
                 Your browser does not support HTML5 video.
               </video>
