@@ -1,0 +1,36 @@
+name: Build and Zip Vite App9
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  build-and-zip:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: 20
+        cache: 'npm'
+
+    - name: Install dependencies
+      run: npm ci
+
+    - name: Build Vite project
+      run: npm run build
+
+    - name: Zip build output
+      run: |
+        cd dist
+        zip -r ../build9.zip .
+    
+    - name: Upload build ZIP as artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: build-zip
+        path: build.zip
