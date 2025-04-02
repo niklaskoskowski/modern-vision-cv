@@ -92,7 +92,7 @@ const Index = () => {
       <main className="container mx-auto px-4 pt-32 pb-20 max-w-6xl">
         {/* Hero Section with Video Background */}
         <section id="home" className="mb-24 relative">
-          <div className="absolute inset-0 w-full h-full overflow-hidden -z-10">
+          <div className="absolute inset-0 w-screen h-full overflow-hidden -z-10 left-1/2 transform -translate-x-1/2">
             <div className="absolute inset-0 bg-black/40 z-10"></div>
             <video 
               autoPlay 
@@ -100,7 +100,7 @@ const Index = () => {
               muted 
               playsInline
               className="w-full h-full object-cover" 
-              style={{ width: '100%', height: '100vh', objectFit: 'cover' }}
+              style={{ width: '100vw', height: '100vh', objectFit: 'cover' }}
             >
               <source src="https://9nk.de/neu/video.mp4" type="video/mp4" />
               Your browser does not support the video tag.

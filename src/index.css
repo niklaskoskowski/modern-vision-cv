@@ -97,7 +97,7 @@
   position: absolute;
   top: 0;
   left: 0;
-  width: 100%;
+  width: 100vw;
   height: 100%;
   overflow: hidden;
   z-index: -1;
@@ -109,7 +109,7 @@
   left: 50%;
   min-width: 100%;
   min-height: 100%;
-  width: auto;
+  width: 100vw;
   height: auto;
   transform: translateX(-50%) translateY(-50%);
 }
