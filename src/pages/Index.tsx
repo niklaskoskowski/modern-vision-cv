@@ -128,7 +128,7 @@ const Index = () => {
                 <img 
                   src="https://9nk.de/assets/nk-portfolio.png" 
                   alt="NK Portfolio Logo" 
-                  className="h-5 w-auto md:h-8" 
+                  className="h-5 w-auto md:h-7" 
                 />
               </button>
             </li>
