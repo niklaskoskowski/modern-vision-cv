@@ -212,7 +212,7 @@ const Index = () => {
         preload="auto"
         className="absolute top-0 left-0 w-full h-full object-cover z-0"
       >
-        <source src="https://9nk.de/neu/video.mp4" type="video/mp4" />
+        <source src="https://img.nkmd.de/uploads/original/10/e0/efa5f1640eb67d59d558cd5e564f.mp4" type="video/mp4" />
         Dein Browser unterstützt kein HTML5-Video.
       </video>
 
