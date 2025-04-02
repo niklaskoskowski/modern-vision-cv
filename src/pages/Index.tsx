@@ -1,12 +1,12 @@
-
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Code, Image, Briefcase, Mail, User, X, Edit, Check, ChevronDown } from 'lucide-react';
+import { ArrowRight, Code, Image, Briefcase, Mail, User, X, Edit, Check, ChevronDown, Play } from 'lucide-react';
 import { Dialog, DialogContent, DialogClose } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { useToast } from "@/hooks/use-toast";
 
 const Index = () => {
   const [activeSection, setActiveSection] = useState<string>('home');
@@ -16,34 +16,37 @@ const Index = () => {
   const [selectedImage, setSelectedImage] = useState<string>("");
   const [isEditMode, setIsEditMode] = useState<boolean>(false);
   const isMobile = useIsMobile();
-
+  const { toast } = useToast();
+  const [formSubmitting, setFormSubmitting] = useState<boolean>(false);
+  const [formSubmitted, setFormSubmitted] = useState<boolean>(false);
+  const videoRef = useRef<HTMLVideoElement>(null);
   const [galleryImages, setGalleryImages] = useState<Array<{
     id: number;
     src: string;
   }>>([{
     id: 1,
-    src: "https://nkmd.de/placeholder/?s400x400"
+    src: "https://img.nkmd.de/uploads/medium/d9/48/01eb4fc6c6699e89f418c8278f35.jpg"
   }, {
     id: 2,
-    src: "https://nkmd.de/placeholder/?s400x400"
+    src: "https://img.nkmd.de/uploads/medium/fe/43/3640d2f8ca9ce08b7bb7b3ad040c.jpg"
   }, {
     id: 3,
-    src: "https://nkmd.de/placeholder/?s400x400"
+    src: "https://img.nkmd.de/uploads/medium/89/fc/4e14d2ef8a79327757c20fdf9939.jpg"
   }, {
     id: 4,
-    src: "https://nkmd.de/placeholder/?s400x400"
+    src: "https://img.nkmd.de/uploads/medium/63/e7/6a5741726ab5bee759010ae4de3b.jpg"
   }, {
     id: 5,
-    src: "https://nkmd.de/placeholder/?s400x400"
+    src: "https://img.nkmd.de/uploads/medium/10/af/9609c92495e20d4425bfbf2a4156.jpeg"
   }, {
     id: 6,
-    src: "https://nkmd.de/placeholder/?s400x400"
+    src: "https://img.nkmd.de/uploads/medium/22/b8/9b7c2247db1be5e0fe48c15a7904.png"
   }, {
     id: 7,
-    src: "https://nkmd.de/placeholder/?s400x400"
+    src: "https://img.nkmd.de/uploads/medium/3b/b3/8c5e9d06a1700f606e23a7c53c0f.jpeg"
   }, {
     id: 8,
-    src: "https://nkmd.de/placeholder/?s400x400"
+    src: "https://img.nkmd.de/uploads/medium/68/11/2d07d6a7ae88e9834939e35630b0.jpeg"
   }]);
   const [editImageId, setEditImageId] = useState<number | null>(null);
   const [newImageUrl, setNewImageUrl] = useState<string>("");
@@ -65,6 +68,61 @@ const Index = () => {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  useEffect(() => {
+    if (!videoRef.current) return;
+    
+    videoRef.current.muted = true;
+    videoRef.current.playsInline = true;
+    videoRef.current.autoplay = true;
+    
+    videoRef.current.setAttribute('playsinline', '');
+    videoRef.current.setAttribute('webkit-playsinline', '');
+    videoRef.current.setAttribute('muted', '');
+    videoRef.current.setAttribute('autoplay', '');
+    
+    const playAttempt = () => {
+      if (videoRef.current) {
+        const promise = videoRef.current.play();
+        if (promise !== undefined) {
+          promise.catch(error => {
+            console.log("Autoplay failed:", error);
+          });
+        }
+      }
+    };
+    
+    playAttempt();
+    
+    if (document.readyState === 'complete') {
+      playAttempt();
+    } else {
+      window.addEventListener('load', playAttempt, { once: true });
+    }
+    
+    return () => {
+      window.removeEventListener('load', playAttempt);
+    };
+  }, []);
+
+  useEffect(() => {
+    const searchParams = new URLSearchParams(window.location.search);
+    const sent = searchParams.get('sent');
+    if (sent === '1') {
+      toast({
+        title: "Message sent!",
+        description: "Thank you for your message. I'll get back to you soon."
+      });
+      window.history.replaceState({}, document.title, window.location.pathname);
+    } else if (sent === '0') {
+      toast({
+        title: "Message not sent",
+        description: "There was an error sending your message. Please try again later.",
+        variant: "destructive"
+      });
+      window.history.replaceState({}, document.title, window.location.pathname);
+    }
+  }, [toast]);
 
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
@@ -119,27 +177,31 @@ const Index = () => {
     level: 60
   }];
 
-  return <div className="min-h-screen">
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setFormSubmitting(true);
+    setTimeout(() => {
+      setFormSubmitting(false);
+      setFormSubmitted(true);
+    }, 500);
+  };
+
+  return (
+    <div className="min-h-screen">
       <header className={`fixed top-0 left-0 right-0 z-50 flex justify-center py-4 px-6 transition-all duration-300 ${isScrolled ? 'py-2' : 'py-4'}`}>
         <nav className={`navbar-glass rounded-full py-2 px-4 md:px-6 max-w-4xl mx-auto transition-all duration-300 ${isScrolled ? 'shadow-md' : ''}`}>
           <ul className="flex items-center justify-between w-full">
             <li className="mr-2 md:mr-4">
               <button onClick={() => scrollToSection('home')} className="cursor-pointer flex items-center">
-                <img 
-                  src="https://9nk.de/assets/nk-portfolio.png" 
-                  alt="NK Portfolio Logo" 
-                  className="h-4 w-auto md:h-6 mr-2 md:mr-4" 
-                />
+                <img src="https://9nk.de/assets/nk-portfolio.png" alt="NK Portfolio Logo" className="h-4 w-auto md:h-6 mr-2 md:mr-4" />
               </button>
             </li>
             <div className="flex items-center gap-1">
-              {!isMobile && (
-                <li>
+              {!isMobile && <li>
                   <button onClick={() => scrollToSection('about')} className={`px-1.5 md:px-3 py-1.5 md:py-2 rounded-full text-xs md:text-base transition-colors ${activeSection === 'about' ? 'bg-primary text-white' : 'hover:bg-secondary'}`}>
                     Über
                   </button>
-                </li>
-              )}
+                </li>}
               <li>
                 <button onClick={() => scrollToSection('lebenslauf')} className={`px-1.5 md:px-3 py-1.5 md:py-2 rounded-full text-xs md:text-base transition-colors ${activeSection === 'lebenslauf' ? 'bg-primary text-white' : 'hover:bg-secondary'}`}>
                   Lebenslauf
@@ -160,18 +222,25 @@ const Index = () => {
         </nav>
       </header>
 
-      <main className="container mx-auto px-4 pt-0  pb-20 max-w-6xl">
+      <main className="container mx-auto px-4 pt-0 pb-20 max-w-6xl">
         <section id="home" className="mb-24 relative">
           <div className="absolute inset-0 w-screen h-full overflow-hidden -z-10 left-1/2 transform -translate-x-1/2">
             <div className="absolute inset-0 bg-black/40 z-10"></div>
-            <video autoPlay loop muted playsInline className="w-full h-full object-cover" style={{
-            width: '100vw',
-            height: '100vh',
-            objectFit: 'cover'
-          }}>
-              <source src="https://9nk.de/neu/video.mp4" type="video/mp4" />
-              Your browser does not support the video tag.
-            </video>
+            
+            <div className="w-full h-full">
+              <video 
+                ref={videoRef}
+                muted
+                autoPlay
+                loop
+                playsInline
+                className="w-full h-full object-cover" 
+                style={{ width: '100vw', height: '100vh', objectFit: 'cover' }}
+              >
+                <source src="https://9nk.de/neu/video.mp4" type="video/mp4" />
+                Your browser does not support HTML5 video.
+              </video>
+            </div>
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center min-h-[100vh] relative z-10">
@@ -196,10 +265,7 @@ const Index = () => {
             </div>
           </div>
           
-          <div 
-            className={`absolute bottom-16 sm:bottom-8 left-1/2 transform -translate-x-1/2 cursor-pointer transition-opacity duration-500 z-30 ${isScrolled ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}
-            onClick={() => scrollToSection('about')}
-          >
+          <div className={`absolute bottom-16 sm:bottom-8 left-1/2 transform -translate-x-1/2 cursor-pointer transition-opacity duration-500 z-30 ${isScrolled ? 'opacity-0 pointer-events-none' : 'opacity-100'}`} onClick={() => scrollToSection('about')}>
             <div className="flex flex-col items-center text-white">
               <span className="text-sm mb-2">Mehr entdecken</span>
               <div className="animate-bounce bg-white/20 p-2 w-10 h-10 ring-1 ring-white/30 shadow-lg rounded-full flex items-center justify-center">
@@ -278,7 +344,7 @@ const Index = () => {
                 <p className="mt-2">
                   Seit 2022 bin ich mitunter für die Formula Student Austria mit einem 4-köpfigen Video-Team für die Erstellung eines Aftermovies zuständig, welcher die Highlights des 1-wöchigen Events am RedBull Ring in Spielberg festhält.
                 </p>
-                <a href="#" className="text-blue-600 mt-1 inline-block hover:underline">Link zum Video</a>
+                
               </div>
             </div>
             
@@ -317,45 +383,48 @@ const Index = () => {
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             <div className="project-card flex flex-col">
-              <h3 className="text-xl font-medium mb-3 px-2">Aftermovie Formula Student Austria 2024</h3>
+              <h3 className="text-xl font-medium mb-3 px-2">Aftermovie FSA 2024</h3>
               <div className="relative flex-1 overflow-hidden cursor-pointer" onClick={() => setShowVideoModal(true)}>
-                <img alt="Aftermovie Formula Student Austria 2024" src="https://img.youtube.com/vi/Drb7kUK75zA/maxresdefault.jpg" className="w-full h-full object-cover transition-transform duration-500 hover:scale-105" />
+                <img alt="Aftermovie FSA 2024" src="https://img.youtube.com/vi/Drb7kUK75zA/maxresdefault.jpg" className="w-full h-full object-cover transition-transform duration-500 hover:scale-105" />
                 <div className="absolute inset-0 bg-black/30 hover:bg-black/50 transition-colors flex items-center justify-center">
+                  <div className="bg-black/50 p-4 rounded-full">
+                    <Play className="h-10 w-10 text-white" fill="white" />
+                  </div>
                 </div>
               </div>
             </div>
             
             <div className="project-card flex flex-col">
               <h3 className="text-xl font-medium mb-3 px-2">Fast Forest – Rendering</h3>
-              <div className="relative flex-1 overflow-hidden cursor-pointer" onClick={() => openImageModal("https://img.nkmd.de/uploads/small2x/3c/c4/71d33a70ac981283a2c1b22e81ed.png")}>
-                <img src="https://img.nkmd.de/uploads/small2x/3c/c4/71d33a70ac981283a2c1b22e81ed.png" alt="Fast Forest – Rendering" className="w-full h-full object-cover transition-transform duration-500 hover:scale-105" />
+              <div className="relative flex-1 overflow-hidden cursor-pointer" onClick={() => openImageModal("https://img.nkmd.de/uploads/small2x/78/9f/16e8b73c1afc9cb940478a5dba77.jpg")}>
+                <img src="https://img.nkmd.de/uploads/small2x/78/9f/16e8b73c1afc9cb940478a5dba77.jpg" alt="Fast Forest – Rendering" className="w-full h-full object-cover transition-transform duration-500 hover:scale-105" />
                 <div className="absolute inset-0 bg-black/30 hover:bg-black/50 transition-colors flex items-center justify-center">
                 </div>
               </div>
             </div>
             
             <div className="project-card flex flex-col">
-              <h3 className="text-xl font-medium mb-3 px-2">Logodesign – niklaskoskowski.de</h3>
+              <h3 className="text-xl font-medium mb-3 px-2">niklaskoskowski.de</h3>
               <div className="relative flex-1 overflow-hidden cursor-pointer" onClick={() => openImageModal("https://9nk.de/assets/9.png")}>
-                <img src="https://9nk.de/assets/9.png" alt="Logodesign – niklaskoskowski.de" className="w-full h-full object-cover transition-transform duration-500 hover:scale-105" />
+                <img src="https://9nk.de/assets/9.png" alt="niklaskoskowski.de" className="w-full h-full object-cover transition-transform duration-500 hover:scale-105" />
                 <div className="absolute inset-0 bg-black/30 hover:bg-black/00 transition-colors flex items-center justify-center">
                 </div>
               </div>
             </div>
             
             <div className="project-card flex flex-col">
-              <h3 className="text-xl font-medium mb-3 px-2">Muster Lybecker Institut Raahe</h3>
+              <h3 className="text-xl font-medium mb-3 px-2">Lybecker Institut Raahe</h3>
               <div className="relative flex-1 overflow-hidden cursor-pointer" onClick={() => openImageModal("https://9nk.de/assets/raahe.jpg")}>
-                <img src="https://9nk.de/assets/raahe.jpg" alt="Muster Lybecker Institut Raahe – Finnland" className="w-full h-full object-cover transition-transform duration-500 hover:scale-105" />
+                <img src="https://9nk.de/assets/raahe.jpg" alt="Lybecker Institut Raahe" className="w-full h-full object-cover transition-transform duration-500 hover:scale-105" />
                 <div className="absolute inset-0 bg-black/30 hover:bg-black/50 transition-colors flex items-center justify-center">
                 </div>
               </div>
             </div>
 
             <div className="project-card flex flex-col">
-              <h3 className="text-xl font-medium mb-3 px-2">UI/UX Design Portfolio</h3>
-              <div className="relative flex-1 overflow-hidden cursor-pointer" onClick={() => openImageModal("https://nkmd.de/placeholder/?s800x600&text=UI/UX+Design")}>
-                <img src="https://nkmd.de/placeholder/?s800x600&text=UI/UX+Design" alt="UI/UX Design Portfolio" className="w-full h-full object-cover transition-transform duration-500 hover:scale-105" />
+              <h3 className="text-xl font-medium mb-3 px-2">Fast Forest Tasse (250x)</h3>
+              <div className="relative flex-1 overflow-hidden cursor-pointer" onClick={() => openImageModal("https://img.nkmd.de/uploads/small2x/8d/5a/d93ae8cacfcd48bfd85e026b62ea.jpg")}>
+                <img src="https://img.nkmd.de/uploads/small2x/8d/5a/d93ae8cacfcd48bfd85e026b62ea.jpg" alt="Fast Forest Tasse (250x)" className="w-full h-full object-cover transition-transform duration-500 hover:scale-105" />
                 <div className="absolute inset-0 bg-black/30 hover:bg-black/50 transition-colors flex items-center justify-center">
                 </div>
               </div>
@@ -363,8 +432,8 @@ const Index = () => {
             
             <div className="project-card flex flex-col">
               <h3 className="text-xl font-medium mb-3 px-2">Corporate Identity Project</h3>
-              <div className="relative flex-1 overflow-hidden cursor-pointer" onClick={() => openImageModal("https://nkmd.de/placeholder/?s800x600&text=Corporate+Identity")}>
-                <img src="https://nkmd.de/placeholder/?s800x600&text=Corporate+Identity" alt="Corporate Identity Project" className="w-full h-full object-cover transition-transform duration-500 hover:scale-105" />
+              <div className="relative flex-1 overflow-hidden cursor-pointer" onClick={() => openImageModal("https://img.nkmd.de/uploads/small2x/68/7b/e36f5a2bc4bd09643d07d0c9fcac.jpg")}>
+                <img src="https://img.nkmd.de/uploads/small2x/68/7b/e36f5a2bc4bd09643d07d0c9fcac.jpg" alt="Corporate Identity Project" className="w-full h-full object-cover transition-transform duration-500 hover:scale-105" />
                 <div className="absolute inset-0 bg-black/30 hover:bg-black/50 transition-colors flex items-center justify-center">
                 </div>
               </div>
@@ -394,27 +463,27 @@ const Index = () => {
           <div className="bento-box">
             <p className="text-lg mb-6">Schreiben Sie mir einfach eine kurze Nachricht.</p>
             
-            <form className="space-y-4">
+            <form method="POST" action="contact.php" className="space-y-4" onSubmit={handleSubmit}>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                   <label htmlFor="name" className="block mb-2 text-sm font-medium">Name</label>
-                  <input type="text" id="name" className="w-full px-4 py-2 rounded-lg border border-border bg-white/50 focus:outline-none focus:ring-2 focus:ring-primary/20" placeholder="Ihr Name" />
+                  <input type="text" id="name" name="name" className="w-full px-4 py-2 rounded-lg border border-border bg-white/50 focus:outline-none focus:ring-2 focus:ring-primary/20" placeholder="Ihr Name" required />
                 </div>
                 <div>
                   <label htmlFor="email" className="block mb-2 text-sm font-medium">Email</label>
-                  <input type="email" id="email" className="w-full px-4 py-2 rounded-lg border border-border bg-white/50 focus:outline-none focus:ring-2 focus:ring-primary/20" placeholder="Ihre Email" />
+                  <input type="email" id="email" name="email" className="w-full px-4 py-2 rounded-lg border border-border bg-white/50 focus:outline-none focus:ring-2 focus:ring-primary/20" placeholder="Ihre Email" required />
                 </div>
               </div>
               <div>
                 <label htmlFor="subject" className="block mb-2 text-sm font-medium">Betreff</label>
-                <input type="text" id="subject" className="w-full px-4 py-2 rounded-lg border border-border bg-white/50 focus:outline-none focus:ring-2 focus:ring-primary/20" placeholder="Betreff" />
+                <input type="text" id="subject" name="subject" className="w-full px-4 py-2 rounded-lg border border-border bg-white/50 focus:outline-none focus:ring-2 focus:ring-primary/20" placeholder="Betreff" required />
               </div>
               <div>
                 <label htmlFor="message" className="block mb-2 text-sm font-medium">Nachricht</label>
-                <textarea id="message" rows={5} className="w-full px-4 py-2 rounded-lg border border-border bg-white/50 focus:outline-none focus:ring-2 focus:ring-primary/20" placeholder="Ihre Nachricht"></textarea>
+                <textarea id="message" name="message" rows={5} className="w-full px-4 py-2 rounded-lg border border-border bg-white/50 focus:outline-none focus:ring-2 focus:ring-primary/20" placeholder="Ihre Nachricht" required></textarea>
               </div>
-              <button type="submit" className="bg-primary text-white rounded-full px-6 py-3 flex items-center font-medium hover:bg-primary/90 transition-colors">
-                Los geht's!
+              <button type="submit" className="bg-primary text-white rounded-full px-6 py-3 flex items-center font-medium hover:bg-primary/90 transition-colors" disabled={formSubmitting}>
+                {formSubmitting ? 'Wird gesendet...' : 'Los geht\'s!'}
               </button>
             </form>
           </div>
@@ -429,9 +498,9 @@ const Index = () => {
       </footer>
 
       <button onClick={() => window.scrollTo({
-      top: 0,
-      behavior: 'smooth'
-    })} className={`fixed bottom-6 right-6 bg-primary text-white p-3 rounded-full shadow-lg transition-opacity duration-300 ${isScrolled ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
+        top: 0,
+        behavior: 'smooth'
+      })} className={`fixed bottom-6 right-6 bg-primary text-white p-3 rounded-full shadow-lg transition-opacity duration-300 ${isScrolled ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
         <ArrowRight className="h-5 w-5 rotate-[270deg]" />
       </button>
 
@@ -483,6 +552,8 @@ const Index = () => {
           </div>
         </DialogContent>
       </Dialog>
-    </div>;
+    </div>
+  );
 };
+
 export default Index;
