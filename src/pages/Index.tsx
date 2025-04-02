@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Code, Image, Briefcase, Mail, User, X, Eye, Edit, Check } from 'lucide-react';
+import { ArrowRight, Code, Image, Briefcase, Mail, User, X, Edit, Check, ChevronDown } from 'lucide-react';
 import { Dialog, DialogContent, DialogClose } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+
 const Index = () => {
   const [activeSection, setActiveSection] = useState<string>('home');
   const [isScrolled, setIsScrolled] = useState<boolean>(false);
@@ -42,6 +43,7 @@ const Index = () => {
   }]);
   const [editImageId, setEditImageId] = useState<number | null>(null);
   const [newImageUrl, setNewImageUrl] = useState<string>("");
+
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);
@@ -59,6 +61,7 @@ const Index = () => {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
     if (element) {
@@ -68,10 +71,12 @@ const Index = () => {
       });
     }
   };
+
   const openImageModal = (imageSrc: string) => {
     setSelectedImage(imageSrc);
     setShowImageModal(true);
   };
+
   const updateGalleryImage = (id: number, newSrc: string) => {
     setGalleryImages(prevImages => prevImages.map(img => img.id === id ? {
       ...img,
@@ -80,6 +85,7 @@ const Index = () => {
     setEditImageId(null);
     setNewImageUrl("");
   };
+
   const handleGalleryImageClick = (image: {
     id: number;
     src: string;
@@ -91,6 +97,7 @@ const Index = () => {
       openImageModal(image.src);
     }
   };
+
   const skills = [{
     name: 'Adobe CC (Ai, Id, Ps)',
     level: 90
@@ -107,6 +114,7 @@ const Index = () => {
     name: 'Unreal Engine',
     level: 60
   }];
+
   return <div className="min-h-screen">
       <header className={`fixed top-0 left-0 right-0 z-50 flex justify-center py-4 px-6 transition-all duration-300 ${isScrolled ? 'py-2' : 'py-4'}`}>
         <nav className={`navbar-glass rounded-full py-2 px-4 md:px-6 max-w-4xl mx-auto transition-all duration-300 ${isScrolled ? 'shadow-md' : ''}`}>
@@ -171,6 +179,18 @@ const Index = () => {
             </div>
             <div className="glass rounded-3xl overflow-hidden">
               <img alt="Niklas Koskowski" src="https://9nk.de/assets/niklas.png" className="w-full h-full object-cover" />
+            </div>
+          </div>
+          
+          <div 
+            className={`absolute bottom-8 left-1/2 transform -translate-x-1/2 cursor-pointer transition-opacity duration-500 ${isScrolled ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}
+            onClick={() => scrollToSection('lebenslauf')}
+          >
+            <div className="flex flex-col items-center text-white">
+              <span className="text-sm mb-2">Mehr entdecken</span>
+              <div className="animate-bounce bg-white/20 p-2 w-10 h-10 ring-1 ring-white/30 shadow-lg rounded-full flex items-center justify-center">
+                <ChevronDown className="h-6 w-6 text-white" />
+              </div>
             </div>
           </div>
         </section>
