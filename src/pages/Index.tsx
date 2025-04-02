@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Code, Image, Briefcase, Mail, User, X, Edit, Check, ChevronDown } from 'lucide-react';
@@ -64,6 +63,27 @@ const Index = () => {
     };
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  useEffect(() => {
+    const videoElement = document.querySelector('video');
+    if (videoElement) {
+      const playPromise = videoElement.play();
+      
+      if (playPromise !== undefined) {
+        playPromise.catch(error => {
+          console.log('Autoplay prevented:', error);
+          const playVideo = () => {
+            videoElement.play();
+            document.removeEventListener('touchstart', playVideo);
+            document.removeEventListener('click', playVideo);
+          };
+          
+          document.addEventListener('touchstart', playVideo);
+          document.addEventListener('click', playVideo);
+        });
+      }
+    }
   }, []);
 
   const scrollToSection = (id: string) => {
@@ -164,11 +184,20 @@ const Index = () => {
         <section id="home" className="mb-24 relative">
           <div className="absolute inset-0 w-screen h-full overflow-hidden -z-10 left-1/2 transform -translate-x-1/2">
             <div className="absolute inset-0 bg-black/40 z-10"></div>
-            <video autoPlay loop muted playsInline className="w-full h-full object-cover" style={{
-            width: '100vw',
-            height: '100vh',
-            objectFit: 'cover'
-          }}>
+            <video 
+              autoPlay 
+              loop 
+              muted 
+              playsInline 
+              preload="auto"
+              className="w-full h-full object-cover" 
+              style={{
+                width: '100vw',
+                height: '100vh',
+                objectFit: 'cover'
+              }}
+              poster="https://9nk.de/neu/video-poster.jpg"
+            >
               <source src="https://9nk.de/neu/video.mp4" type="video/mp4" />
               Your browser does not support the video tag.
             </video>
