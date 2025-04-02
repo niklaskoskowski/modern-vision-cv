@@ -323,9 +323,7 @@ const Index = () => {
           <div className="mt-12">
             <div className="flex justify-between items-center mb-6">
               <h3 className="text-xl font-semibold">Fotogalerie</h3>
-              <Button variant="outline" size="sm" onClick={() => setIsEditMode(!isEditMode)} className="flex items-center gap-2">
-                {isEditMode ? <><Check className="h-4 w-4" /> Fertig</> : <><Edit className="h-4 w-4" /> Bearbeiten</>}
-              </Button>
+              
             </div>
             
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
