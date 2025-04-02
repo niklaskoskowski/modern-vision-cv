@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { useToast } from "@/hooks/use-toast";
 
 const Index = () => {
   const [activeSection, setActiveSection] = useState<string>('home');
@@ -15,6 +16,9 @@ const Index = () => {
   const [selectedImage, setSelectedImage] = useState<string>("");
   const [isEditMode, setIsEditMode] = useState<boolean>(false);
   const isMobile = useIsMobile();
+  const { toast } = useToast();
+  const [formSubmitting, setFormSubmitting] = useState<boolean>(false);
+  const [formSubmitted, setFormSubmitted] = useState<boolean>(false);
 
   const [galleryImages, setGalleryImages] = useState<Array<{
     id: number;
@@ -86,6 +90,26 @@ const Index = () => {
     }
   }, []);
 
+  useEffect(() => {
+    const searchParams = new URLSearchParams(window.location.search);
+    const sent = searchParams.get('sent');
+    
+    if (sent === '1') {
+      toast({
+        title: "Message sent!",
+        description: "Thank you for your message. I'll get back to you soon.",
+      });
+      window.history.replaceState({}, document.title, window.location.pathname);
+    } else if (sent === '0') {
+      toast({
+        title: "Message not sent",
+        description: "There was an error sending your message. Please try again later.",
+        variant: "destructive",
+      });
+      window.history.replaceState({}, document.title, window.location.pathname);
+    }
+  }, [toast]);
+
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
     if (element) {
@@ -138,6 +162,16 @@ const Index = () => {
     name: 'Unreal Engine',
     level: 60
   }];
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setFormSubmitting(true);
+
+    setTimeout(() => {
+      setFormSubmitting(false);
+      setFormSubmitted(true);
+    }, 500);
+  };
 
   return <div className="min-h-screen">
       <header className={`fixed top-0 left-0 right-0 z-50 flex justify-center py-4 px-6 transition-all duration-300 ${isScrolled ? 'py-2' : 'py-4'}`}>
@@ -423,27 +457,59 @@ const Index = () => {
           <div className="bento-box">
             <p className="text-lg mb-6">Schreiben Sie mir einfach eine kurze Nachricht.</p>
             
-            <form className="space-y-4">
+            <form method="POST" action="contact.php" className="space-y-4" onSubmit={handleSubmit}>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                   <label htmlFor="name" className="block mb-2 text-sm font-medium">Name</label>
-                  <input type="text" id="name" className="w-full px-4 py-2 rounded-lg border border-border bg-white/50 focus:outline-none focus:ring-2 focus:ring-primary/20" placeholder="Ihr Name" />
+                  <input 
+                    type="text" 
+                    id="name" 
+                    name="name" 
+                    className="w-full px-4 py-2 rounded-lg border border-border bg-white/50 focus:outline-none focus:ring-2 focus:ring-primary/20" 
+                    placeholder="Ihr Name"
+                    required 
+                  />
                 </div>
                 <div>
                   <label htmlFor="email" className="block mb-2 text-sm font-medium">Email</label>
-                  <input type="email" id="email" className="w-full px-4 py-2 rounded-lg border border-border bg-white/50 focus:outline-none focus:ring-2 focus:ring-primary/20" placeholder="Ihre Email" />
+                  <input 
+                    type="email" 
+                    id="email" 
+                    name="email" 
+                    className="w-full px-4 py-2 rounded-lg border border-border bg-white/50 focus:outline-none focus:ring-2 focus:ring-primary/20" 
+                    placeholder="Ihre Email"
+                    required 
+                  />
                 </div>
               </div>
               <div>
                 <label htmlFor="subject" className="block mb-2 text-sm font-medium">Betreff</label>
-                <input type="text" id="subject" className="w-full px-4 py-2 rounded-lg border border-border bg-white/50 focus:outline-none focus:ring-2 focus:ring-primary/20" placeholder="Betreff" />
+                <input 
+                  type="text" 
+                  id="subject" 
+                  name="subject" 
+                  className="w-full px-4 py-2 rounded-lg border border-border bg-white/50 focus:outline-none focus:ring-2 focus:ring-primary/20" 
+                  placeholder="Betreff"
+                  required 
+                />
               </div>
               <div>
                 <label htmlFor="message" className="block mb-2 text-sm font-medium">Nachricht</label>
-                <textarea id="message" rows={5} className="w-full px-4 py-2 rounded-lg border border-border bg-white/50 focus:outline-none focus:ring-2 focus:ring-primary/20" placeholder="Ihre Nachricht"></textarea>
+                <textarea 
+                  id="message" 
+                  name="message" 
+                  rows={5} 
+                  className="w-full px-4 py-2 rounded-lg border border-border bg-white/50 focus:outline-none focus:ring-2 focus:ring-primary/20" 
+                  placeholder="Ihre Nachricht"
+                  required
+                ></textarea>
               </div>
-              <button type="submit" className="bg-primary text-white rounded-full px-6 py-3 flex items-center font-medium hover:bg-primary/90 transition-colors">
-                Los geht's!
+              <button 
+                type="submit" 
+                className="bg-primary text-white rounded-full px-6 py-3 flex items-center font-medium hover:bg-primary/90 transition-colors"
+                disabled={formSubmitting}
+              >
+                {formSubmitting ? 'Wird gesendet...' : 'Los geht\'s!'}
               </button>
             </form>
           </div>
