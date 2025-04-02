@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Code, Image, Briefcase, Mail, User, X, Edit, Check, ChevronDown } from 'lucide-react';
+import { ArrowRight, Code, Image, Briefcase, Mail, User, X, Edit, Check, ChevronDown, Play } from 'lucide-react';
 import { Dialog, DialogContent, DialogClose } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -224,6 +224,7 @@ const Index = () => {
               muted 
               playsInline 
               preload="auto"
+              controls={false}
               className="w-full h-full object-cover" 
               style={{
                 width: '100vw',
@@ -380,36 +381,39 @@ const Index = () => {
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             <div className="project-card flex flex-col">
-              <h3 className="text-xl font-medium mb-3 px-2">Aftermovie Formula Student Austria 2024</h3>
+              <h3 className="text-xl font-medium mb-3 px-2">Aftermovie FSA 2024</h3>
               <div className="relative flex-1 overflow-hidden cursor-pointer" onClick={() => setShowVideoModal(true)}>
-                <img alt="Aftermovie Formula Student Austria 2024" src="https://img.youtube.com/vi/Drb7kUK75zA/maxresdefault.jpg" className="w-full h-full object-cover transition-transform duration-500 hover:scale-105" />
+                <img alt="Aftermovie FSA 2024" src="https://img.youtube.com/vi/Drb7kUK75zA/maxresdefault.jpg" className="w-full h-full object-cover transition-transform duration-500 hover:scale-105" />
                 <div className="absolute inset-0 bg-black/30 hover:bg-black/50 transition-colors flex items-center justify-center">
+                  <div className="bg-black/50 p-4 rounded-full">
+                    <Play className="h-10 w-10 text-white" fill="white" />
+                  </div>
                 </div>
               </div>
             </div>
             
             <div className="project-card flex flex-col">
               <h3 className="text-xl font-medium mb-3 px-2">Fast Forest – Rendering</h3>
-              <div className="relative flex-1 overflow-hidden cursor-pointer" onClick={() => openImageModal("https://img.nkmd.de/uploads/small2x/3c/c4/71d33a70ac981283a2c1b22e81ed.png")}>
-                <img src="https://img.nkmd.de/uploads/small2x/3c/c4/71d33a70ac981283a2c1b22e81ed.png" alt="Fast Forest – Rendering" className="w-full h-full object-cover transition-transform duration-500 hover:scale-105" />
+              <div className="relative flex-1 overflow-hidden cursor-pointer" onClick={() => openImageModal("https://img.nkmd.de/uploads/small2x/78/9f/16e8b73c1afc9cb940478a5dba77.jpg")}>
+                <img src="https://img.nkmd.de/uploads/small2x/78/9f/16e8b73c1afc9cb940478a5dba77.jpg" alt="Fast Forest – Rendering" className="w-full h-full object-cover transition-transform duration-500 hover:scale-105" />
                 <div className="absolute inset-0 bg-black/30 hover:bg-black/50 transition-colors flex items-center justify-center">
                 </div>
               </div>
             </div>
             
             <div className="project-card flex flex-col">
-              <h3 className="text-xl font-medium mb-3 px-2">Logodesign – niklaskoskowski.de</h3>
+              <h3 className="text-xl font-medium mb-3 px-2">niklaskoskowski.de</h3>
               <div className="relative flex-1 overflow-hidden cursor-pointer" onClick={() => openImageModal("https://9nk.de/assets/9.png")}>
-                <img src="https://9nk.de/assets/9.png" alt="Logodesign – niklaskoskowski.de" className="w-full h-full object-cover transition-transform duration-500 hover:scale-105" />
+                <img src="https://9nk.de/assets/9.png" alt="niklaskoskowski.de" className="w-full h-full object-cover transition-transform duration-500 hover:scale-105" />
                 <div className="absolute inset-0 bg-black/30 hover:bg-black/00 transition-colors flex items-center justify-center">
                 </div>
               </div>
             </div>
             
             <div className="project-card flex flex-col">
-              <h3 className="text-xl font-medium mb-3 px-2">Muster Lybecker Institut Raahe</h3>
+              <h3 className="text-xl font-medium mb-3 px-2">Lybecker Institut Raahe</h3>
               <div className="relative flex-1 overflow-hidden cursor-pointer" onClick={() => openImageModal("https://9nk.de/assets/raahe.jpg")}>
-                <img src="https://9nk.de/assets/raahe.jpg" alt="Muster Lybecker Institut Raahe – Finnland" className="w-full h-full object-cover transition-transform duration-500 hover:scale-105" />
+                <img src="https://9nk.de/assets/raahe.jpg" alt="Lybecker Institut Raahe" className="w-full h-full object-cover transition-transform duration-500 hover:scale-105" />
                 <div className="absolute inset-0 bg-black/30 hover:bg-black/50 transition-colors flex items-center justify-center">
                 </div>
               </div>
