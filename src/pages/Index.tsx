@@ -2,36 +2,29 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Code, Image, Briefcase, Mail, User, X } from 'lucide-react';
 import { Dialog, DialogContent, DialogClose } from "@/components/ui/dialog";
-
 const Index = () => {
   const [activeSection, setActiveSection] = useState<string>('home');
   const [isScrolled, setIsScrolled] = useState<boolean>(false);
   const [showVideoModal, setShowVideoModal] = useState<boolean>(false);
   const [showImageModal, setShowImageModal] = useState<boolean>(false);
   const [selectedImage, setSelectedImage] = useState<string>("");
-
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);
-      
       const sections = document.querySelectorAll('section[id]');
       const scrollPosition = window.scrollY + 100;
-
       sections.forEach(section => {
         const sectionTop = (section as HTMLElement).offsetTop;
         const sectionHeight = (section as HTMLElement).offsetHeight;
         const sectionId = section.getAttribute('id') || '';
-        
         if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
           setActiveSection(sectionId);
         }
       });
     };
-
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
-
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
     if (element) {
@@ -41,54 +34,47 @@ const Index = () => {
       });
     }
   };
-
   const openImageModal = (imageSrc: string) => {
     setSelectedImage(imageSrc);
     setShowImageModal(true);
   };
-
-  const skills = [
-    { name: 'Adobe CC (Ai, Id, Ps)', level: 90 },
-    { name: 'HTML', level: 75 },
-    { name: 'CSS', level: 70 },
-    { name: 'Fotografie', level: 85 },
-    { name: 'Unreal Engine', level: 60 }
-  ];
-
-  return (
-    <div className="min-h-screen">
+  const skills = [{
+    name: 'Adobe CC (Ai, Id, Ps)',
+    level: 90
+  }, {
+    name: 'HTML',
+    level: 75
+  }, {
+    name: 'CSS',
+    level: 70
+  }, {
+    name: 'Fotografie',
+    level: 85
+  }, {
+    name: 'Unreal Engine',
+    level: 60
+  }];
+  return <div className="min-h-screen">
       <header className={`fixed top-0 left-0 right-0 z-50 flex justify-center py-4 px-6 transition-all duration-300 ${isScrolled ? 'py-2' : 'py-4'}`}>
         <nav className={`navbar-glass rounded-full py-2 px-4 md:px-6 max-w-4xl mx-auto transition-all duration-300 ${isScrolled ? 'shadow-md' : ''}`}>
           <ul className="flex items-center space-x-1 md:space-x-2">
             <li>
-              <button 
-                onClick={() => scrollToSection('home')}
-                className={`px-3 py-2 rounded-full text-sm md:text-base transition-colors ${activeSection === 'home' ? 'bg-primary text-white' : 'hover:bg-secondary'}`}
-              >
+              <button onClick={() => scrollToSection('home')} className={`px-3 py-2 rounded-full text-sm md:text-base transition-colors ${activeSection === 'home' ? 'bg-primary text-white' : 'hover:bg-secondary'}`}>
                 Home
               </button>
             </li>
             <li>
-              <button 
-                onClick={() => scrollToSection('lebenslauf')}
-                className={`px-3 py-2 rounded-full text-sm md:text-base transition-colors ${activeSection === 'lebenslauf' ? 'bg-primary text-white' : 'hover:bg-secondary'}`}
-              >
+              <button onClick={() => scrollToSection('lebenslauf')} className={`px-3 py-2 rounded-full text-sm md:text-base transition-colors ${activeSection === 'lebenslauf' ? 'bg-primary text-white' : 'hover:bg-secondary'}`}>
                 Lebenslauf
               </button>
             </li>
             <li>
-              <button 
-                onClick={() => scrollToSection('projekte')}
-                className={`px-3 py-2 rounded-full text-sm md:text-base transition-colors ${activeSection === 'projekte' ? 'bg-primary text-white' : 'hover:bg-secondary'}`}
-              >
+              <button onClick={() => scrollToSection('projekte')} className={`px-3 py-2 rounded-full text-sm md:text-base transition-colors ${activeSection === 'projekte' ? 'bg-primary text-white' : 'hover:bg-secondary'}`}>
                 Projekte
               </button>
             </li>
             <li>
-              <button 
-                onClick={() => scrollToSection('kontakt')}
-                className={`px-3 py-2 rounded-full text-sm md:text-base transition-colors ${activeSection === 'kontakt' ? 'bg-primary text-white' : 'hover:bg-secondary'}`}
-              >
+              <button onClick={() => scrollToSection('kontakt')} className={`px-3 py-2 rounded-full text-sm md:text-base transition-colors ${activeSection === 'kontakt' ? 'bg-primary text-white' : 'hover:bg-secondary'}`}>
                 Kontakt
               </button>
             </li>
@@ -100,14 +86,11 @@ const Index = () => {
         <section id="home" className="mb-24 relative">
           <div className="absolute inset-0 w-screen h-full overflow-hidden -z-10 left-1/2 transform -translate-x-1/2">
             <div className="absolute inset-0 bg-black/40 z-10"></div>
-            <video 
-              autoPlay 
-              loop 
-              muted 
-              playsInline
-              className="w-full h-full object-cover" 
-              style={{ width: '100vw', height: '100vh', objectFit: 'cover' }}
-            >
+            <video autoPlay loop muted playsInline className="w-full h-full object-cover" style={{
+            width: '100vw',
+            height: '100vh',
+            objectFit: 'cover'
+          }}>
               <source src="https://9nk.de/neu/video.mp4" type="video/mp4" />
               Your browser does not support the video tag.
             </video>
@@ -126,19 +109,12 @@ const Index = () => {
                 Hi, Ich bin <span className="text-gradient">Niklas</span>,
               </h1>
               <p className="text-xl md:text-2xl text-white mb-8">schau Dich mal um!</p>
-              <button 
-                onClick={() => scrollToSection('about')}
-                className="bg-primary text-white rounded-full px-6 py-3 flex items-center font-medium hover:bg-primary/90 transition-colors"
-              >
+              <button onClick={() => scrollToSection('about')} className="bg-primary text-white rounded-full px-6 py-3 flex items-center font-medium hover:bg-primary/90 transition-colors">
                 Mehr erfahren <ArrowRight className="ml-2 h-4 w-4" />
               </button>
             </div>
             <div className="glass rounded-3xl overflow-hidden">
-              <img 
-                src="https://nkmd.de/placeholder/600x400" 
-                alt="Niklas Koskowski" 
-                className="w-full h-full object-cover"
-              />
+              <img src="https://nkmd.de/placeholder/600x400" alt="Niklas Koskowski" className="w-full h-full object-cover" />
             </div>
           </div>
         </section>
@@ -160,26 +136,24 @@ const Index = () => {
           <div className="mt-12">
             <h3 className="text-xl font-semibold mb-4">Hobbies</h3>
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4">
-              {['3D Druck', 'Motorsport', 'Fotografie', 'Design', 'Musik'].map((hobby, index) => (
-                <div key={index} className="bento-box h-24 flex items-center justify-center text-center">
+              {['3D Druck', 'Motorsport', 'Fotografie', 'Design', 'Musik'].map((hobby, index) => <div key={index} className="bento-box h-24 flex items-center justify-center text-center">
                   <span>{hobby}</span>
-                </div>
-              ))}
+                </div>)}
             </div>
           </div>
           
           <div className="mt-12">
             <h3 className="text-xl font-semibold mb-4">Skills</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {skills.map((skill, index) => (
-                <div key={index} className="skill-item">
+              {skills.map((skill, index) => <div key={index} className="skill-item">
                   <span className="w-32 md:w-40 font-medium">{skill.name}</span>
                   <div className="skill-bar">
-                    <div className="skill-progress" style={{ width: `${skill.level}%` }}></div>
+                    <div className="skill-progress" style={{
+                  width: `${skill.level}%`
+                }}></div>
                   </div>
                   <span className="text-sm">{skill.level}%</span>
-                </div>
-              ))}
+                </div>)}
             </div>
           </div>
         </section>
@@ -253,16 +227,12 @@ const Index = () => {
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             <div className="project-card">
-              <img src="https://nkmd.de/placeholder/600x400" alt="Aftermovie Formula Student Austria 2024" />
-              <div 
-                className="project-overlay"
-                onClick={() => setShowVideoModal(true)}
-                style={{
-                  backgroundImage: 'url(https://nkmd.de/placeholder/1200x800)',
-                  backgroundSize: 'cover',
-                  backgroundPosition: 'center',
-                }}
-              >
+              <img alt="Aftermovie Formula Student Austria 2024" src="https://img.youtube.com/vi/Drb7kUK75zA/maxresdefault.jpg" />
+              <div className="project-overlay" onClick={() => setShowVideoModal(true)} style={{
+              backgroundImage: 'url(https://nkmd.de/placeholder/1200x800)',
+              backgroundSize: 'cover',
+              backgroundPosition: 'center'
+            }}>
                 <div className="absolute inset-0 bg-black/70 flex flex-col items-center justify-center p-4 text-white">
                   <h3 className="text-xl font-medium mb-2">Aftermovie Formula Student Austria 2024</h3>
                   <button className="bg-white/20 hover:bg-white/30 text-white px-4 py-2 rounded-full mt-2 transition-colors">Ansehen</button>
@@ -272,10 +242,7 @@ const Index = () => {
             
             <div className="project-card">
               <img src="https://nkmd.de/placeholder/600x400" alt="Fast Forest – Rendering" />
-              <div 
-                className="project-overlay"
-                onClick={() => openImageModal("https://nkmd.de/placeholder/1200x800")}
-              >
+              <div className="project-overlay" onClick={() => openImageModal("https://nkmd.de/placeholder/1200x800")}>
                 <h3 className="text-xl font-medium mb-2">Fast Forest – Rendering</h3>
                 <button className="bg-white/20 hover:bg-white/30 text-white px-4 py-2 rounded-full mt-2 transition-colors">Ansehen</button>
               </div>
@@ -283,10 +250,7 @@ const Index = () => {
             
             <div className="project-card">
               <img src="https://nkmd.de/placeholder/600x400" alt="Logodesign – niklaskoskowski.de" />
-              <div 
-                className="project-overlay"
-                onClick={() => openImageModal("https://nkmd.de/placeholder/1200x800")}
-              >
+              <div className="project-overlay" onClick={() => openImageModal("https://nkmd.de/placeholder/1200x800")}>
                 <h3 className="text-xl font-medium mb-2">Logodesign – niklaskoskowski.de</h3>
                 <button className="bg-white/20 hover:bg-white/30 text-white px-4 py-2 rounded-full mt-2 transition-colors">Ansehen</button>
               </div>
@@ -294,10 +258,7 @@ const Index = () => {
             
             <div className="project-card">
               <img src="https://nkmd.de/placeholder/600x400" alt="Muster Lybecker Institut Raahe – Finnland" />
-              <div 
-                className="project-overlay"
-                onClick={() => openImageModal("https://nkmd.de/placeholder/1200x800")}
-              >
+              <div className="project-overlay" onClick={() => openImageModal("https://nkmd.de/placeholder/1200x800")}>
                 <h3 className="text-xl font-medium mb-2">Muster Lybecker Institut Raahe</h3>
                 <button className="bg-white/20 hover:bg-white/30 text-white px-4 py-2 rounded-full mt-2 transition-colors">Ansehen</button>
               </div>
@@ -307,15 +268,9 @@ const Index = () => {
           <div className="mt-12">
             <h3 className="text-xl font-semibold mb-6">Fotogalerie</h3>
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-              {[1, 2, 3, 4, 5, 6, 7, 8].map((item) => (
-                <div key={item} className="aspect-square overflow-hidden rounded-xl">
-                  <img 
-                    src={`https://nkmd.de/placeholder/400x400`} 
-                    alt={`Foto ${item}`} 
-                    className="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
-                  />
-                </div>
-              ))}
+              {[1, 2, 3, 4, 5, 6, 7, 8].map(item => <div key={item} className="aspect-square overflow-hidden rounded-xl">
+                  <img src={`https://nkmd.de/placeholder/400x400`} alt={`Foto ${item}`} className="w-full h-full object-cover transition-transform duration-500 hover:scale-110" />
+                </div>)}
             </div>
           </div>
         </section>
@@ -329,45 +284,22 @@ const Index = () => {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                   <label htmlFor="name" className="block mb-2 text-sm font-medium">Name</label>
-                  <input 
-                    type="text" 
-                    id="name" 
-                    className="w-full px-4 py-2 rounded-lg border border-border bg-white/50 focus:outline-none focus:ring-2 focus:ring-primary/20"
-                    placeholder="Ihr Name"
-                  />
+                  <input type="text" id="name" className="w-full px-4 py-2 rounded-lg border border-border bg-white/50 focus:outline-none focus:ring-2 focus:ring-primary/20" placeholder="Ihr Name" />
                 </div>
                 <div>
                   <label htmlFor="email" className="block mb-2 text-sm font-medium">Email</label>
-                  <input 
-                    type="email" 
-                    id="email" 
-                    className="w-full px-4 py-2 rounded-lg border border-border bg-white/50 focus:outline-none focus:ring-2 focus:ring-primary/20" 
-                    placeholder="Ihre Email"
-                  />
+                  <input type="email" id="email" className="w-full px-4 py-2 rounded-lg border border-border bg-white/50 focus:outline-none focus:ring-2 focus:ring-primary/20" placeholder="Ihre Email" />
                 </div>
               </div>
               <div>
                 <label htmlFor="subject" className="block mb-2 text-sm font-medium">Betreff</label>
-                <input 
-                  type="text" 
-                  id="subject" 
-                  className="w-full px-4 py-2 rounded-lg border border-border bg-white/50 focus:outline-none focus:ring-2 focus:ring-primary/20"
-                  placeholder="Betreff"
-                />
+                <input type="text" id="subject" className="w-full px-4 py-2 rounded-lg border border-border bg-white/50 focus:outline-none focus:ring-2 focus:ring-primary/20" placeholder="Betreff" />
               </div>
               <div>
                 <label htmlFor="message" className="block mb-2 text-sm font-medium">Nachricht</label>
-                <textarea 
-                  id="message" 
-                  rows={5} 
-                  className="w-full px-4 py-2 rounded-lg border border-border bg-white/50 focus:outline-none focus:ring-2 focus:ring-primary/20"
-                  placeholder="Ihre Nachricht"
-                ></textarea>
+                <textarea id="message" rows={5} className="w-full px-4 py-2 rounded-lg border border-border bg-white/50 focus:outline-none focus:ring-2 focus:ring-primary/20" placeholder="Ihre Nachricht"></textarea>
               </div>
-              <button 
-                type="submit"
-                className="bg-primary text-white rounded-full px-6 py-3 flex items-center font-medium hover:bg-primary/90 transition-colors"
-              >
+              <button type="submit" className="bg-primary text-white rounded-full px-6 py-3 flex items-center font-medium hover:bg-primary/90 transition-colors">
                 Los geht's!
               </button>
             </form>
@@ -382,10 +314,10 @@ const Index = () => {
         </div>
       </footer>
 
-      <button 
-        onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-        className={`fixed bottom-6 right-6 bg-primary text-white p-3 rounded-full shadow-lg transition-opacity duration-300 ${isScrolled ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
-      >
+      <button onClick={() => window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    })} className={`fixed bottom-6 right-6 bg-primary text-white p-3 rounded-full shadow-lg transition-opacity duration-300 ${isScrolled ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
         <ArrowRight className="h-5 w-5 rotate-[270deg]" />
       </button>
 
@@ -396,14 +328,7 @@ const Index = () => {
             <span className="sr-only">Close</span>
           </DialogClose>
           <div className="relative pb-[56.25%] h-0">
-            <iframe 
-              className="absolute top-0 left-0 w-full h-full"
-              src={`https://www.youtube.com/embed/Drb7kUK75zA?autoplay=1`}
-              title="YouTube video player"
-              frameBorder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
-            />
+            <iframe className="absolute top-0 left-0 w-full h-full" src={`https://www.youtube.com/embed/Drb7kUK75zA?autoplay=1`} title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen />
           </div>
         </DialogContent>
       </Dialog>
@@ -415,16 +340,10 @@ const Index = () => {
             <span className="sr-only">Close</span>
           </DialogClose>
           <div className="relative">
-            <img 
-              src={selectedImage} 
-              alt="Project image" 
-              className="w-full h-auto max-h-[90vh] object-contain"
-            />
+            <img src={selectedImage} alt="Project image" className="w-full h-auto max-h-[90vh] object-contain" />
           </div>
         </DialogContent>
       </Dialog>
-    </div>
-  );
+    </div>;
 };
-
 export default Index;
