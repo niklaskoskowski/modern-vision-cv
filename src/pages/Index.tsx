@@ -72,24 +72,51 @@ const Index = () => {
   }, []);
 
   useEffect(() => {
-    const video = videoRef.current;
-    if (video) {
-      video.muted = true;
-      video.play().catch(err => {
-        console.log("Autoplay prevented:", err);
-      });
-    }
-
-    const handleVisibilityChange = () => {
-      if (document.visibilityState === 'visible' && videoRef.current) {
-        videoRef.current.play().catch(err => {
-          console.log("Autoplay on visibility change prevented:", err);
-        });
+    const videoElement = videoRef.current;
+    if (!videoElement) return;
+    
+    const attemptPlay = () => {
+      videoElement.muted = true;
+      
+      const playPromise = videoElement.play();
+      
+      if (playPromise !== undefined) {
+        playPromise
+          .then(() => {
+            console.log('Autoplay successful');
+          })
+          .catch(error => {
+            console.log('Autoplay prevented:', error);
+            
+            const startPlayback = () => {
+              videoElement.play()
+                .then(() => {
+                  document.removeEventListener('click', startPlayback);
+                  document.removeEventListener('touchstart', startPlayback);
+                })
+                .catch(e => console.log('Play after interaction failed:', e));
+            };
+            
+            document.addEventListener('click', startPlayback);
+            document.addEventListener('touchstart', startPlayback);
+          });
       }
     };
+    
+    attemptPlay();
+    
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === 'visible' && videoElement.paused) {
+        attemptPlay();
+      }
+    };
+    
     document.addEventListener('visibilitychange', handleVisibilityChange);
+    
     return () => {
       document.removeEventListener('visibilitychange', handleVisibilityChange);
+      document.removeEventListener('click', attemptPlay);
+      document.removeEventListener('touchstart', attemptPlay);
     };
   }, []);
 
@@ -213,23 +240,34 @@ const Index = () => {
         <section id="home" className="mb-24 relative">
           <div className="absolute inset-0 w-screen h-full overflow-hidden -z-10 left-1/2 transform -translate-x-1/2">
             <div className="absolute inset-0 bg-black/40 z-10"></div>
-            <video 
-              ref={videoRef} 
-              autoPlay 
-              loop 
-              muted 
-              playsInline
-              className="w-full h-full object-cover" 
-              style={{
-                width: '100vw',
-                height: '100vh',
-                objectFit: 'cover'
-              }}
-              poster="https://img.nkmd.de/uploads/medium/10/af/9609c92495e20d4425bfbf2a4156.jpeg"
-            >
-              <source src="https://9nk.de/neu/video.mp4" type="video/mp4" />
-              Your browser does not support the video tag.
-            </video>
+            
+            <div className="w-full h-full">
+              <video 
+                ref={videoRef}
+                muted
+                loop
+                playsInline
+                autoPlay
+                className="w-full h-full object-cover"
+                style={{ width: '100vw', height: '100vh', objectFit: 'cover' }}
+                poster="https://img.nkmd.de/uploads/medium/10/af/9609c92495e20d4425bfbf2a4156.jpeg"
+              >
+                <source src="https://9nk.de/neu/video.mp4" type="video/mp4" />
+                Your browser does not support the video tag.
+              </video>
+              
+              <img 
+                src="https://img.nkmd.de/uploads/medium/10/af/9609c92495e20d4425bfbf2a4156.jpeg" 
+                alt="Background" 
+                className="w-full h-full object-cover absolute top-0 left-0 z-[-1]"
+                style={{ display: 'none' }}
+                onError={(e) => {
+                  if (videoRef.current?.error) {
+                    e.currentTarget.style.display = 'block';
+                  }
+                }}
+              />
+            </div>
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center min-h-[100vh] relative z-10">
