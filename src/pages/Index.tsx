@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Code, Image, Briefcase, Mail, User, X, Edit, Check, ChevronDown } from 'lucide-react';
@@ -127,7 +128,7 @@ const Index = () => {
                 <img 
                   src="https://9nk.de/assets/nk-portfolio.png" 
                   alt="NK Portfolio Logo" 
-                  className="h-4 w-auto md:h-6" 
+                  className="h-4 w-auto md:h-6 mr-2 md:mr-4" 
                 />
               </button>
             </li>
@@ -196,7 +197,7 @@ const Index = () => {
           </div>
           
           <div 
-            className={`absolute bottom-8 left-1/2 transform -translate-x-1/2 cursor-pointer transition-opacity duration-500 z-30 ${isScrolled ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}
+            className={`absolute bottom-16 sm:bottom-8 left-1/2 transform -translate-x-1/2 cursor-pointer transition-opacity duration-500 z-30 ${isScrolled ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}
             onClick={() => scrollToSection('about')}
           >
             <div className="flex flex-col items-center text-white">
