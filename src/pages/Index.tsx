@@ -190,7 +190,8 @@ const Index = () => {
 
       <main className="container mx-auto px-4 pt-0 pb-20 max-w-6xl">
         <section id="home" className="mb-24 relative">
-          <div className="absolute inset-0 overflow-hidden z-0">
+          <div className="absolute inset-0 w-screen h-full overflow-hidden z-1 left-1/2 transform -translate-x-1/2">
+
 
             <div className="absolute inset-0 bg-black/40 z-10"></div>
             
