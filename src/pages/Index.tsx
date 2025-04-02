@@ -120,8 +120,8 @@ const Index = () => {
       <header className={`fixed top-0 left-0 right-0 z-50 flex justify-center py-4 px-6 transition-all duration-300 ${isScrolled ? 'py-2' : 'py-4'}`}>
         <nav className={`navbar-glass rounded-full py-2 px-4 md:px-6 max-w-4xl mx-auto transition-all duration-300 ${isScrolled ? 'shadow-md' : ''}`}>
           <ul className="flex items-center space-x-1 md:space-x-2">
-            <li className="mr-2 md:mr-3">
-              <button onClick={() => scrollToSection('home')} className="cursor-pointer">
+            <li className="mr-2 md:mr-3 flex items-center">
+              <button onClick={() => scrollToSection('home')} className="cursor-pointer flex items-center">
                 <img src="https://9nk.de/assets/nk-portfolio.png" alt="NK Portfolio Logo" className="h-8 w-auto" />
               </button>
             </li>
@@ -186,7 +186,7 @@ const Index = () => {
           </div>
           
           <div 
-            className={`absolute bottom-8 left-1/2 transform -translate-x-1/2 cursor-pointer transition-opacity duration-500 ${isScrolled ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}
+            className={`absolute bottom-8 left-1/2 transform -translate-x-1/2 cursor-pointer transition-opacity duration-500 z-20 ${isScrolled ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}
             onClick={() => scrollToSection('lebenslauf')}
           >
             <div className="flex flex-col items-center text-white">
