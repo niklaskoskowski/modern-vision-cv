@@ -72,50 +72,25 @@ const Index = () => {
   }, []);
 
   useEffect(() => {
-    const handlePlayVideo = () => {
-      const videoElement = videoRef.current;
-      if (videoElement) {
-        videoElement.volume = 0;
-        videoElement.muted = true;
-        videoElement.playsInline = true;
-        videoElement.controls = false;
-        videoElement.setAttribute('playsinline', '');
-        videoElement.setAttribute('webkit-playsinline', '');
-        
-        const playPromise = videoElement.play();
-        
-        if (playPromise !== undefined) {
-          playPromise.catch(error => {
-            console.log('Autoplay prevented:', error);
-            
-            const playVideoOnInteraction = () => {
-              if (videoElement) {
-                videoElement.controls = false;
-                videoElement.play().catch(e => console.log("Still couldn't play:", e));
-              }
-            };
-            
-            document.addEventListener('touchstart', playVideoOnInteraction, { once: true });
-            document.addEventListener('click', playVideoOnInteraction, { once: true });
-          });
-        }
-      }
-    };
-    
-    handlePlayVideo();
+    const video = videoRef.current;
+    if (video) {
+      video.muted = true;
+      video.play().catch(err => {
+        console.log("Autoplay prevented:", err);
+      });
+    }
     
     const handleVisibilityChange = () => {
-      if (document.visibilityState === 'visible') {
-        handlePlayVideo();
+      if (document.visibilityState === 'visible' && videoRef.current) {
+        videoRef.current.play().catch(err => {
+          console.log("Autoplay on visibility change prevented:", err);
+        });
       }
     };
     
     document.addEventListener('visibilitychange', handleVisibilityChange);
-    
     return () => {
       document.removeEventListener('visibilitychange', handleVisibilityChange);
-      document.removeEventListener('touchstart', handlePlayVideo);
-      document.removeEventListener('click', handlePlayVideo);
     };
   }, []);
 
@@ -253,9 +228,6 @@ const Index = () => {
               loop 
               muted 
               playsInline
-              preload="auto"
-              disablePictureInPicture
-              controls={false}
               className="w-full h-full object-cover" 
               style={{
                 width: '100vw',
