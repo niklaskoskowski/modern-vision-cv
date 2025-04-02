@@ -257,9 +257,16 @@ const Index = () => {
               <div 
                 className="project-overlay"
                 onClick={() => setShowVideoModal(true)}
+                style={{
+                  backgroundImage: 'url(https://nkmd.de/placeholder/1200x800)',
+                  backgroundSize: 'cover',
+                  backgroundPosition: 'center',
+                }}
               >
-                <h3 className="text-xl font-medium mb-2">Aftermovie Formula Student Austria 2024</h3>
-                <button className="bg-white/20 hover:bg-white/30 text-white px-4 py-2 rounded-full mt-2 transition-colors">Ansehen</button>
+                <div className="absolute inset-0 bg-black/70 flex flex-col items-center justify-center p-4 text-white">
+                  <h3 className="text-xl font-medium mb-2">Aftermovie Formula Student Austria 2024</h3>
+                  <button className="bg-white/20 hover:bg-white/30 text-white px-4 py-2 rounded-full mt-2 transition-colors">Ansehen</button>
+                </div>
               </div>
             </div>
             
