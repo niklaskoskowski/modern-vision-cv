@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Code, Image, Briefcase, Mail, User, X, Edit, Check, ChevronDown, Play } from 'lucide-react';
@@ -74,21 +73,15 @@ const Index = () => {
     const video = videoRef.current;
     if (!video) return;
     
-    // Setup video for optimal autoplay based on Apple's documentation
-    const setupVideoForAutoplay = () => {
-      if (!video) return;
-      
-      // Make sure video is muted for autoplay to work
-      video.muted = true;
-      
-      // Try to play the video
+    video.muted = true;
+    
+    const attemptAutoplay = () => {
       const playPromise = video.play();
       
       if (playPromise !== undefined) {
         playPromise.catch(error => {
           console.log('Autoplay was prevented:', error);
           
-          // Add a user interaction handler if autoplay fails
           const handleUserInteraction = () => {
             video.play().catch(e => console.log('Play failed despite user interaction:', e));
             ['click', 'touchstart', 'keydown'].forEach(event => {
@@ -103,22 +96,15 @@ const Index = () => {
       }
     };
     
-    // Try to play when video can start playing
-    video.addEventListener('canplay', setupVideoForAutoplay);
+    attemptAutoplay();
     
-    // Also try when metadata is loaded (recommended by Apple)
-    video.addEventListener('loadedmetadata', setupVideoForAutoplay);
-    
-    // Check if video is already ready to play
-    if (video.readyState >= 3) {
-      setupVideoForAutoplay();
-    }
+    video.addEventListener('canplaythrough', attemptAutoplay);
+    video.addEventListener('loadedmetadata', attemptAutoplay);
     
     return () => {
-      // Clean up event listeners
       if (video) {
-        video.removeEventListener('canplay', setupVideoForAutoplay);
-        video.removeEventListener('loadedmetadata', setupVideoForAutoplay);
+        video.removeEventListener('canplaythrough', attemptAutoplay);
+        video.removeEventListener('loadedmetadata', attemptAutoplay);
       }
     };
   }, []);
@@ -252,10 +238,9 @@ const Index = () => {
                 muted
                 loop
                 playsInline
-                preload="metadata"
+                preload="auto"
                 className="w-full h-full object-cover"
                 style={{ width: '100vw', height: '100vh', objectFit: 'cover' }}
-                poster="https://img.nkmd.de/uploads/medium/10/af/9609c92495e20d4425bfbf2a4156.jpeg"
               >
                 <source src="https://9nk.de/neu/video.mp4" type="video/mp4" />
                 Your browser does not support the video tag.
