@@ -1,13 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Code, Image, Briefcase, Mail, User, X } from 'lucide-react';
+import { ArrowRight, Code, Image, Briefcase, Mail, User, X, Eye } from 'lucide-react';
 import { Dialog, DialogContent, DialogClose } from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
+
 const Index = () => {
   const [activeSection, setActiveSection] = useState<string>('home');
   const [isScrolled, setIsScrolled] = useState<boolean>(false);
   const [showVideoModal, setShowVideoModal] = useState<boolean>(false);
   const [showImageModal, setShowImageModal] = useState<boolean>(false);
   const [selectedImage, setSelectedImage] = useState<string>("");
+
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);
@@ -25,6 +28,7 @@ const Index = () => {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
     if (element) {
@@ -34,10 +38,12 @@ const Index = () => {
       });
     }
   };
+
   const openImageModal = (imageSrc: string) => {
     setSelectedImage(imageSrc);
     setShowImageModal(true);
   };
+
   const skills = [{
     name: 'Adobe CC (Ai, Id, Ps)',
     level: 90
@@ -54,6 +60,7 @@ const Index = () => {
     name: 'Unreal Engine',
     level: 60
   }];
+
   return <div className="min-h-screen">
       <header className={`fixed top-0 left-0 right-0 z-50 flex justify-center py-4 px-6 transition-all duration-300 ${isScrolled ? 'py-2' : 'py-4'}`}>
         <nav className={`navbar-glass rounded-full py-2 px-4 md:px-6 max-w-4xl mx-auto transition-all duration-300 ${isScrolled ? 'shadow-md' : ''}`}>
@@ -228,39 +235,69 @@ const Index = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             <div className="project-card">
               <img alt="Aftermovie Formula Student Austria 2024" src="https://img.youtube.com/vi/Drb7kUK75zA/maxresdefault.jpg" />
-              <div className="project-overlay" onClick={() => setShowVideoModal(true)} style={{
-              backgroundImage: 'url(https://nkmd.de/placeholder/1200x800)',
-              backgroundSize: 'cover',
-              backgroundPosition: 'center'
-            }}>
+              <div className="project-overlay" style={{
+                backgroundImage: 'url(https://nkmd.de/placeholder/1200x800)',
+                backgroundSize: 'cover',
+                backgroundPosition: 'center'
+              }}>
                 <div className="absolute inset-0 bg-black/70 flex flex-col items-center justify-center p-4 text-white">
                   <h3 className="text-xl font-medium mb-2">Aftermovie Formula Student Austria 2024</h3>
-                  <button className="bg-white/20 hover:bg-white/30 text-white px-4 py-2 rounded-full mt-2 transition-colors">Ansehen</button>
+                  <Button variant="outline" onClick={() => setShowVideoModal(true)} className="border-white/60 text-white hover:bg-white/20 hover:text-white">
+                    <Eye className="mr-2 h-4 w-4" />
+                    Video ansehen
+                  </Button>
                 </div>
               </div>
             </div>
             
             <div className="project-card">
               <img src="https://nkmd.de/placeholder/600x400" alt="Fast Forest – Rendering" />
-              <div className="project-overlay" onClick={() => openImageModal("https://nkmd.de/placeholder/1200x800")}>
-                <h3 className="text-xl font-medium mb-2">Fast Forest – Rendering</h3>
-                <button className="bg-white/20 hover:bg-white/30 text-white px-4 py-2 rounded-full mt-2 transition-colors">Ansehen</button>
+              <div className="project-overlay" style={{
+                backgroundImage: 'url(https://nkmd.de/placeholder/1200x800)',
+                backgroundSize: 'cover',
+                backgroundPosition: 'center'
+              }}>
+                <div className="absolute inset-0 bg-black/70 flex flex-col items-center justify-center p-4 text-white">
+                  <h3 className="text-xl font-medium mb-2">Fast Forest – Rendering</h3>
+                  <Button variant="outline" onClick={() => openImageModal("https://nkmd.de/placeholder/1200x800")} className="border-white/60 text-white hover:bg-white/20 hover:text-white">
+                    <Image className="mr-2 h-4 w-4" />
+                    Bild öffnen
+                  </Button>
+                </div>
               </div>
             </div>
             
             <div className="project-card">
               <img src="https://nkmd.de/placeholder/600x400" alt="Logodesign – niklaskoskowski.de" />
-              <div className="project-overlay" onClick={() => openImageModal("https://nkmd.de/placeholder/1200x800")}>
-                <h3 className="text-xl font-medium mb-2">Logodesign – niklaskoskowski.de</h3>
-                <button className="bg-white/20 hover:bg-white/30 text-white px-4 py-2 rounded-full mt-2 transition-colors">Ansehen</button>
+              <div className="project-overlay" style={{
+                backgroundImage: 'url(https://nkmd.de/placeholder/1200x800)',
+                backgroundSize: 'cover',
+                backgroundPosition: 'center'
+              }}>
+                <div className="absolute inset-0 bg-black/70 flex flex-col items-center justify-center p-4 text-white">
+                  <h3 className="text-xl font-medium mb-2">Logodesign – niklaskoskowski.de</h3>
+                  <Button variant="outline" onClick={() => openImageModal("https://nkmd.de/placeholder/1200x800")} className="border-white/60 text-white hover:bg-white/20 hover:text-white">
+                    <Image className="mr-2 h-4 w-4" />
+                    Bild öffnen
+                  </Button>
+                </div>
               </div>
             </div>
             
             <div className="project-card">
               <img src="https://nkmd.de/placeholder/600x400" alt="Muster Lybecker Institut Raahe – Finnland" />
-              <div className="project-overlay" onClick={() => openImageModal("https://nkmd.de/placeholder/1200x800")}>
-                <h3 className="text-xl font-medium mb-2">Muster Lybecker Institut Raahe</h3>
-                <button className="bg-white/20 hover:bg-white/30 text-white px-4 py-2 rounded-full mt-2 transition-colors">Ansehen</button>
+              <div className="project-overlay" style={{
+                backgroundImage: 'url(https://nkmd.de/placeholder/1200x800)',
+                backgroundSize: 'cover',
+                backgroundPosition: 'center'
+              }}>
+                <div className="absolute inset-0 bg-black/70 flex flex-col items-center justify-center p-4 text-white">
+                  <h3 className="text-xl font-medium mb-2">Muster Lybecker Institut Raahe</h3>
+                  <Button variant="outline" onClick={() => openImageModal("https://nkmd.de/placeholder/1200x800")} className="border-white/60 text-white hover:bg-white/20 hover:text-white">
+                    <Image className="mr-2 h-4 w-4" />
+                    Bild öffnen
+                  </Button>
+                </div>
               </div>
             </div>
           </div>
@@ -346,4 +383,5 @@ const Index = () => {
       </Dialog>
     </div>;
 };
+
 export default Index;
