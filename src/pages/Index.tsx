@@ -1,16 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Code, Image, Briefcase, Mail, User } from 'lucide-react';
+import { ArrowRight, Code, Image, Briefcase, Mail, User, X } from 'lucide-react';
+import { Dialog, DialogContent, DialogClose } from "@/components/ui/dialog";
 
 const Index = () => {
   const [activeSection, setActiveSection] = useState<string>('home');
   const [isScrolled, setIsScrolled] = useState<boolean>(false);
+  const [showVideoModal, setShowVideoModal] = useState<boolean>(false);
 
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);
       
-      // Update active section based on scroll position
       const sections = document.querySelectorAll('section[id]');
       const scrollPosition = window.scrollY + 100;
 
@@ -49,7 +50,6 @@ const Index = () => {
 
   return (
     <div className="min-h-screen">
-      {/* Navbar */}
       <header className={`fixed top-0 left-0 right-0 z-50 flex justify-center py-4 px-6 transition-all duration-300 ${isScrolled ? 'py-2' : 'py-4'}`}>
         <nav className={`navbar-glass rounded-full py-2 px-4 md:px-6 max-w-4xl mx-auto transition-all duration-300 ${isScrolled ? 'shadow-md' : ''}`}>
           <ul className="flex items-center space-x-1 md:space-x-2">
@@ -90,7 +90,6 @@ const Index = () => {
       </header>
 
       <main className="container mx-auto px-4 pt-32 pb-20 max-w-6xl">
-        {/* Hero Section with Video Background */}
         <section id="home" className="mb-24 relative">
           <div className="absolute inset-0 w-screen h-full overflow-hidden -z-10 left-1/2 transform -translate-x-1/2">
             <div className="absolute inset-0 bg-black/40 z-10"></div>
@@ -137,7 +136,6 @@ const Index = () => {
           </div>
         </section>
 
-        {/* About Section */}
         <section id="about" className="mb-24">
           <h2 className="section-title">Über mich</h2>
           <div className="bento-box">
@@ -179,7 +177,6 @@ const Index = () => {
           </div>
         </section>
 
-        {/* Resume Section */}
         <section id="lebenslauf" className="mb-24">
           <h2 className="section-title">Lebenslauf</h2>
           
@@ -244,14 +241,16 @@ const Index = () => {
           </div>
         </section>
 
-        {/* Projects Section */}
         <section id="projekte" className="mb-24">
           <h2 className="section-title">Projekte</h2>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             <div className="project-card">
               <img src="https://nkmd.de/placeholder/600x400" alt="Aftermovie Formula Student Austria 2024" />
-              <div className="project-overlay">
+              <div 
+                className="project-overlay"
+                onClick={() => setShowVideoModal(true)}
+              >
                 <h3 className="text-xl font-medium mb-2">Aftermovie Formula Student Austria 2024</h3>
                 <button className="bg-white/20 hover:bg-white/30 text-white px-4 py-2 rounded-full mt-2 transition-colors">Ansehen</button>
               </div>
@@ -298,7 +297,6 @@ const Index = () => {
           </div>
         </section>
 
-        {/* Contact Section */}
         <section id="kontakt" className="mb-12">
           <h2 className="section-title">Kontakt</h2>
           <div className="bento-box">
@@ -361,13 +359,31 @@ const Index = () => {
         </div>
       </footer>
 
-      {/* Floating Action Button - Back to top */}
       <button 
         onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
         className={`fixed bottom-6 right-6 bg-primary text-white p-3 rounded-full shadow-lg transition-opacity duration-300 ${isScrolled ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
       >
         <ArrowRight className="h-5 w-5 rotate-[270deg]" />
       </button>
+
+      <Dialog open={showVideoModal} onOpenChange={setShowVideoModal}>
+        <DialogContent className="sm:max-w-[800px] p-0 bg-black overflow-hidden">
+          <DialogClose className="absolute right-2 top-2 rounded-full z-10 bg-black/50 p-2 text-white hover:bg-black/80">
+            <X className="h-4 w-4" />
+            <span className="sr-only">Close</span>
+          </DialogClose>
+          <div className="relative pb-[56.25%] h-0">
+            <iframe 
+              className="absolute top-0 left-0 w-full h-full"
+              src={`https://www.youtube.com/embed/Drb7kUK75zA?autoplay=1`}
+              title="YouTube video player"
+              frameBorder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+            />
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };
