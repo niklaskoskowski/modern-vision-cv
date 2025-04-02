@@ -251,10 +251,10 @@ const Index = () => {
               <h3 className="text-xl font-medium mb-3 px-2">Fast Forest – Rendering</h3>
               <div 
                 className="relative flex-1 overflow-hidden cursor-pointer" 
-                onClick={() => openImageModal("https://nkmd.de/placeholder/1200x800")}
+                onClick={() => openImageModal("https://img.nkmd.de/uploads/small2x/3c/c4/71d33a70ac981283a2c1b22e81ed.png")}
               >
                 <img 
-                  src="https://nkmd.de/placeholder/600x400" 
+                  src="https://img.nkmd.de/uploads/small2x/3c/c4/71d33a70ac981283a2c1b22e81ed.png" 
                   alt="Fast Forest – Rendering"
                   className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
                 />
@@ -268,10 +268,10 @@ const Index = () => {
               <h3 className="text-xl font-medium mb-3 px-2">Logodesign – niklaskoskowski.de</h3>
               <div 
                 className="relative flex-1 overflow-hidden cursor-pointer" 
-                onClick={() => openImageModal("https://nkmd.de/placeholder/1200x800")}
+                onClick={() => openImageModal("https://9nk.de/assets/9.png")}
               >
                 <img 
-                  src="https://nkmd.de/placeholder/600x400" 
+                  src="https://9nk.de/assets/9.png" 
                   alt="Logodesign – niklaskoskowski.de"
                   className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
                 />
@@ -285,10 +285,10 @@ const Index = () => {
               <h3 className="text-xl font-medium mb-3 px-2">Muster Lybecker Institut Raahe</h3>
               <div 
                 className="relative flex-1 overflow-hidden cursor-pointer" 
-                onClick={() => openImageModal("https://nkmd.de/placeholder/1200x800")}
+                onClick={() => openImageModal("https://9nk.de/assets/raahe.jpg")}
               >
                 <img 
-                  src="https://nkmd.de/placeholder/600x400" 
+                  src="https://9nk.de/assets/raahe.jpg" 
                   alt="Muster Lybecker Institut Raahe – Finnland"
                   className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
                 />
