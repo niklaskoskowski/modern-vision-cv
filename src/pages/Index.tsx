@@ -70,11 +70,41 @@ const Index = () => {
   }, []);
 
   useEffect(() => {
-    if (videoRef.current) {
-      videoRef.current.play().catch(error => {
-        console.log("Autoplay prevented:", error);
-      });
-    }
+    const playVideo = () => {
+      if (videoRef.current) {
+        videoRef.current.muted = true;
+        videoRef.current.playsInline = true;
+        videoRef.current.setAttribute('playsinline', '');
+        videoRef.current.setAttribute('webkit-playsinline', '');
+        
+        const playPromise = videoRef.current.play();
+        
+        if (playPromise !== undefined) {
+          playPromise.catch(error => {
+            console.log("Initial autoplay prevented:", error);
+            
+            const attemptPlay = () => {
+              videoRef.current?.play();
+              document.removeEventListener('click', attemptPlay);
+              document.removeEventListener('touchstart', attemptPlay);
+            };
+            
+            document.addEventListener('click', attemptPlay);
+            document.addEventListener('touchstart', attemptPlay);
+          });
+        }
+      }
+    };
+    
+    playVideo();
+    
+    setTimeout(playVideo, 100);
+    
+    window.addEventListener('load', playVideo);
+    
+    return () => {
+      window.removeEventListener('load', playVideo);
+    };
   }, []);
 
   useEffect(() => {
@@ -194,7 +224,7 @@ const Index = () => {
         </nav>
       </header>
 
-      <main className="container mx-auto px-4 pt-0  pb-20 max-w-6xl">
+      <main className="container mx-auto px-4 pt-0 pb-20 max-w-6xl">
         <section id="home" className="mb-24 relative">
           <div className="absolute inset-0 w-screen h-full overflow-hidden -z-10 left-1/2 transform -translate-x-1/2">
             <div className="absolute inset-0 bg-black/40 z-10"></div>
