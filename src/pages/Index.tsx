@@ -218,12 +218,14 @@ const Index = () => {
             <div className="absolute inset-0 bg-black/40 z-11"></div>
             
             <div className="w-full h-full">
-              <video 
-                ref={videoRef}
-                muted
-                playsInline
-                loop
-                className="w-full h-full object-cover"
+              <video
+  playsInline
+  autoPlay
+  muted
+  loop
+  preload="auto"
+  className="w-full h-full object-cover"
+
                 style={{ width: '100%', height: '100%', objectFit: 'cover' }}
               >
                 <source src="https://test.9nk.de/video.mp4" type="video/mp4" />
