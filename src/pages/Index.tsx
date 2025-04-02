@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Code, Image, Briefcase, Mail, User, X, Edit, Check, ChevronDown } from 'lucide-react';
@@ -128,7 +127,7 @@ const Index = () => {
                 <img 
                   src="https://9nk.de/assets/nk-portfolio.png" 
                   alt="NK Portfolio Logo" 
-                  className="h-5 w-auto md:h-6" 
+                  className="h-4 w-auto md:h-6" 
                 />
               </button>
             </li>
