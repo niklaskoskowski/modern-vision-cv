@@ -69,7 +69,7 @@ const Index = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  useEffect(() => {
+  /*useEffect(() => {
     if (!videoRef.current) return;
     
     videoRef.current.muted = true;
@@ -85,6 +85,7 @@ const Index = () => {
     
     return () => clearTimeout(timer);
   }, []);
+  */
 
   useEffect(() => {
     const searchParams = new URLSearchParams(window.location.search);
@@ -210,9 +211,9 @@ const Index = () => {
             
             <div className="w-full h-full">
               <video 
-                ref={videoRef}
+                
                 muted
-                autoPlay={false}
+                autoPlay
                 loop
                 playsInline
                 className="w-full h-full object-cover"
