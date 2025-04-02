@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Code, Image, Briefcase, Mail, User, X, Edit, Check, ChevronDown, Play } from 'lucide-react';
@@ -68,6 +67,14 @@ const Index = () => {
     };
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  useEffect(() => {
+    if (videoRef.current) {
+      videoRef.current.play().catch(error => {
+        console.log("Autoplay prevented:", error);
+      });
+    }
   }, []);
 
   useEffect(() => {
@@ -193,15 +200,18 @@ const Index = () => {
             <div className="absolute inset-0 bg-black/40 z-10"></div>
             
             <div className="w-full h-full">
-              <video autoPlay muted loop playsInline id="myVideo" className="w-full h-full object-cover" style={{ width: '100vw', height: '100vh', objectFit: 'cover' }}>
+              <video 
+                ref={videoRef}
+                autoPlay 
+                muted 
+                loop 
+                playsInline 
+                className="w-full h-full object-cover" 
+                style={{ width: '100vw', height: '100vh', objectFit: 'cover' }}
+              >
                 <source src="https://9nk.de/neu/video.mp4" type="video/mp4" />
                 Your browser does not support HTML5 video.
               </video>
-              
-              <script dangerouslySetInnerHTML={{ __html: `
-                var video = document.getElementById("myVideo");
-                video.muted = true; // Ensure autoplay works in Safari
-              `}} />
             </div>
           </div>
           
