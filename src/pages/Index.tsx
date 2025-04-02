@@ -19,6 +19,8 @@ const Index = () => {
   const { toast } = useToast();
   const [formSubmitting, setFormSubmitting] = useState<boolean>(false);
   const [formSubmitted, setFormSubmitted] = useState<boolean>(false);
+  const [videoError, setVideoError] = useState<boolean>(false);
+  const videoRef = useRef<HTMLVideoElement>(null);
   const [galleryImages, setGalleryImages] = useState<Array<{
     id: number;
     src: string;
@@ -66,6 +68,37 @@ const Index = () => {
     };
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+    
+    const handleError = () => {
+      console.error('Video error occurred');
+      setVideoError(true);
+    };
+    
+    const playVideo = () => {
+      if (video.paused) {
+        video.play().catch(err => {
+          console.error('Video play failed:', err);
+          setVideoError(true);
+        });
+      }
+    };
+    
+    video.addEventListener('canplay', playVideo);
+    video.addEventListener('error', handleError);
+    
+    if (video.readyState >= 3) {
+      playVideo();
+    }
+    
+    return () => {
+      video.removeEventListener('canplay', playVideo);
+      video.removeEventListener('error', handleError);
+    };
   }, []);
 
   useEffect(() => {
@@ -191,11 +224,26 @@ const Index = () => {
             <div className="absolute inset-0 bg-black/40 z-10"></div>
             
             <div className="w-full h-full">
-              <img 
-                src="https://img.nkmd.de/uploads/medium/10/af/9609c92495e20d4425bfbf2a4156.jpeg" 
-                alt="Background" 
-                className="w-full h-full object-cover absolute top-0 left-0"
-              />
+              <video 
+                ref={videoRef}
+                muted
+                loop
+                playsInline
+                className="w-full h-full object-cover"
+                style={{ width: '100vw', height: '100vh', objectFit: 'cover' }}
+                poster="https://img.nkmd.de/uploads/medium/10/af/9609c92495e20d4425bfbf2a4156.jpeg"
+              >
+                <source src="https://9nk.de/neu/video.mp4" type="video/mp4" />
+                Your browser does not support the video tag.
+              </video>
+              
+              {videoError && (
+                <img 
+                  src="https://img.nkmd.de/uploads/medium/10/af/9609c92495e20d4425bfbf2a4156.jpeg" 
+                  alt="Background" 
+                  className="w-full h-full object-cover absolute top-0 left-0"
+                />
+              )}
             </div>
           </div>
           
@@ -454,9 +502,9 @@ const Index = () => {
       </footer>
 
       <button onClick={() => window.scrollTo({
-      top: 0,
-      behavior: 'smooth'
-    })} className={`fixed bottom-6 right-6 bg-primary text-white p-3 rounded-full shadow-lg transition-opacity duration-300 ${isScrolled ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
+        top: 0,
+        behavior: 'smooth'
+      })} className={`fixed bottom-6 right-6 bg-primary text-white p-3 rounded-full shadow-lg transition-opacity duration-300 ${isScrolled ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
         <ArrowRight className="h-5 w-5 rotate-[270deg]" />
       </button>
 
