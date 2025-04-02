@@ -70,40 +70,38 @@ const Index = () => {
   }, []);
 
   useEffect(() => {
-    const playVideo = () => {
+    if (!videoRef.current) return;
+    
+    videoRef.current.muted = true;
+    videoRef.current.playsInline = true;
+    videoRef.current.autoplay = true;
+    
+    videoRef.current.setAttribute('playsinline', '');
+    videoRef.current.setAttribute('webkit-playsinline', '');
+    videoRef.current.setAttribute('muted', '');
+    videoRef.current.setAttribute('autoplay', '');
+    
+    const playAttempt = () => {
       if (videoRef.current) {
-        videoRef.current.muted = true;
-        videoRef.current.playsInline = true;
-        videoRef.current.setAttribute('playsinline', '');
-        videoRef.current.setAttribute('webkit-playsinline', '');
-        
-        const playPromise = videoRef.current.play();
-        
-        if (playPromise !== undefined) {
-          playPromise.catch(error => {
-            console.log("Initial autoplay prevented:", error);
-            
-            const attemptPlay = () => {
-              videoRef.current?.play();
-              document.removeEventListener('click', attemptPlay);
-              document.removeEventListener('touchstart', attemptPlay);
-            };
-            
-            document.addEventListener('click', attemptPlay);
-            document.addEventListener('touchstart', attemptPlay);
+        const promise = videoRef.current.play();
+        if (promise !== undefined) {
+          promise.catch(error => {
+            console.log("Autoplay failed:", error);
           });
         }
       }
     };
     
-    playVideo();
+    playAttempt();
     
-    setTimeout(playVideo, 100);
-    
-    window.addEventListener('load', playVideo);
+    if (document.readyState === 'complete') {
+      playAttempt();
+    } else {
+      window.addEventListener('load', playAttempt, { once: true });
+    }
     
     return () => {
-      window.removeEventListener('load', playVideo);
+      window.removeEventListener('load', playAttempt);
     };
   }, []);
 
@@ -232,10 +230,10 @@ const Index = () => {
             <div className="w-full h-full">
               <video 
                 ref={videoRef}
-                autoPlay 
-                muted 
-                loop 
-                playsInline 
+                muted
+                autoPlay
+                loop
+                playsInline
                 className="w-full h-full object-cover" 
                 style={{ width: '100vw', height: '100vh', objectFit: 'cover' }}
               >
