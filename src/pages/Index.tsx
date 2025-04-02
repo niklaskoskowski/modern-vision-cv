@@ -197,7 +197,7 @@ const Index = () => {
             
             <div className="w-full h-full">
               <video playsInline autoPlay muted loop preload="auto" className="w-full h-full object-cover" >
-                <source src="https://9nk.de/neu/video.mp4" type="video/mp4" />
+                <source src="https://img.nkmd.de/uploads/original/10/e0/efa5f1640eb67d59d558cd5e564f.mp4" type="video/mp4" />
                 Your browser does not support HTML5 video.
               </video>
             </div>
