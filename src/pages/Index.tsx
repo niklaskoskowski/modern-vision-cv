@@ -70,30 +70,18 @@ const Index = () => {
   }, []);
 
   useEffect(() => {
-    if (!videoRef.current) return;
-    
-    videoRef.current.muted = true;
-    videoRef.current.playsInline = true;
-    
-    const playVideo = () => {
-      if (videoRef.current) {
-        const playPromise = videoRef.current.play();
-        
-        if (playPromise !== undefined) {
-          playPromise.catch(error => {
-            console.warn("Autoplay failed:", error);
-            document.addEventListener('touchstart', () => {
-              videoRef.current?.play();
-            }, { once: true });
-          });
-        }
-      }
-    };
-    
-    const timer = setTimeout(playVideo, 1000);
-    
-    return () => clearTimeout(timer);
-  }, []);
+  const video = videoRef.current;
+  if (video) {
+    video.muted = true;
+    video.playsInline = true;
+    video.autoplay = true;
+    video.play().catch((e) => {
+      document.addEventListener("touchstart", () => {
+        video.play();
+      }, { once: true });
+    });
+  }
+}, []);
 
   useEffect(() => {
     const searchParams = new URLSearchParams(window.location.search);
@@ -219,18 +207,18 @@ const Index = () => {
             
             <div className="w-full h-full">
               <video
-  playsInline
-  autoPlay={false}
-  muted
-  loop
-  preload="auto"
-  className="w-full h-full object-cover"
-
-                style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-              >
-                <source src="https://test.9nk.de/video.mp4" type="video/mp4" />
-                Your browser does not support HTML5 video.
-              </video>
+    ref={videoRef}
+    playsInline
+    autoPlay
+    muted
+    loop
+    preload="auto"
+    className="w-full h-full object-cover"
+    style={{ width: "100%", height: "100%", objectFit: "cover" }}
+  >
+    <source src="https://test.9nk.de/video.mp4" type="video/mp4" />
+    Your browser does not support HTML5 video.
+  </video>
             </div>
           </div>
           
