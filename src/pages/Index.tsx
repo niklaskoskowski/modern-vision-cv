@@ -69,7 +69,7 @@ const Index = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  useEffect(() => {
+ /* useEffect(() => {
   const video = videoRef.current;
   if (video) {
     video.muted = true;
@@ -79,7 +79,7 @@ const Index = () => {
     });
   }
 }, []);
-
+*/
 
   useEffect(() => {
     const searchParams = new URLSearchParams(window.location.search);
@@ -205,17 +205,17 @@ const Index = () => {
             
             <div className="w-full h-full">
               <video
-        //ref={videoRef}
-        autoPlay
-        muted
-        loop
-        playsInline
-        preload="auto"
-        className="absolute top-0 left-0 w-full h-full object-cover z-0"
-      >
-        <source src="https://img.nkmd.de/uploads/original/10/e0/efa5f1640eb67d59d558cd5e564f.mp4" type="video/mp4" />
-        Dein Browser unterstützt kein HTML5-Video.
-      </video>
+  autoplay
+  muted
+  loop
+  playsinline
+  preload="auto"
+  style="width:100vw; height:100vh; object-fit:cover;"
+>
+  <source src="https://9nk.de/neu/video.mp4" type="video/mp4" />
+  Dein Browser unterstützt kein HTML5-Video.
+</video>
+
 
             </div>
           </div>
