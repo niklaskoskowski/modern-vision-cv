@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Code, Image, Briefcase, Mail, User, X, Edit, Check, ChevronDown, Play } from 'lucide-react';
 import { Dialog, DialogContent, DialogClose } from "@/components/ui/dialog";
@@ -51,6 +51,8 @@ const Index = () => {
   const [editImageId, setEditImageId] = useState<number | null>(null);
   const [newImageUrl, setNewImageUrl] = useState<string>("");
 
+  const videoRef = useRef<HTMLVideoElement>(null);
+
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);
@@ -70,24 +72,40 @@ const Index = () => {
   }, []);
 
   useEffect(() => {
-    const videoElement = document.querySelector('video');
-    if (videoElement) {
-      const playPromise = videoElement.play();
-      
-      if (playPromise !== undefined) {
-        playPromise.catch(error => {
-          console.log('Autoplay prevented:', error);
-          const playVideo = () => {
-            videoElement.play();
-            document.removeEventListener('touchstart', playVideo);
-            document.removeEventListener('click', playVideo);
-          };
-          
-          document.addEventListener('touchstart', playVideo);
-          document.addEventListener('click', playVideo);
-        });
+    const handlePlayVideo = () => {
+      const videoElement = videoRef.current;
+      if (videoElement) {
+        videoElement.volume = 0;
+        videoElement.muted = true;
+        
+        const playPromise = videoElement.play();
+        
+        if (playPromise !== undefined) {
+          playPromise.catch(error => {
+            console.log('Autoplay prevented:', error);
+            
+            const playVideoOnInteraction = () => {
+              videoElement.play().catch(e => console.log("Still couldn't play:", e));
+            };
+            
+            document.addEventListener('touchstart', playVideoOnInteraction, { once: true });
+            document.addEventListener('click', playVideoOnInteraction, { once: true });
+          });
+        }
       }
-    }
+    };
+    
+    handlePlayVideo();
+    
+    document.addEventListener('visibilitychange', () => {
+      if (document.visibilityState === 'visible') {
+        handlePlayVideo();
+      }
+    });
+    
+    return () => {
+      document.removeEventListener('visibilitychange', handlePlayVideo);
+    };
   }, []);
 
   useEffect(() => {
@@ -219,6 +237,7 @@ const Index = () => {
           <div className="absolute inset-0 w-screen h-full overflow-hidden -z-10 left-1/2 transform -translate-x-1/2">
             <div className="absolute inset-0 bg-black/40 z-10"></div>
             <video 
+              ref={videoRef}
               autoPlay 
               loop 
               muted 
