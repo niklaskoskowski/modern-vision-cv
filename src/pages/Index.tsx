@@ -16,11 +16,11 @@ const Index = () => {
   const [selectedImage, setSelectedImage] = useState<string>("");
   const [isEditMode, setIsEditMode] = useState<boolean>(false);
   const isMobile = useIsMobile();
-  const {
-    toast
-  } = useToast();
+  const { toast } = useToast();
   const [formSubmitting, setFormSubmitting] = useState<boolean>(false);
   const [formSubmitted, setFormSubmitted] = useState<boolean>(false);
+  const [videoLoaded, setVideoLoaded] = useState<boolean>(false);
+  const [videoError, setVideoError] = useState<boolean>(false);
   const [galleryImages, setGalleryImages] = useState<Array<{
     id: number;
     src: string;
@@ -72,51 +72,69 @@ const Index = () => {
   }, []);
 
   useEffect(() => {
-    const videoElement = videoRef.current;
-    if (!videoElement) return;
+    const video = videoRef.current;
+    if (!video) return;
     
-    const attemptPlay = () => {
-      videoElement.muted = true;
+    const playVideo = () => {
+      if (!video) return;
       
-      const playPromise = videoElement.play();
+      video.muted = true;
+      video.setAttribute('playsinline', '');
+      video.setAttribute('webkit-playsinline', '');
       
-      if (playPromise !== undefined) {
-        playPromise
-          .then(() => {
-            console.log('Autoplay successful');
-          })
-          .catch(error => {
-            console.log('Autoplay prevented:', error);
-            
-            const startPlayback = () => {
-              videoElement.play()
-                .then(() => {
-                  document.removeEventListener('click', startPlayback);
-                  document.removeEventListener('touchstart', startPlayback);
-                })
-                .catch(e => console.log('Play after interaction failed:', e));
-            };
-            
-            document.addEventListener('click', startPlayback);
-            document.addEventListener('touchstart', startPlayback);
-          });
+      video.play().catch(error => {
+        console.log('Video autoplay failed:', error);
+        setVideoError(true);
+      });
+    };
+    
+    const handleCanPlay = () => {
+      setVideoLoaded(true);
+      playVideo();
+    };
+    
+    video.addEventListener('canplay', handleCanPlay);
+    video.addEventListener('canplaythrough', handleCanPlay);
+    
+    video.addEventListener('error', () => {
+      console.log('Video error occurred');
+      setVideoError(true);
+    });
+    
+    if (video.readyState >= 3) {
+      playVideo();
+    }
+    
+    document.addEventListener('visibilitychange', () => {
+      if (document.visibilityState === 'visible' && video && video.paused) {
+        playVideo();
+      }
+    });
+    
+    const userInteractionEvents = ['click', 'touchend', 'keydown', 'scroll'];
+    
+    const handleUserInteraction = () => {
+      if (video && video.paused) {
+        playVideo();
+        userInteractionEvents.forEach(event => {
+          document.removeEventListener(event, handleUserInteraction);
+        });
       }
     };
     
-    attemptPlay();
-    
-    const handleVisibilityChange = () => {
-      if (document.visibilityState === 'visible' && videoElement.paused) {
-        attemptPlay();
-      }
-    };
-    
-    document.addEventListener('visibilitychange', handleVisibilityChange);
+    userInteractionEvents.forEach(event => {
+      document.addEventListener(event, handleUserInteraction);
+    });
     
     return () => {
-      document.removeEventListener('visibilitychange', handleVisibilityChange);
-      document.removeEventListener('click', attemptPlay);
-      document.removeEventListener('touchstart', attemptPlay);
+      video.removeEventListener('canplay', handleCanPlay);
+      video.removeEventListener('canplaythrough', handleCanPlay);
+      video.removeEventListener('error', () => setVideoError(true));
+      document.removeEventListener('visibilitychange', () => {});
+      
+      userInteractionEvents.forEach(event => {
+        document.removeEventListener(event, handleUserInteraction);
+      });
     };
   }, []);
 
@@ -248,6 +266,7 @@ const Index = () => {
                 loop
                 playsInline
                 autoPlay
+                preload="auto"
                 className="w-full h-full object-cover"
                 style={{ width: '100vw', height: '100vh', objectFit: 'cover' }}
                 poster="https://img.nkmd.de/uploads/medium/10/af/9609c92495e20d4425bfbf2a4156.jpeg"
@@ -259,12 +278,10 @@ const Index = () => {
               <img 
                 src="https://img.nkmd.de/uploads/medium/10/af/9609c92495e20d4425bfbf2a4156.jpeg" 
                 alt="Background" 
-                className="w-full h-full object-cover absolute top-0 left-0 z-[-1]"
-                style={{ display: 'none' }}
-                onError={(e) => {
-                  if (videoRef.current?.error) {
-                    e.currentTarget.style.display = 'block';
-                  }
+                className="w-full h-full object-cover absolute top-0 left-0"
+                style={{ 
+                  display: videoError || !videoLoaded ? 'block' : 'none',
+                  zIndex: 0
                 }}
               />
             </div>
