@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Code, Image, Briefcase, Mail, User, X, Edit, Check, ChevronDown } from 'lucide-react';
@@ -120,11 +121,13 @@ const Index = () => {
         <nav className={`navbar-glass rounded-full py-2 px-4 md:px-6 max-w-4xl mx-auto transition-all duration-300 ${isScrolled ? 'shadow-md' : ''}`}>
           <ul className="flex items-center space-x-1 md:space-x-2">
             <li className="mr-2 md:mr-3">
-              <img src="https://9nk.de/assets/nk-portfolio.png" alt="NK Portfolio Logo" className="h-8 w-auto" />
+              <button onClick={() => scrollToSection('home')} className="cursor-pointer">
+                <img src="https://9nk.de/assets/nk-portfolio.png" alt="NK Portfolio Logo" className="h-8 w-auto" />
+              </button>
             </li>
             <li>
-              <button onClick={() => scrollToSection('home')} className={`px-3 py-2 rounded-full text-sm md:text-base transition-colors ${activeSection === 'home' ? 'bg-primary text-white' : 'hover:bg-secondary'}`}>
-                Home
+              <button onClick={() => scrollToSection('about')} className={`px-3 py-2 rounded-full text-sm md:text-base transition-colors ${activeSection === 'about' ? 'bg-primary text-white' : 'hover:bg-secondary'}`}>
+                Über
               </button>
             </li>
             <li>
