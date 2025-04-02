@@ -7,6 +7,8 @@ const Index = () => {
   const [activeSection, setActiveSection] = useState<string>('home');
   const [isScrolled, setIsScrolled] = useState<boolean>(false);
   const [showVideoModal, setShowVideoModal] = useState<boolean>(false);
+  const [showImageModal, setShowImageModal] = useState<boolean>(false);
+  const [selectedImage, setSelectedImage] = useState<string>("");
 
   useEffect(() => {
     const handleScroll = () => {
@@ -38,6 +40,11 @@ const Index = () => {
         behavior: 'smooth'
       });
     }
+  };
+
+  const openImageModal = (imageSrc: string) => {
+    setSelectedImage(imageSrc);
+    setShowImageModal(true);
   };
 
   const skills = [
@@ -258,7 +265,10 @@ const Index = () => {
             
             <div className="project-card">
               <img src="https://nkmd.de/placeholder/600x400" alt="Fast Forest – Rendering" />
-              <div className="project-overlay">
+              <div 
+                className="project-overlay"
+                onClick={() => openImageModal("https://nkmd.de/placeholder/1200x800")}
+              >
                 <h3 className="text-xl font-medium mb-2">Fast Forest – Rendering</h3>
                 <button className="bg-white/20 hover:bg-white/30 text-white px-4 py-2 rounded-full mt-2 transition-colors">Ansehen</button>
               </div>
@@ -266,7 +276,10 @@ const Index = () => {
             
             <div className="project-card">
               <img src="https://nkmd.de/placeholder/600x400" alt="Logodesign – niklaskoskowski.de" />
-              <div className="project-overlay">
+              <div 
+                className="project-overlay"
+                onClick={() => openImageModal("https://nkmd.de/placeholder/1200x800")}
+              >
                 <h3 className="text-xl font-medium mb-2">Logodesign – niklaskoskowski.de</h3>
                 <button className="bg-white/20 hover:bg-white/30 text-white px-4 py-2 rounded-full mt-2 transition-colors">Ansehen</button>
               </div>
@@ -274,7 +287,10 @@ const Index = () => {
             
             <div className="project-card">
               <img src="https://nkmd.de/placeholder/600x400" alt="Muster Lybecker Institut Raahe – Finnland" />
-              <div className="project-overlay">
+              <div 
+                className="project-overlay"
+                onClick={() => openImageModal("https://nkmd.de/placeholder/1200x800")}
+              >
                 <h3 className="text-xl font-medium mb-2">Muster Lybecker Institut Raahe</h3>
                 <button className="bg-white/20 hover:bg-white/30 text-white px-4 py-2 rounded-full mt-2 transition-colors">Ansehen</button>
               </div>
@@ -380,6 +396,22 @@ const Index = () => {
               frameBorder="0"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
               allowFullScreen
+            />
+          </div>
+        </DialogContent>
+      </Dialog>
+
+      <Dialog open={showImageModal} onOpenChange={setShowImageModal}>
+        <DialogContent className="sm:max-w-[90vw] md:max-w-[80vw] lg:max-w-[1200px] p-0 bg-black overflow-hidden">
+          <DialogClose className="absolute right-2 top-2 rounded-full z-10 bg-black/50 p-2 text-white hover:bg-black/80">
+            <X className="h-4 w-4" />
+            <span className="sr-only">Close</span>
+          </DialogClose>
+          <div className="relative">
+            <img 
+              src={selectedImage} 
+              alt="Project image" 
+              className="w-full h-auto max-h-[90vh] object-contain"
             />
           </div>
         </DialogContent>
