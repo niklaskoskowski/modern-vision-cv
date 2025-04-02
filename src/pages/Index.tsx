@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Code, Image, Briefcase, Mail, User, X, Edit, Check, ChevronDown, Play } from 'lucide-react';
 import { Dialog, DialogContent, DialogClose } from "@/components/ui/dialog";
@@ -67,13 +67,6 @@ const Index = () => {
     };
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  useEffect(() => {
-    const video = document.getElementById("myVideo") as HTMLVideoElement;
-    if (video) {
-      video.muted = true;
-    }
   }, []);
 
   useEffect(() => {
@@ -203,6 +196,11 @@ const Index = () => {
                 <source src="https://9nk.de/neu/video.mp4" type="video/mp4" />
                 Your browser does not support HTML5 video.
               </video>
+              
+              <script dangerouslySetInnerHTML={{ __html: `
+                var video = document.getElementById("myVideo");
+                video.muted = true; // Ensure autoplay works in Safari
+              `}} />
             </div>
           </div>
           
