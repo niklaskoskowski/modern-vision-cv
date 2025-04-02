@@ -170,7 +170,7 @@ const Index = () => {
               </button>
             </div>
             <div className="glass rounded-3xl overflow-hidden">
-              <img alt="Niklas Koskowski" src="https://9nk.de/assets/niklas.png" className="w-full h-70 object-cover" />
+              <img alt="Niklas Koskowski" src="https://9nk.de/assets/niklas.png" className="w-full h-full object-cover" />
             </div>
           </div>
         </section>
