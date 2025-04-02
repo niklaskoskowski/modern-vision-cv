@@ -334,6 +334,26 @@ const Index = () => {
                 </div>
               </div>
             </div>
+
+            <div className="project-card flex flex-col">
+              <h3 className="text-xl font-medium mb-3 px-2">Motorsport Photography</h3>
+              <div className="relative flex-1 overflow-hidden cursor-pointer" onClick={() => openImageModal("https://nkmd.de/placeholder/?s800x600&text=Motorsport")}>
+                <img src="https://nkmd.de/placeholder/?s800x600&text=Motorsport" alt="Motorsport Photography" className="w-full h-full object-cover transition-transform duration-500 hover:scale-105" />
+                <div className="absolute inset-0 bg-black/30 hover:bg-black/50 transition-colors flex items-center justify-center">
+                  <Eye className="h-10 w-10 text-white" />
+                </div>
+              </div>
+            </div>
+            
+            <div className="project-card flex flex-col">
+              <h3 className="text-xl font-medium mb-3 px-2">3D Printing Collection</h3>
+              <div className="relative flex-1 overflow-hidden cursor-pointer" onClick={() => openImageModal("https://nkmd.de/placeholder/?s800x600&text=3D+Printing")}>
+                <img src="https://nkmd.de/placeholder/?s800x600&text=3D+Printing" alt="3D Printing Collection" className="w-full h-full object-cover transition-transform duration-500 hover:scale-105" />
+                <div className="absolute inset-0 bg-black/30 hover:bg-black/50 transition-colors flex items-center justify-center">
+                  <Eye className="h-10 w-10 text-white" />
+                </div>
+              </div>
+            </div>
           </div>
           
           <div className="mt-12">
