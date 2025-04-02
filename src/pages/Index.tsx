@@ -187,7 +187,7 @@ const Index = () => {
           
           <div 
             className={`absolute bottom-8 left-1/2 transform -translate-x-1/2 cursor-pointer transition-opacity duration-500 z-20 ${isScrolled ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}
-            onClick={() => scrollToSection('lebenslauf')}
+            onClick={() => scrollToSection('about')}
           >
             <div className="flex flex-col items-center text-white">
               <span className="text-sm mb-2">Mehr entdecken</span>
