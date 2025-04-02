@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { useToast } from "@/hooks/use-toast";
+
 const Index = () => {
   const [activeSection, setActiveSection] = useState<string>('home');
   const [isScrolled, setIsScrolled] = useState<boolean>(false);
@@ -51,6 +52,7 @@ const Index = () => {
   const [editImageId, setEditImageId] = useState<number | null>(null);
   const [newImageUrl, setNewImageUrl] = useState<string>("");
   const videoRef = useRef<HTMLVideoElement>(null);
+
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);
@@ -68,6 +70,7 @@ const Index = () => {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
   useEffect(() => {
     const video = videoRef.current;
     if (video) {
@@ -76,6 +79,7 @@ const Index = () => {
         console.log("Autoplay prevented:", err);
       });
     }
+
     const handleVisibilityChange = () => {
       if (document.visibilityState === 'visible' && videoRef.current) {
         videoRef.current.play().catch(err => {
@@ -88,6 +92,7 @@ const Index = () => {
       document.removeEventListener('visibilitychange', handleVisibilityChange);
     };
   }, []);
+
   useEffect(() => {
     const searchParams = new URLSearchParams(window.location.search);
     const sent = searchParams.get('sent');
@@ -106,6 +111,7 @@ const Index = () => {
       window.history.replaceState({}, document.title, window.location.pathname);
     }
   }, [toast]);
+
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
     if (element) {
@@ -115,10 +121,12 @@ const Index = () => {
       });
     }
   };
+
   const openImageModal = (imageSrc: string) => {
     setSelectedImage(imageSrc);
     setShowImageModal(true);
   };
+
   const updateGalleryImage = (id: number, newSrc: string) => {
     setGalleryImages(prevImages => prevImages.map(img => img.id === id ? {
       ...img,
@@ -127,6 +135,7 @@ const Index = () => {
     setEditImageId(null);
     setNewImageUrl("");
   };
+
   const handleGalleryImageClick = (image: {
     id: number;
     src: string;
@@ -138,6 +147,7 @@ const Index = () => {
       openImageModal(image.src);
     }
   };
+
   const skills = [{
     name: 'Adobe CC (Ai, Id, Ps)',
     level: 90
@@ -154,6 +164,7 @@ const Index = () => {
     name: 'Unreal Engine',
     level: 60
   }];
+
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setFormSubmitting(true);
@@ -162,6 +173,7 @@ const Index = () => {
       setFormSubmitted(true);
     }, 500);
   };
+
   return <div className="min-h-screen">
       <header className={`fixed top-0 left-0 right-0 z-50 flex justify-center py-4 px-6 transition-all duration-300 ${isScrolled ? 'py-2' : 'py-4'}`}>
         <nav className={`navbar-glass rounded-full py-2 px-4 md:px-6 max-w-4xl mx-auto transition-all duration-300 ${isScrolled ? 'shadow-md' : ''}`}>
@@ -201,11 +213,20 @@ const Index = () => {
         <section id="home" className="mb-24 relative">
           <div className="absolute inset-0 w-screen h-full overflow-hidden -z-10 left-1/2 transform -translate-x-1/2">
             <div className="absolute inset-0 bg-black/40 z-10"></div>
-            <video ref={videoRef} autoPlay loop muted playsInline className="w-full h-full object-cover" style={{
-            width: '100vw',
-            height: '100vh',
-            objectFit: 'cover'
-          }} poster="https://9nk.de/neu/video-poster.jpg">
+            <video 
+              ref={videoRef} 
+              autoPlay 
+              loop 
+              muted 
+              playsInline
+              className="w-full h-full object-cover" 
+              style={{
+                width: '100vw',
+                height: '100vh',
+                objectFit: 'cover'
+              }}
+              poster="https://img.nkmd.de/uploads/medium/10/af/9609c92495e20d4425bfbf2a4156.jpeg"
+            >
               <source src="https://9nk.de/neu/video.mp4" type="video/mp4" />
               Your browser does not support the video tag.
             </video>
@@ -522,4 +543,5 @@ const Index = () => {
       </Dialog>
     </div>;
 };
+
 export default Index;
