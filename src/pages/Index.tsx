@@ -69,23 +69,7 @@ const Index = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  /*useEffect(() => {
-    if (!videoRef.current) return;
-    
-    videoRef.current.muted = true;
-    videoRef.current.playsInline = true;
-    
-    const timer = setTimeout(() => {
-      if (videoRef.current) {
-        videoRef.current.play().catch(error => {
-          console.log("Autoplay failed:", error);
-        });
-      }
-    }, 2000);
-    
-    return () => clearTimeout(timer);
-  }, []);
-  */
+  
 
   useEffect(() => {
     const searchParams = new URLSearchParams(window.location.search);
@@ -143,7 +127,7 @@ const Index = () => {
   };
 
   const skills = [{
-    name: 'Adobe CC (Ai, Id, Ps)',
+    name: 'Adobe (Ai, Id, Ps)',
     level: 90
   }, {
     name: 'HTML',
@@ -210,15 +194,7 @@ const Index = () => {
             <div className="absolute inset-0 bg-black/40 z-10"></div>
             
             <div className="w-full h-full">
-              <video 
-                
-                muted
-                autoPlay
-                loop
-                playsInline
-                className="w-full h-full object-cover"
-                style={{ width: '100vw', height: '100vh', objectFit: 'cover' }}
-              >
+              <video muted autoPlay loop playsInline className="w-full h-full object-cover" >
                 <source src="https://9nk.de/neu/video.mp4" type="video/mp4" />
                 Your browser does not support HTML5 video.
               </video>
