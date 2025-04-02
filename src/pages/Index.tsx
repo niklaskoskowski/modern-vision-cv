@@ -220,7 +220,7 @@ const Index = () => {
             <div className="w-full h-full">
               <video
   playsInline
-  autoPlay
+  autoPlay={false}
   muted
   loop
   preload="auto"
