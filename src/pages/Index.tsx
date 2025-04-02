@@ -70,21 +70,15 @@ const Index = () => {
   }, []);
 
   useEffect(() => {
-    if (!videoRef.current) return;
-    
-    videoRef.current.muted = true;
-    videoRef.current.playsInline = true;
-    
-    const timer = setTimeout(() => {
-      if (videoRef.current) {
-        videoRef.current.play().catch(error => {
-          console.log("Autoplay failed:", error);
-        });
-      }
-    }, 2000);
-    
-    return () => clearTimeout(timer);
-  }, []);
+  const video = videoRef.current;
+  if (video) {
+    video.muted = true;
+    video.playsInline = true;
+    video.play().catch((error) => {
+      console.warn("Autoplay failed:", error);
+    });
+  }
+}, []);
 
   useEffect(() => {
     const searchParams = new URLSearchParams(window.location.search);
