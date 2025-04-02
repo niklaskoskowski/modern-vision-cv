@@ -69,17 +69,22 @@ const Index = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
- /* useEffect(() => {
-  const video = videoRef.current;
-  if (video) {
-    video.muted = true;
-    video.playsInline = true;
-    video.play().catch((err) => {
-      console.warn("Autoplay failed:", err);
-    });
-  }
-}, []);
-*/
+  useEffect(() => {
+    if (!videoRef.current) return;
+    
+    videoRef.current.muted = true;
+    videoRef.current.playsInline = true;
+    
+    const timer = setTimeout(() => {
+      if (videoRef.current) {
+        videoRef.current.play().catch(error => {
+          console.log("Autoplay failed:", error);
+        });
+      }
+    }, 2000);
+    
+    return () => clearTimeout(timer);
+  }, []);
 
   useEffect(() => {
     const searchParams = new URLSearchParams(window.location.search);
@@ -204,19 +209,18 @@ const Index = () => {
             <div className="absolute inset-0 bg-black/40 z-10"></div>
             
             <div className="w-full h-full">
-              <video
-  autoplay
-  muted
-  loop
-  playsinline
-  preload="auto"
-  style="width:100vw; height:100vh; object-fit:cover;"
->
-  <source src="https://9nk.de/neu/video.mp4" type="video/mp4" />
-  Dein Browser unterstützt kein HTML5-Video.
-</video>
-
-
+              <video 
+                ref={videoRef}
+                muted
+                autoPlay={false}
+                loop
+                playsInline
+                className="w-full h-full object-cover"
+                style={{ width: '100vw', height: '100vh', objectFit: 'cover' }}
+              >
+                <source src="https://9nk.de/neu/video.mp4" type="video/mp4" />
+                Your browser does not support HTML5 video.
+              </video>
             </div>
           </div>
           
