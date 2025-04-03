@@ -70,18 +70,18 @@ const Index = () => {
   }, []);
 
   useEffect(() => {
-  const video = videoRef.current;
-  if (video) {
-    video.muted = true;
-    video.playsInline = true;
-    video.autoplay = true;
-    video.play().catch((e) => {
-      document.addEventListener("touchstart", () => {
-        video.play();
-      }, { once: true });
-    });
-  }
-}, []);
+    const video = videoRef.current;
+    if (video) {
+      video.muted = true;
+      video.playsInline = true;
+      video.autoplay = true;
+      video.play().catch((e) => {
+        document.addEventListener("touchstart", () => {
+          video.play();
+        }, { once: true });
+      });
+    }
+  }, []);
 
   useEffect(() => {
     const searchParams = new URLSearchParams(window.location.search);
@@ -235,8 +235,8 @@ const Index = () => {
                 Hi, Ich bin <span className="text-gradient">Niklas</span>,
               </h1>
               <p className="text-xl md:text-2xl text-white mb-8">schau Dich mal um!</p>
-              <button onClick={() => scrollToSection('about')} className="bg-primary text-white rounded-full px-6 py-3 flex items-center font-medium hover:bg-primary/90 transition-colors">
-                Mehr erfahren <ArrowRight className="ml-2 h-4 w-4" />
+              <button onClick={() => scrollToSection('projekte')} className="bg-primary text-white rounded-full px-6 py-3 flex items-center font-medium hover:bg-primary/90 transition-colors">
+                Projekte <ArrowRight className="ml-2 h-4 w-4" />
               </button>
             </div>
             <div className={`glass rounded-3xl overflow-hidden ${isMobile ? 'hidden' : ''}`}>
@@ -514,8 +514,8 @@ const Index = () => {
             <div className="flex gap-4">
               <div className="w-1/3 aspect-square rounded-md overflow-hidden">
                 {newImageUrl && <img src={newImageUrl} alt="Preview" className="w-full h-full object-cover" onError={e => {
-                (e.target as HTMLImageElement).src = "https://nkmd.de/placeholder/400x400";
-              }} />}
+                  (e.target as HTMLImageElement).src = "https://nkmd.de/placeholder/400x400";
+                }} />}
               </div>
               <div className="w-2/3 space-y-4">
                 <div>
