@@ -365,7 +365,7 @@ const Index = () => {
               <h3 className="text-xl font-medium mb-3 px-2">Aftermovie FSA 2024</h3>
               <div className="relative flex-1 overflow-hidden cursor-pointer" onClick={() => setShowVideoModal(true)}>
                 <img alt="Aftermovie FSA 2024" src="https://img.youtube.com/vi/Drb7kUK75zA/maxresdefault.jpg" className="w-full h-full object-cover transition-transform duration-500 hover:scale-105" />
-                <div className="absolute inset-0 bg-black/30 hover:bg-black/50 transition-colors flex items-center justify-center">
+                <div className="absolute inset-0 flex items-center justify-center">
                   <div className="bg-black/50 p-4 rounded-full">
                     <Play className="h-10 w-10 text-white" fill="white" />
                   </div>
@@ -377,8 +377,6 @@ const Index = () => {
               <h3 className="text-xl font-medium mb-3 px-2">Fast Forest – Rendering</h3>
               <div className="relative flex-1 overflow-hidden cursor-pointer" onClick={() => openImageModal("https://img.nkmd.de/uploads/small2x/78/9f/16e8b73c1afc9cb940478a5dba77.jpg")}>
                 <img src="https://img.nkmd.de/uploads/small2x/78/9f/16e8b73c1afc9cb940478a5dba77.jpg" alt="Fast Forest – Rendering" className="w-full h-full object-cover transition-transform duration-500 hover:scale-105" />
-                <div className="absolute inset-0 bg-black/30 hover:bg-black/50 transition-colors flex items-center justify-center">
-                </div>
               </div>
             </div>
             
@@ -386,8 +384,6 @@ const Index = () => {
               <h3 className="text-xl font-medium mb-3 px-2">niklaskoskowski.de</h3>
               <div className="relative flex-1 overflow-hidden cursor-pointer" onClick={() => openImageModal("https://9nk.de/assets/9.png")}>
                 <img src="https://9nk.de/assets/9.png" alt="niklaskoskowski.de" className="w-full h-full object-cover transition-transform duration-500 hover:scale-105" />
-                <div className="absolute inset-0 bg-black/30 hover:bg-black/00 transition-colors flex items-center justify-center">
-                </div>
               </div>
             </div>
             
@@ -395,8 +391,6 @@ const Index = () => {
               <h3 className="text-xl font-medium mb-3 px-2">Lybecker Institut Raahe</h3>
               <div className="relative flex-1 overflow-hidden cursor-pointer" onClick={() => openImageModal("https://9nk.de/assets/raahe.jpg")}>
                 <img src="https://9nk.de/assets/raahe.jpg" alt="Lybecker Institut Raahe" className="w-full h-full object-cover transition-transform duration-500 hover:scale-105" />
-                <div className="absolute inset-0 bg-black/30 hover:bg-black/50 transition-colors flex items-center justify-center">
-                </div>
               </div>
             </div>
 
@@ -404,8 +398,6 @@ const Index = () => {
               <h3 className="text-xl font-medium mb-3 px-2">Fast Forest Tasse (250x)</h3>
               <div className="relative flex-1 overflow-hidden cursor-pointer" onClick={() => openImageModal("https://img.nkmd.de/uploads/small2x/8d/5a/d93ae8cacfcd48bfd85e026b62ea.jpg")}>
                 <img src="https://img.nkmd.de/uploads/small2x/8d/5a/d93ae8cacfcd48bfd85e026b62ea.jpg" alt="Fast Forest Tasse (250x)" className="w-full h-full object-cover transition-transform duration-500 hover:scale-105" />
-                <div className="absolute inset-0 bg-black/30 hover:bg-black/50 transition-colors flex items-center justify-center">
-                </div>
               </div>
             </div>
             
@@ -413,8 +405,6 @@ const Index = () => {
               <h3 className="text-xl font-medium mb-3 px-2">Corporate Identity Project</h3>
               <div className="relative flex-1 overflow-hidden cursor-pointer" onClick={() => openImageModal("https://img.nkmd.de/uploads/small2x/68/7b/e36f5a2bc4bd09643d07d0c9fcac.jpg")}>
                 <img src="https://img.nkmd.de/uploads/small2x/68/7b/e36f5a2bc4bd09643d07d0c9fcac.jpg" alt="Corporate Identity Project" className="w-full h-full object-cover transition-transform duration-500 hover:scale-105" />
-                <div className="absolute inset-0 bg-black/30 hover:bg-black/50 transition-colors flex items-center justify-center">
-                </div>
               </div>
             </div>
           </div>
