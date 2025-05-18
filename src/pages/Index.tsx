@@ -432,29 +432,14 @@ const Index = () => {
           <div className="bento-box">
             <p className="text-lg mb-6">Schreiben Sie mir einfach eine kurze Nachricht.</p>
             
-            <form method="POST" action="contact.php" className="space-y-4" onSubmit={handleSubmit}>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div>
-                  <label htmlFor="name" className="block mb-2 text-sm font-medium">Name</label>
-                  <input type="text" id="name" name="name" className="w-full px-4 py-2 rounded-lg border border-border bg-white/50 focus:outline-none focus:ring-2 focus:ring-primary/20" placeholder="Ihr Name" required />
-                </div>
-                <div>
-                  <label htmlFor="email" className="block mb-2 text-sm font-medium">Email</label>
-                  <input type="email" id="email" name="email" className="w-full px-4 py-2 rounded-lg border border-border bg-white/50 focus:outline-none focus:ring-2 focus:ring-primary/20" placeholder="Ihre Email" required />
-                </div>
-              </div>
-              <div>
-                <label htmlFor="subject" className="block mb-2 text-sm font-medium">Betreff</label>
-                <input type="text" id="subject" name="subject" className="w-full px-4 py-2 rounded-lg border border-border bg-white/50 focus:outline-none focus:ring-2 focus:ring-primary/20" placeholder="Betreff" required />
-              </div>
-              <div>
-                <label htmlFor="message" className="block mb-2 text-sm font-medium">Nachricht</label>
-                <textarea id="message" name="message" rows={5} className="w-full px-4 py-2 rounded-lg border border-border bg-white/50 focus:outline-none focus:ring-2 focus:ring-primary/20" placeholder="Ihre Nachricht" required></textarea>
-              </div>
-              <button type="submit" className="bg-primary text-white rounded-full px-6 py-3 flex items-center font-medium hover:bg-primary/90 transition-colors" disabled={formSubmitting}>
-                {formSubmitting ? 'Wird gesendet...' : 'Los geht\'s!'}
-              </button>
-            </form>
+            <div className="w-full rounded-lg overflow-hidden">
+              <iframe 
+                src="https://9nk.de/contact.php" 
+                className="w-full" 
+                style={{ height: "600px", border: "none" }} 
+                title="Kontaktformular"
+              ></iframe>
+            </div>
           </div>
         </section>
       </main>
